@@ -8,7 +8,7 @@ jobs:
   main-to-gh-pages:
     runs-on: ubuntu-latest
         
-    steps:                          
+  steps:                          
     - name: Checkout gitbook
       uses: actions/checkout@v2
       with:
