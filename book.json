@@ -1,5 +1,6 @@
 {
-	"title": "Summary",
+	"title": "flink_learning_notes",
+	"language": "zh-hans",
 	"plugins" : [
 		"expandable-chapters",
 		"github-buttons",
@@ -13,7 +14,6 @@
 		"lunr", 
 		"-search", 
 		"search-pro",
-		"-donate",
 		"splitter"
 	],
 	"pluginsConfig": {
