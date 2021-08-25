@@ -18,7 +18,7 @@
 	],
 	"pluginsConfig": {
 		"editlink": {
-			"base": "https://github.com/Flyraty/flink_learning_notes/tree/main",
+			"base": "https://github.com/Flyraty/flink_learning_notes/tree/gitbook",
 			"label": "Edit This Page"
 		},	
 		"github-buttons": {

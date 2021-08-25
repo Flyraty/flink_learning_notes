@@ -32,11 +32,11 @@ Flink 使用流重放和 Checkpoints 来实现容错。每个 checkpoint 都是�
 
 在程序由于机器，网络，处理逻辑问题挂掉后，flink 会将程序重置到上次成功的 checkpoint 处，重启后的 flink 程序并不会影响以前产生的 checkpoint。
 
->> checkpoint 默认是关闭的，可以阅读 [Checkpointing ](https://ci.apache.org/projects/flink/flink-docs-release-1.13/docs/dev/datastream/fault-tolerance/checkpointing/) 查看如何配置开启。
+> checkpoint 默认是关闭的，可以阅读 [Checkpointing ](https://ci.apache.org/projects/flink/flink-docs-release-1.13/docs/dev/datastream/fault-tolerance/checkpointing/) 查看如何配置开启。
 
->> 为了保证 checkpoint 机制正常使用，数据源（例如消息队列）需要支持数据重放。Kafka 具有这种能力，并且对应的 Flink connector 也支持。可以去 [Fault Tolerance Guarantees of Data Sources and Sinks ](https://ci.apache.org/projects/flink/flink-docs-release-1.13/docs/connectors/datastream/guarantees/) 查看更多信息。
+> 为了保证 checkpoint 机制正常使用，数据源（例如消息队列）需要支持数据重放。Kafka 具有这种能力，并且对应的 Flink connector 也支持。可以去 [Fault Tolerance Guarantees of Data Sources and Sinks ](https://ci.apache.org/projects/flink/flink-docs-release-1.13/docs/connectors/datastream/guarantees/) 查看更多信息。
 
->> 因为 Flink 的 checkpoint 使用分布式快照实现，所以我们经常用快照表示 checkpoint 或者 savepoint。
+> 因为 Flink 的 checkpoint 使用分布式快照实现，所以我们经常用快照表示 checkpoint 或者 savepoint。
 
 ### Checkpointing
 Flink 容错机制的核心就是产生数据流和对应 operator 状态的分布式一致性快照。这些快照充当一致性检查点，以便在任务失败时可以回退重启。需要注意的是，checkpoint 是异步完成的。状态的分布式一致性快照。这些快照充当一致性检查点，以便在任务失败时可以回退重启。需要注意的是，checkpoint barriers 不会对操作加锁，因此 operator 可以异步持久化他们的状态。
@@ -113,23 +113,78 @@ Flink 将批任务运行当做流任务的特例。因此，上述状态的管�
 - Dataset 中状态的处理使用内存数据结构，而不是键值对。
 
 ### 思考
-1.Keyed State 中的对齐是指？
+**1.Keyed State 中的对齐是指？**
 
+这里没太理解，keyed state 需要对齐的是什么信息呢？
 
-2.Keyed Groups 是和什么最大并行度保持一致？
+**2.Keyed Groups 是和什么最大并行度保持一致，如何计算出来的呢？**
 
+个人感觉是和 operator 的并行度保持一致（这点需要在后续阅读中验证，也可以查看源码）。在并行度改变时，以 key groups 为单位重新分配 keyed state 到对应的 subtask。
+此处可以参考 [Flink状态的缩放（rescale）与键组（Key Group）设计](https://cloud.tencent.com/developer/article/1697402)
 
-3.在 shuffle 产生数据倾斜时，会不会影响 operator barrier 的对齐过程？
+**3.在 shuffle 产生数据倾斜时，会不会影响 operator barrier 的对齐过程？**
 
 感觉会影响，下游在读取上游数据时，处理大 key 的 task 肯定比较慢，成为 barrier 对齐等待的一方
 
-4.怎么描述整个 checkpoint 的过程？
+**4.怎么描述整个 checkpoint 的过程？**
 
 从读取 source 端开始，barrier 被注入到数据流中，下游 operator 在接收到其所有输入流的 barrier 后（即对齐过程），通知 JM checkpoint coordinator 存储状态生成局部快照，记录元数据，并将 barrier 传递给下游，如此往复，直到 sink operator，最终生成全局快照。
 
-5.对齐和不对齐的 checkpoint 的有什么区别，对于性能的影响和考量又在哪里？
-- 对齐在某些情况下会对性能产生影响，尤其是在存在反压的时候，降低了程序吞吐量，但是逻辑清晰，以算子快照为界限分隔。本质上是在最后一个 barrier 到达时触发 checkpoint。
-- 非对齐提高了程序吞吐量，但是由于缓存数据，IO 压力比较大，本质上是在第一个 barrier 到达后就触发 checkpoint。
+**5.对齐和不对齐的 checkpoint 的有什么区别，对于性能的影响和考量又在哪里？**
+
+此处可以参考 [Flink 1.11 新特性详解:【非对齐】Unaligned Checkpoint 优化高反压](https://cloud.tencent.com/developer/article/1663055)
+- 对齐会阻塞数据的数据的处理，在 input buffer 被填满后，还没等到对齐时，会对性能产生影响，增大整个数据处理的延时，降低了程序吞吐量，尤其是在存在反压的时候。但是逻辑清晰，以算子快照为界限分隔。本质上是在最后一个 barrier 到达时触发 checkpoint。
+- 非对齐提高了程序吞吐量，但是由于每个 operator state 缓存当前被 barrier 越过的数据，快照的大小会显著增加，IO 压力会增大。本质上是在第一个 barrier 到达后就触发 checkpoint。
+
+**6.checkpoint 相关的配置参数？**
+
+代码
+	```java
+	StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+
+	// start a checkpoint every 1000 ms
+	env.enableCheckpointing(1000);
+
+	// advanced options:
+
+	// set mode to exactly-once (this is the default)
+	env.getCheckpointConfig().setCheckpointingMode(CheckpointingMode.EXACTLY_ONCE);
+
+	// checkpoints have to complete within one minute, or are discarded
+	env.getCheckpointConfig().setCheckpointTimeout(60000);
+
+	// make sure 500 ms of progress happen between checkpoints
+	env.getCheckpointConfig().setMinPauseBetweenCheckpoints(500);
+
+	// allow only one checkpoint to be in progress at the same time
+	env.getCheckpointConfig().setMaxConcurrentCheckpoints(1);
+
+	// enable externalized checkpoints which are retained after job cancellation
+	env.getCheckpointConfig().enableExternalizedCheckpoints(ExternalizedCheckpointCleanup.RETAIN_ON_CANCELLATION);
+
+	// This determines if a task will be failed if an error occurs in the execution of the task’s checkpoint procedure.
+	env.getCheckpointConfig().setFailOnCheckpointingErrors(true);
+
+	```
+
+flink-conf.yml
+
+	```yml
+	# 使用何种状态后端
+	state.backends: filesystme
+	# 检查点的存储目录
+	state.checkpoint.dir: 
+    # 保存点的存储目录
+    state.savepoints.dir
+    # 是否开启增量快照，默认 false
+    state.backend.incremental: false
+
+	```
+**7.为什么需要增量快照？** 
+对于 TB 级别的作业，状态太大，每次做全量快照耗时太长，影响整个链路的处理时延，所以需要增量快照。类似于 Mac 的 TimeMachine，在做完一次全量快照后，剩下的都是增量快照，只处理变化的数据。
+那么 Flink 是如何实现增量快照的呢？可以参考 [Apache Flink 管理大型状态之增量 Checkpoint 详解](https://cloud.tencent.com/developer/article/1506196)
+
+
 
 
 
