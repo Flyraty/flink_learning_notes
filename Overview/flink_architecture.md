@@ -82,8 +82,17 @@ Flink 程序可以用 session mode，per job 的方式运行，下面介绍这�
 
 **1.从 job 提交来看 Yarn，Flink，Spark？**
 
+yarn 只是集群管理器，这里更贴切的是 MR。看看大部分计算框架的作业提交过程，都是相通的，基本思想是一致的。
+1. 客户端像外部资源管理器申请资源，启动 master。
+2. master 做好调度，切分任务。
+3. 在启动 worker，将切分好的 task 发到各个 worker 上进行。
+4. woker 与 master 之间维持心跳通信，一旦 worker 挂掉或者上面的 task 失败，master 就会接到通知重新申请资源调度起失败任务
+5. 最后到任务完成，释放资源。
 
 **2.Flink 常见资源配置参数？**
 
+可以查看[官方参数配置文档](https://ci.apache.org/projects/flink/flink-docs-master/zh/docs/deployment/config/#memory-configuration)
 
 **3.咋一看，Flink Application Cluster 是作业提交运行最佳的方式，是这样吗？**
+
+生产环境上的实时计算平台好像就是这种模式。
