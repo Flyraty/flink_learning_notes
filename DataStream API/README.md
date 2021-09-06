@@ -8,5 +8,9 @@
 
 > [状态容错与管理](state_and_fault_tolerance.md)
 
+> [Data Sources](datasource.md)
+
+> [Operators](operators.md)
+
 > [UDF](udf.md)
 
