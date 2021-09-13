@@ -186,4 +186,4 @@ WatermarkStrategy.forBoundedOutOfOrderness(Duration.ofSeconds(10));
 ### 思考
 **1. 自己分别实现两种 watermark 的生成，观察一下 watermark 是如何触发计算的？**
 
-可以参考[测试代码]()
+可以参考[测试代码](https://github.com/Flyraty/daily_flink/blob/master/src/main/java/com/timemachine/icu/watermark/Readme.md)
