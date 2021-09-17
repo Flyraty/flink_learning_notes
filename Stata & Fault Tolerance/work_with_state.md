@@ -149,6 +149,7 @@ StateTtlConfig ttlConfig = StateTtlConfig
 下面会介绍一些更细粒度的状态清理策略。一般 Heap 状态后端会进行增量更新，RocksDB 会通过压实策略进行清理。
 
 **Cleanup in full snapshot**
+
 在生成状态快照的时候触发状态的清理，这样做可以减少快照的大小。在当前实现下，本地状态不会被清理，但是前一个快照中过期状态已经被清理了。可以通过 StateTtlConfig 配置。
 ```java
 import org.apache.flink.api.common.state.StateTtlConfig;
@@ -162,6 +163,7 @@ StateTtlConfig ttlConfig = StateTtlConfig
 这种清理策略不适用于 RocksDB 上的增量快照。
 
 **Incremental cleanup**
+
 增量触发状态的清理，可以在访问状态或者处理记录时触发。基本实现是维持一个全局的状态元素迭代器，当清理被触发后，调用迭代器，遍历所有状态元素然后清理掉过期状态。同样是通过 StateTtlConfig 配置。
 ```java
 import org.apache.flink.api.common.state.StateTtlConfig;
@@ -180,6 +182,7 @@ Notes：
 - 对于已经运行的 job，可以通过 StateTtlConfig 开启清理，例如从 savepoint 恢复作业时。
 
 **Cleanup during RocksDB compaction**
+
 使用 RocksDB 状态后端的话，会调用 Flink compaction filter 用于后台状态清理。compaction 意为压实，在大数据存储中经常会接触到，目的是对各种摄入任务的文件碎片进行合并压缩，减小碎片数量，提高存储查询的性能。这里的压实也是一样的，在对状态做合并压缩的过程中顺便对状态进行清理。 Flink compaction filter 会检查状态的时间并清除过期策略。
 ```java
 import org.apache.flink.api.common.state.StateTtlConfig;
@@ -189,16 +192,156 @@ StateTtlConfig ttlConfig = StateTtlConfig
     .cleanupInRocksdbCompactFilter(1000)
     .build();
 ```
-这种策略会在每次处理一定数量的状态元素后从 Flink 查询当前时间戳，用于检查过期时间。检查条数的配置就是 cleanupInRocksdbCompactFilter 的参数。RocksDB 采用这种策略的默认配置是每处理 1000 条就查询当前时间戳。emmn，我此处描述的其实非常不清晰。。
+这种策略会在每次处理一定数量的状态元素后从 Flink 查询当前时间戳，用于检查过期时间。检查条数的配置就是 cleanupInRocksdbCompactFilter 的参数。RocksDB 采用这种策略的默认配置是每处理 1000 条数据就查询更新时间戳。emmn，我此处描述的其实非常不清晰。。
+
+Notes：
+- 显而易见，在 compaction 期间进行状态的清理会降低 compaction 的效率。程序必须获取上次查询的时间戳对存储的每个 key 的状态判断是否过期。对于 list，map 类型的状态，还要对状态存储中的每个元素进行检查。
 
 ### Operator State
+*Operator State* 可以认为是绑定并行 operator 中的一个实例的状态。最明显的例子是 Kafka，在从 Kafka 源读取数据时，一般会根据 paratition 的数量设置并行度，这意味着读取数据源的 opertor 是并行多个实例的，这里的 Operator State 指的就是每个实例读取的 partition 及其 offset。
 
+Operator State 接口支持在并行度发生改变时重新分配状态。分配策略有几种不同的方案，这个后面会讲到。
+
+在典型的有状态数据流处理中，一般不需要 Operator State。Operator State 仅仅是一种特殊的状态类型，在 source 或者 sink 中实现，用于没有明确分区 key 的场景。
 
 ### Broadcast State
+*Broadcast State* 是一种特殊的 Operator State。主要用于一条数据流中的数据需要广播到下游所有 task 的场景，即每个 task 保留的状态是一致的。一个例子是关于事件模式的匹配，吞吐量比较小的事件规则流作为状态广播到事件流，事件流中处理每条事件筛选出符合规则的用户行为。
+
+Broadcast State 与 Operator State 主要有以下几点不同
+- it has a map format,
+- it is only available to specific operators that have as inputs a broadcasted stream and a non-broadcasted one, and
+- such an operator can have multiple broadcast states with different names.
 
 ### Using Operator State
+继承 CheckpointedFunction 来使用 Operator State。
 
+#### CheckpointedFunction
+CheckpointedFunction 提供非 keyed state 状态的访问，需要实现以下两种方法
+```java
+void snapshotState(FunctionSnapshotContext context) throws Exception;
+
+void initializeState(FunctionInitializationContext context) throws Exception;
+```
+当执行 checkpoint 时，snapshotState 就被调用。对应的是，在每次执行用户自定义函数或者从上个检查点恢复用户自定义函数执行时，会调用 initializeState()。这样看来，initializeState 不仅仅是初始化状态的地方，也可以包含恢复逻辑。
+
+当前，支持 list 类型的 operator state。这种状态应该是一个可序列化对象的列表，彼此独立，这也是可以重新分配状态的基础，换句话说，这些可序列化对象是重新分配的最小粒度。基于此，定义了以下两中重分配策略：
+
+- **均匀分配**：每个 operator 拥有一个状态元素列表，整个状态可以看做是所有 operator 列表的组合。在重新分配状态时，该列表被平均分为与并行运算符一样多的子列表。每个 operator 都得到一个子列表，可能是空，也可能包含一个或者多个元素。例如，如果并行度为 1，operator state 中包含元素 element1 和 element2，当并行度增加到 2 时，element1 可能会在 operator 实例 0 中结束，而 element2 将转到 operator 实例 1。
+
+- **合并分配**：每个 operator 拥有一个状态元素列表，整个状态可以看做是所有 operator 列表的组合。在重新分配状态时，每个 operator 获取状态的所有元素。当状态是高基数时，不建议使用，因为 checkpoint 元数据将存储每个列表条目的偏移量，这可能导致 RPC 帧大小或内存溢出。
+
+下面是一个均匀分配的例子，先缓存一批数据在 sink 出去。在创建 checkpoint 时保存 bufferedElements 的状态。在从 checkpoint恢复时，重放 bufferedElements。
+```java
+public class BufferingSink
+        implements SinkFunction<Tuple2<String, Integer>>,
+                   CheckpointedFunction {
+
+    private final int threshold;
+
+    private transient ListState<Tuple2<String, Integer>> checkpointedState;
+
+    private List<Tuple2<String, Integer>> bufferedElements;
+
+    public BufferingSink(int threshold) {
+        this.threshold = threshold;
+        this.bufferedElements = new ArrayList<>();
+    }
+
+    @Override
+    public void invoke(Tuple2<String, Integer> value, Context contex) throws Exception {
+        bufferedElements.add(value);
+        if (bufferedElements.size() == threshold) {
+            for (Tuple2<String, Integer> element: bufferedElements) {
+                // send it to the sink
+            }
+            bufferedElements.clear();
+        }
+    }
+
+    @Override
+    public void snapshotState(FunctionSnapshotContext context) throws Exception {
+        checkpointedState.clear();
+        for (Tuple2<String, Integer> element : bufferedElements) {
+            checkpointedState.add(element);
+        }
+    }
+
+    @Override
+    public void initializeState(FunctionInitializationContext context) throws Exception {
+        ListStateDescriptor<Tuple2<String, Integer>> descriptor =
+            new ListStateDescriptor<>(
+                "buffered-elements",
+                TypeInformation.of(new TypeHint<Tuple2<String, Integer>>() {}));
+
+        checkpointedState = context.getOperatorStateStore().getListState(descriptor);
+
+        if (context.isRestored()) {
+            for (Tuple2<String, Integer> element : checkpointedState.get()) {
+                bufferedElements.add(element);
+            }
+        }
+    }
+}
+```
 #### Stateful Source Functions
+source 相比其它 operator 更需要注意，一般需要锁机制做到原子更新保证精确一次处理语义。
+```java
+public static class CounterSource
+        extends RichParallelSourceFunction<Long>
+        implements CheckpointedFunction {
+
+    /**  current offset for exactly once semantics */
+    private Long offset = 0L;
+
+    /** flag for job cancellation */
+    private volatile boolean isRunning = true;
+    
+    /** Our state object. */
+    private ListState<Long> state;
+
+    @Override
+    public void run(SourceContext<Long> ctx) {
+        final Object lock = ctx.getCheckpointLock();
+
+        while (isRunning) {
+            // output and state update are atomic
+            synchronized (lock) {
+                ctx.collect(offset);
+                offset += 1;
+            }
+        }
+    }
+
+    @Override
+    public void cancel() {
+        isRunning = false;
+    }
+
+    @Override
+    public void initializeState(FunctionInitializationContext context) throws Exception {
+        state = context.getOperatorStateStore().getListState(new ListStateDescriptor<>(
+                "state",
+                LongSerializer.INSTANCE));
+                
+        // restore any state that we might already have to our fields, initialize state
+        // is also called in case of restore.
+        for (Long l : state.get()) {
+            offset = l;
+        }
+    }
+
+    @Override
+    public void snapshotState(FunctionSnapshotContext context) throws Exception {
+        state.clear();
+        state.add(offset);
+    }
+}
+```
+
 
 ### 思考
+**1.自定义状态可以用来做什么？**
+
+实现一些内置聚合函数无法做到的逻辑。实现程序恢复。
+
 
