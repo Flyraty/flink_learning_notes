@@ -342,6 +342,6 @@ public static class CounterSource
 ### 思考
 **1.自定义状态可以用来做什么？**
 
-实现一些内置聚合函数无法做到的逻辑。实现程序恢复。
+实现一些内置聚合函数无法做到的逻辑。实现程序恢复。可以参考[测试代码](https://github.com/Flyraty/daily_flink/blob/master/src/main/java/com/timemachine/icu/state)
 
 

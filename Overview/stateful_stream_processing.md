@@ -120,7 +120,7 @@ Flink 将批任务运行当做流任务的特例。因此，上述状态的管�
 **2.Keyed Groups 是和什么最大并行度保持一致，如何计算出来的呢？**
 
 个人感觉是和 operator 的并行度保持一致（这点需要在后续阅读中验证，也可以查看源码）。在并行度改变时，以 key groups 为单位重新分配 keyed state 到对应的 subtask。
-此处可以参考 [Flink状态的缩放（rescale）与键组（Key Group）设计](https://cloud.tencent.com/developer/article/1697402)
+此处可以参考 [Flink状态的缩放（rescale）与键组（Key Group）设计](https://www.jianshu.com/p/f0a13f98dac2)
 
 **3.在 shuffle 产生数据倾斜时，会不会影响 operator barrier 的对齐过程？**
 
@@ -132,7 +132,7 @@ Flink 将批任务运行当做流任务的特例。因此，上述状态的管�
 
 **5.对齐和不对齐的 checkpoint 的有什么区别，对于性能的影响和考量又在哪里？**
 
-此处可以参考 [Flink 1.11 新特性详解:【非对齐】Unaligned Checkpoint 优化高反压](https://cloud.tencent.com/developer/article/1663055)
+此处可以参考 [Flink 1.11 新特性详解:【非对齐】Unaligned Checkpoint 优化高反压](https://icode.best/i/78869133551744)
 - 对齐会阻塞数据的数据的处理，在 input buffer 被填满后，还没等到对齐时，会对性能产生影响，增大整个数据处理的延时，降低了程序吞吐量，尤其是在存在反压的时候。但是逻辑清晰，以算子快照为界限分隔。本质上是在最后一个 barrier 到达时触发 checkpoint。
 - 非对齐提高了程序吞吐量，但是由于每个 operator state 缓存当前被 barrier 越过的数据，快照的大小会显著增加，IO 压力会增大。本质上是在第一个 barrier 到达后就触发 checkpoint。
 
