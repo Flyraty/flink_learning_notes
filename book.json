@@ -2,7 +2,7 @@
 	"title": "flink_learning_notes",
 	"language": "zh-hans",
 	"plugins" : [
-		"expandable-chapters",
+		"-expandable-chapters",
 		"github-buttons",
 		"editlink",
 		"copy-code-button",
