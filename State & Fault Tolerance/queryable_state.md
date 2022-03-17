@@ -106,16 +106,91 @@ CompletableFuture<S> getKvState(
     TypeInformation<K> keyTypeInfo,
     StateDescriptor<S, V> stateDescriptor)
 ```
-最终返回的 CompletableFuture 包含要查询的状态值。传入的 jobId 参数
+最终返回的 CompletableFuture 包含要查询的状态值。传入的 jobId 参数用来标识该状态属于哪个作业。参数 key 是待查询的 key 值，keyTypeInfo 用来确定 key 的类型以及 Flink 该如何序列化/反序列化该 key。stateDescriptor 中包含状态的类型（Value，Reduce 等等）以及该如何序列化/反序列化的信息。
 
-> Note:   
+细心的读者会注意到，返回的 CompletableFuture 是一个类型为 S 的值：即包含实际状态值的 State Object。可以是 Flink 支持的任意状态类型：ValueState, ReduceState, ListState, MapState, and AggregatingState。
 
-> Note:
+> Note: 返回的状态对象中包含的状态不允许被修改。我们可以使用该对象获取真正的状态值，例如 `ValueState.get()`，或者返回包含 <K,V> 状态对的可迭代对象，例如 `mapState.entries()`。我们只是不能修改这些状态，举个例子，在返回的 list state 对象上调用 add() 方法会抛出 UnsupportedOperationException。
+
+> Note: 状态客户端是异步的，且可以被多个线程共享。在想要关闭的时候必须使用 QueryableStateClient.shutdown() 方法来释放资源。
 
 ### 示例
+下面是一个是状态可查询的例子
+```java
+public class CountWindowAverage extends RichFlatMapFunction<Tuple2<Long, Long>, Tuple2<Long, Long>> {
 
+    private transient ValueState<Tuple2<Long, Long>> sum; // a tuple containing the count and the sum
+
+    @Override
+    public void flatMap(Tuple2<Long, Long> input, Collector<Tuple2<Long, Long>> out) throws Exception {
+        Tuple2<Long, Long> currentSum = sum.value();
+        currentSum.f0 += 1;
+        currentSum.f1 += input.f1;
+        sum.update(currentSum);
+
+        if (currentSum.f0 >= 2) {
+            out.collect(new Tuple2<>(input.f0, currentSum.f1 / currentSum.f0));
+            sum.clear();
+        }
+    }
+
+    @Override
+    public void open(Configuration config) {
+        ValueStateDescriptor<Tuple2<Long, Long>> descriptor =
+                new ValueStateDescriptor<>(
+                        "average", // the state name
+                        TypeInformation.of(new TypeHint<Tuple2<Long, Long>>() {})); // type information
+        descriptor.setQueryable("query-name");
+        sum = getRuntimeContext().getState(descriptor);
+    }
+}
+
+```
+当包含以上逻辑的作业启动后，就可以通过 jobId 查询 sum 关联的状态。
+
+```java 
+QueryableStateClient client = new QueryableStateClient(tmHostname, proxyPort);
+
+// the state descriptor of the state to be fetched.
+ValueStateDescriptor<Tuple2<Long, Long>> descriptor =
+        new ValueStateDescriptor<>(
+          "average",
+          TypeInformation.of(new TypeHint<Tuple2<Long, Long>>() {}));
+
+CompletableFuture<ValueState<Tuple2<Long, Long>>> resultFuture =
+        client.getKvState(jobId, "query-name", key, BasicTypeInfo.LONG_TYPE_INFO, descriptor);
+
+// now handle the returned value
+resultFuture.thenAccept(response -> {
+        try {
+            Tuple2<Long, Long> res = response.get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+});
+```
 ### 配置
+以下是 state server 和 state client 相关的一些配置，可以通过 QueryableStateOptions 进行定义。
+
+#### State Server
+
+- queryable-state.server.ports：state server 的端口范围。如果多个 taskManager 运行在同一台机器上，可以用来避免端口冲突。这个参数值可以被设置为多种形式，比如一个端口号："9123"，或者端口号的范围："50100-50200"，或者端口列表：“50100-50200,50300-50400,51234”。默认端口是 "9067"。
+- queryable-state.server.network-threads：state server 处理查询请求的网络线程数。
+- queryable-state.server.query-threads：state server 处理查询请求的查询线程数。
+
+#### Proxy
+
+- queryable-state.proxy.ports：state proxey 的端口范围。如果多个 taskManager 运行在同一台机器上，可以用来避免端口冲突。这个参数值可以被设置为多种形式，比如一个端口号："9123"，或者端口号的范围："50100-50200"，或者端口列表：“50100-50200,50300-50400,51234”。默认端口是 "9069"。
+- queryable-state.proxy.network-threads：state proxey 处理查询请求的网络线程数。
+- queryable-state.proxy.query-threads：state proxey 处理查询请求的查询线程数。
+
 
 ### 局限
 
+- 可查询状态的生命周期和运行的作业是绑定在一起的，在 task 启动时注册，task 完成时销毁。在未来的版本中，期望是在某个 task 结束后仍然可以查询其绑定的状态，并通过状态副本机制加速作业的恢复。
+- 当天 KvState 的通知（个人理解是和 server，proxey 等的交互）比较简单。未来期望建立更健壮的反馈机制。
+- 服务器和客户端跟踪查询的统计信息功能在默认情况下是被禁用的，期望在未来可以通过 metrics 进行暴露。
+
+
 ### 思考
+暂无
