@@ -20,6 +20,7 @@
     * [Checkpointing](State & Fault Tolerance/checkpointing.md)
     * [状态查询](State & Fault Tolerance/queryable_state.md)
     * [状态后端](State & Fault Tolerance/state_backends.md) 
+    * [状态容错](State & Fault Tolerance/state_and_fault_tolerance.md)
     * [状态迁移与演化](State & Fault Tolerance/state_schema_evolution.md)
     * [自定义状态序列化器](State & Fault Tolerance/custom_state_serialization.md)
 * [DataSet API](DataSet API/README.md)
