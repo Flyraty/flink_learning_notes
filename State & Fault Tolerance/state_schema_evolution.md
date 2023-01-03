@@ -22,4 +22,4 @@ checkpointedState = getRuntimeContext().getListState(descriptor);
 
 ### 思考
 
-**1. 状态的演化是啥含义？状态的 schema 为啥会发生改变？ 
+**1. 状态的演化是啥含义？状态的 schema 为啥会发生改变？**
