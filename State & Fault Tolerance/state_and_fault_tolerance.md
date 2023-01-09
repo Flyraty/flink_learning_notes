@@ -127,11 +127,44 @@ Flink 会尝试获取更多的类型信息以优化分布式计算中交换、�
 ### Flink TypeInformation 类
 TypeInformation 类是所有类型描述的基类。它定义了类型的一些基本属性，并可以生成对应的序列化器，并且还可以生成相应类型的比较器。（*需要注意，Flink 中的比较器不仅仅是定义一个顺序，它们常用来处理 key*）。这个位置没太明白，Flink 的 comparators 还可以做什么呢？
 
+在内部，Flink 对类型进行了以下归类划分：
+
+- 基本类型：所有 Java 的原语类型及其封装，加上 void、StringDate、BigDecimal、BigInteger。
+- 原始数组和对象数组。
+- 复合类型
+    - Java Tuples，最多 25 个元素，不支持 null 值。
+    - Scala 样例类（包括 Tuples），不支持 null 值。
+    - Row：可以理解为带有可选 Schema 信息的 Tuple，没有数量限制，允许 null 值存在。
+    - POJOs：遵循 Java Bean 规则的类。
+- 辅助类型：（Option、Either、Lists、Maps、...）
+- 泛型：Flink 本身不处理其序列化，而是交给 kyro 来做。
+
+POJOs 使用非常广泛，因为其支持组合任意复杂类型。且 Flink 对 POJOs 的处理也相对高效。
+
 #### POJO 类型的规则
+如果满足以下条件，Flink 会将数据类型识别为 POJO 类型（并允许按字段名称进行引用）：
+
+- class 是 public 的并且是单例（不包括静态内部类）。
+- 该类有一个公共的无参构造器。
+- 该类的所有非静态字段，包括其子类，必须是 public 的。或者有相对应的公共 getter 和 setter 方法。
+
+需要注意的是当用户自定义的数据类型不能被识别为 POJOs 时，会被当做泛型，使用 kyro 序列化处理。
 
 #### 创建一个 TypeInformation 类及其对应的序列化器
+因为 Java 的泛型擦除原因，所以需要将类型传递给 TypeInformation 构造器。对于非泛型，可以使用如下方法。
+```java
+TypeInformation<String> info = TypeInformation.of(String.class);
+```
+对于泛型，必须使用 TypeHint 标识泛型类型信息
+```java
+TypeInformation<Tuple2<String, Double>> info = TypeInformation.of(new TypeHint<Tuple2<String, Double>>(){});
+```
+可以在 TypeInformation 实例上调用 typeInfo.createSerializer(config) 方法创建对应类型的序列化器。其中的 config 参数是 ExecutionConfig 类型，包含有关程序注册的自定义序列化程序的信息，可以在 DataStream 上调用 getExecutionConfig() 方法。在函数内部（如 MapFunction），您可以通过将函数设为 [Rich Function](https://nightlies.apache.org/flink/flink-docs-release-1.16/docs/dev/datastream/fault-tolerance/serialization/types_serialization/) 并调用 getRuntimeContext().getExecutionConfig() 来获取它。
 
 ### Scala API 中的类型信息
+Scala 通过*类型 manifests 和类标签*对运行时的类型信息有非常详尽的了解。通常，类型和方法可以访问它们的泛型参数的类型，因此Scala 程序不会像 Java 程序那样遭受类型擦除的困扰。
+
+此外，Scala 允许通过 Scala 宏在 Scala 编译器中运行自定义代码。that means that some Flink code gets executed whenever you compile a Scala program written against Flink’s Scala API。此处有点不太理解，对于程序的底层编译运行还是一知半解。
 
 #### No Implicit Value for Evidence Parameter Error
 
