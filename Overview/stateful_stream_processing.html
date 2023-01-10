@@ -1,0 +1,758 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Stateful Stream Processing · flink_learning_notes</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-page-footer-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchor-navigation-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-prism/prism-solarizedlight.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search-pro/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="timely_stream_processing.html" />
+    
+    
+    <link rel="prev" href="./" />
+    
+
+    <style>
+    @media only screen and (max-width: 640px) {
+        .book-header .hidden-mobile {
+            display: none;
+        }
+    }
+    </style>
+    <script>
+        window["gitbook-plugin-github-buttons"] = {"buttons":[{"user":"Flyraty","repo":"flink_learning_notes","type":"star","size":"small"}]};
+    </script>
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    开篇
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    基础概念
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="1.2.1" data-path="stateful_stream_processing.html">
+            
+                <a href="stateful_stream_processing.html">
+            
+                    
+                    Stateful Stream Processing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="timely_stream_processing.html">
+            
+                <a href="timely_stream_processing.html">
+            
+                    
+                    Timely Stream Processing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="flink_architecture.html">
+            
+                <a href="flink_architecture.html">
+            
+                    
+                    Flink Architecture
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="flink_api.html">
+            
+                <a href="flink_api.html">
+            
+                    
+                    Flink API
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../DataStream API/">
+            
+                <a href="../DataStream API/">
+            
+                    
+                    DataStream API
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../DataStream API/overview.html">
+            
+                <a href="../DataStream API/overview.html">
+            
+                    
+                    概览
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../DataStream API/execution_mode.html">
+            
+                <a href="../DataStream API/execution_mode.html">
+            
+                    
+                    流/批的运行模式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../DataStream API/event_time.html">
+            
+                <a href="../DataStream API/event_time.html">
+            
+                    
+                    事件时间与 Watermark
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="../DataStream API/datasource.html">
+            
+                <a href="../DataStream API/datasource.html">
+            
+                    
+                    Data Sources
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="../DataStream API/operators.html">
+            
+                <a href="../DataStream API/operators.html">
+            
+                    
+                    Operators
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6" data-path="../DataStream API/udf.html">
+            
+                <a href="../DataStream API/udf.html">
+            
+                    
+                    UDF
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../State & Fault Tolerance/">
+            
+                <a href="../State & Fault Tolerance/">
+            
+                    
+                    状态容错与管理
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../State & Fault Tolerance/work_with_state.html">
+            
+                <a href="../State & Fault Tolerance/work_with_state.html">
+            
+                    
+                    状态处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../State & Fault Tolerance/broadcast_state.html">
+            
+                <a href="../State & Fault Tolerance/broadcast_state.html">
+            
+                    
+                    状态广播
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="../State & Fault Tolerance/checkpointing.html">
+            
+                <a href="../State & Fault Tolerance/checkpointing.html">
+            
+                    
+                    Checkpointing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="../State & Fault Tolerance/queryable_state.html">
+            
+                <a href="../State & Fault Tolerance/queryable_state.html">
+            
+                    
+                    状态查询
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="../State & Fault Tolerance/state_backends.html">
+            
+                <a href="../State & Fault Tolerance/state_backends.html">
+            
+                    
+                    状态后端
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6" data-path="../State & Fault Tolerance/state_and_fault_tolerance.html">
+            
+                <a href="../State & Fault Tolerance/state_and_fault_tolerance.html">
+            
+                    
+                    状态容错
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7" data-path="../State & Fault Tolerance/state_schema_evolution.html">
+            
+                <a href="../State & Fault Tolerance/state_schema_evolution.html">
+            
+                    
+                    状态迁移与演化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8" data-path="../State & Fault Tolerance/custom_state_serialization.html">
+            
+                <a href="../State & Fault Tolerance/custom_state_serialization.html">
+            
+                    
+                    自定义状态序列化器
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../DataSet API/">
+            
+                <a href="../DataSet API/">
+            
+                    
+                    DataSet API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../Table API/">
+            
+                <a href="../Table API/">
+            
+                    
+                    Table API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../Data Types & Serialization/">
+            
+                <a href="../Data Types & Serialization/">
+            
+                    
+                    Data Types & Serialization
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            本书使用 GitBook 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Stateful Stream Processing</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <div id="anchor-navigation-ex-navbar"><i class="fa fa-navicon"></i><ul><ul><ul><li><span class="title-icon "></span><a href="#&#x4EC0;&#x4E48;&#x662F;&#x72B6;&#x6001;&#xFF1F;"><b>1.1.1. </b>&#x4EC0;&#x4E48;&#x662F;&#x72B6;&#x6001;&#xFF1F;</a></li><li><span class="title-icon "></span><a href="#keyed-state"><b>1.1.2. </b>Keyed State</a></li><li><span class="title-icon "></span><a href="#&#x72B6;&#x6001;&#x6301;&#x4E45;&#x5316;"><b>1.1.3. </b>&#x72B6;&#x6001;&#x6301;&#x4E45;&#x5316;</a></li><li><span class="title-icon "></span><a href="#checkpointing"><b>1.1.4. </b>Checkpointing</a></li><li><span class="title-icon "></span><a href="#unaligned-checkpointing"><b>1.1.5. </b>Unaligned Checkpointing</a></li><li><span class="title-icon "></span><a href="#state-backends"><b>1.1.6. </b>State Backends</a></li><li><span class="title-icon "></span><a href="#savepoints"><b>1.1.7. </b>Savepoints</a></li><li><span class="title-icon "></span><a href="#exactly-once-vs-at-least-once"><b>1.1.8. </b>Exactly Once vs. At Least Once</a></li><li><span class="title-icon "></span><a href="#state-and-fault-tolerance-in-batch-programs"><b>1.1.9. </b>State and Fault Tolerance in Batch Programs</a></li><li><span class="title-icon "></span><a href="#&#x601D;&#x8003;"><b>1.1.10. </b>&#x601D;&#x8003;</a></li></ul></ul></ul></div><a href="#" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><h3 id="&#x4EC0;&#x4E48;&#x662F;&#x72B6;&#x6001;&#xFF1F;"><a name="&#x4EC0;&#x4E48;&#x662F;&#x72B6;&#x6001;&#xFF1F;" class="anchor-navigation-ex-anchor" href="#&#x4EC0;&#x4E48;&#x662F;&#x72B6;&#x6001;&#xFF1F;"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.1. &#x4EC0;&#x4E48;&#x662F;&#x72B6;&#x6001;&#xFF1F;</h3>
+<p>&#x5728;&#x4E00;&#x6761;&#x6570;&#x636E;&#x6D41;&#x4E2D;&#xFF0C;&#x5F88;&#x591A;&#x64CD;&#x4F5C;&#x4E00;&#x6B21;&#x53EA;&#x5904;&#x7406;&#x4E00;&#x4E2A;&#x4E8B;&#x4EF6;&#xFF0C;&#x6BD4;&#x5982;&#x4E8B;&#x4EF6;&#x89E3;&#x6790;&#x5668;&#xFF0C;&#x5C31;&#x662F;&#x7B80;&#x5355;&#x7684; ETL &#x64CD;&#x4F5C;&#x3002;&#x4F46;&#x662F;&#x67D0;&#x4E9B;&#x64CD;&#x4F5C;&#x9700;&#x8981;&#x8BB0;&#x4F4F;&#x5DF2;&#x7ECF;&#x5904;&#x7406;&#x8FC7;&#x7684;&#x4E8B;&#x4EF6;&#x7684;&#x4FE1;&#x606F;&#xFF0C;&#x6BD4;&#x5982;&#x6D41;&#x5F0F;&#x5904;&#x7406;&#x4E2D;&#x6BCF;&#x5C0F;&#x65F6;&#x7684;&#x8BF7;&#x6C42;&#x91CF;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x7A97;&#x53E3;&#x64CD;&#x4F5C;&#xFF0C;&#x6211;&#x4EEC;&#x7BA1;&#x8FD9;&#x4E9B;&#x64CD;&#x4F5C;&#x53EB;&#x4F5C;&#x6709;&#x72B6;&#x6001;&#x7684;&#xFF0C;&#x5DF2;&#x7ECF;&#x53D1;&#x751F;&#x5904;&#x7406;&#x8FC7;&#x7684;&#x4E8B;&#x4EF6;&#x4F1A;&#x5F71;&#x54CD;&#x540E;&#x7EED;&#x7684;&#x7EDF;&#x8BA1;&#x3002;
+&#x4E0B;&#x9762;&#x662F;&#x4E00;&#x4E9B;&#x6709;&#x72B6;&#x6001;&#x7684;&#x64CD;&#x4F5C;&#x7684;&#x4F8B;&#x5B50;&#xFF1A;</p>
+<ul>
+<li>&#x5F53;&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x9700;&#x8981;&#x6309;&#x7167;&#x67D0;&#x4E9B;&#x6A21;&#x5F0F;&#x641C;&#x7D22;&#x4E8B;&#x4EF6;&#x65F6;&#xFF0C;&#x9700;&#x8981;&#x8BB0;&#x5F55;&#x4E0B;&#x6765;&#x5DF2;&#x7ECF;&#x53D1;&#x751F;&#x8FC7;&#x7684;&#x4E8B;&#x4EF6;&#x3002;</li>
+<li>&#x5F53;&#x6309;&#x7167;&#x65E5;&#x671F;&#x805A;&#x5408;&#x4E8B;&#x4EF6;&#x65F6;&#xFF0C;&#x9700;&#x8981;&#x8BB0;&#x5F55;&#x4E0B;&#x6765;&#x8BE5;&#x65E5;&#x671F;&#x5185;&#x53D1;&#x751F;&#x7684;&#x4E8B;&#x4EF6;&#x5F53;&#x505A;&#x72B6;&#x6001;&#x3002;</li>
+<li>&#x5F53;&#x8BAD;&#x7EC3;&#x673A;&#x5668;&#x5B66;&#x4E60;&#x6A21;&#x578B;&#x65F6;&#xFF0C;&#x9700;&#x8981;&#x7528;&#x72B6;&#x6001;&#x8BB0;&#x5F55;&#x4E0B;&#x6765;&#x5F53;&#x524D;&#x7684;&#x6A21;&#x578B;&#x7248;&#x672C;&#xFF0C;&#x53C2;&#x6570;&#x7B49;&#x4FE1;&#x606F;&#x3002;</li>
+<li>&#x5F53;&#x9700;&#x8981;&#x5904;&#x7406;&#x5386;&#x53F2;&#x4E8B;&#x4EF6;&#x65F6;&#xFF0C;&#x9700;&#x8981;&#x7528;&#x72B6;&#x6001;&#x8BB0;&#x5F55;&#x8FC7;&#x53BB;&#x53D1;&#x751F;&#x7684;&#x4E8B;&#x4EF6;&#xFF0C;&#x8FD9;&#x6837;&#x624D;&#x6709;&#x6743;&#x9650;&#x8BBF;&#x95EE;&#x7EDF;&#x8BA1;&#x3002;</li>
+</ul>
+<p>Flink &#x4F7F;&#x7528; Checkpoints &#x548C; Savepoints &#x6765;&#x505A;&#x5BB9;&#x9519;&#x7BA1;&#x7406;&#x548C;&#x7CBE;&#x786E;&#x5904;&#x7406;&#x4E00;&#x6B21;&#x7684;&#x5904;&#x7406;&#x8BED;&#x4E49;&#xFF0C;&#x56E0;&#x6B64;&#x9700;&#x8981;&#x7BA1;&#x7406;&#x72B6;&#x6001;&#xFF0C;&#x8BB0;&#x5F55;&#x5404;&#x4E2A;&#x64CD;&#x4F5C;&#x7684;&#x72B6;&#x6001;&#x3002;</p>
+<p>&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F; Flink &#x91CD;&#x542F;&#x5E76;&#x4E14;&#x5E76;&#x884C;&#x5EA6;&#x6539;&#x53D8;&#x65F6;&#xFF0C;&#x72B6;&#x6001;&#x4E5F;&#x9700;&#x8981;&#x5206;&#x53D1;&#x81F3;&#x4E0D;&#x540C;&#x8282;&#x70B9;&#xFF0C;&#x5E76;&#x91CD;&#x65B0;&#x5206;&#x914D;&#x3002;&#x8FD9;&#x70B9;&#x5728; failover &#x65F6;&#x4F1A;&#x8BB2;&#x5230;&#x3002;</p>
+<p><a href="https://ci.apache.org/projects/flink/flink-docs-release-1.13/docs/dev/datastream/fault-tolerance/queryable_state/" target="_blank">Queryable state</a>&#x5141;&#x8BB8;&#x4F60;&#x5728; flink &#x7A0B;&#x5E8F;&#x8FD0;&#x884C;&#x65F6;&#x7BA1;&#x7406;&#x72B6;&#x6001;&#xFF0C;&#x5373; state processer API&#xFF0C;&#x8FD9;&#x4E9B;&#x5728;&#x4EFB;&#x52A1;&#x72B6;&#x6001;&#x521D;&#x59CB;&#x5316;&#xFF0C;&#x72B6;&#x6001;&#x9519;&#x8BEF;&#x4FEE;&#x6539;&#x573A;&#x666F;&#x4E0B;&#x6BD4;&#x8F83;&#x6709;&#x7528;&#x3002;</p>
+<p>&#x5F53;&#x5904;&#x7406;&#x72B6;&#x6001;&#x65F6;&#xFF0C;&#x5148;&#x4E86;&#x89E3; <a href="https://ci.apache.org/projects/flink/flink-docs-release-1.13/docs/ops/state/state_backends/" target="_blank">Flink&#x2019;s state backends</a>&#x975E;&#x5E38;&#x6709;&#x7528;&#xFF0C;&#x8FD9;&#x4F1A;&#x544A;&#x8BC9;&#x6211;&#x4EEC; Flink &#x652F;&#x6301;&#x54EA;&#x51E0;&#x79CD;&#x72B6;&#x6001;&#x540E;&#x7AEF;&#xFF0C;&#x72B6;&#x6001;&#x4EE5;&#x4F55;&#x79CD;&#x65B9;&#x5F0F;&#x5B58;&#x5728;&#x54EA;&#x91CC;&#x3002;</p>
+<h3 id="keyed-state"><a name="keyed-state" class="anchor-navigation-ex-anchor" href="#keyed-state"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.2. Keyed State</h3>
+<p>Keyed State &#x53EF;&#x4EE5;&#x88AB;&#x8BA4;&#x4E3A;&#x662F;&#x4EE5;&#x952E;&#x503C;&#x5BF9;&#x65B9;&#x5F0F;&#x5B58;&#x50A8;&#x7684;&#x72B6;&#x6001;&#x3002;&#x4E3E;&#x4E2A;&#x4F8B;&#x5B50;&#xFF0C;&#x7EDF;&#x8BA1;&#x5F53;&#x5929;&#x6BCF;&#x4E2A;&#x5546;&#x54C1;&#x7684;&#x552E;&#x51FA;&#xFF0C;&#x5728;&#x67D0;&#x4E00;&#x65F6;&#x523B;&#xFF0C;&#x5546;&#x54C1; A &#x552E;&#x51FA;&#x4E86; 10 &#x4EF6;&#xFF0C;&#x90A3;&#x4E48; <code>A-&gt;10</code> &#x5C31;&#x662F;&#x6B64;&#x523B;&#x7684;&#x72B6;&#x6001;&#xFF0C;&#x5F53;&#x4E0B;&#x6B21;&#x518D;&#x63A5;&#x6536;&#x5230; A &#x5356;&#x51FA;&#x4E00;&#x4EF6;&#x7684;&#x4E8B;&#x4EF6;&#x65F6;&#xFF0C;&#x72B6;&#x6001;&#x5C31;&#x53D8;&#x6210;&#x4E86; <code>A-&gt;11</code>&#xFF0C;checkpoint &#x4E2D;&#x5B58;&#x50A8;&#x7684;&#x72B6;&#x6001;&#x5C31;&#x662F;&#x622A;&#x6B62;&#x67D0;&#x4E00;&#x65F6;&#x95F4;&#x70B9;&#x524D;&#x67D0;&#x4E2A; key &#x7684;&#x5F53;&#x524D;&#x72B6;&#x6001;&#x3002;
+Keyed State &#x4E0E;&#x8BFB;&#x53D6;&#x8BE5; key &#x7684;&#x6D41;&#x4E00;&#x8D77;&#x88AB;&#x5206;&#x53D1;&#xFF0C;&#x56E0;&#x6B64;&#xFF0C;&#x53EA;&#x80FD;&#x5728; keyd stream &#x4E0A;&#x64CD;&#x4F5C;&#x952E;&#x503C;&#x5BF9;&#x72B6;&#x6001;&#x3002;&#x7406;&#x89E3;&#x4E00;&#x4E0B;&#xFF0C;&#x4E5F;&#x5C31;&#x662F; keyed state &#x4E0E;&#x4E0B;&#x6E38;&#x8BE5; key &#x7684; operator &#x662F;&#x7ED1;&#x5B9A;&#x5728;&#x4E00;&#x8D77;&#x7684;&#xFF0C;&#x8FD9;&#x4E2A; operator &#x53EF;&#x4EE5;&#x66F4;&#x65B0;&#x63D2;&#x5165;&#x65B0;&#x7684; keyed state&#xFF0C;&#x5E76;&#x4E14;&#x5728;&#x72B6;&#x6001;&#x548C; operator &#x5BF9;&#x9F50;&#x60C5;&#x51B5;&#x4E0B;&#x90FD;&#x662F;&#x672C;&#x5730;&#x64CD;&#x4F5C;&#xFF0C;&#x6CA1;&#x6709;&#x4E8B;&#x52A1;&#x5F00;&#x9500;&#xFF0C;&#x4FDD;&#x8BC1;&#x4E00;&#x81F4;&#x6027;&#x3002;&#x8FD9;&#x79CD;&#x5BF9;&#x9F50;&#x8FD8;&#x5141;&#x8BB8; Flink &#x91CD;&#x65B0;&#x5206;&#x53D1;&#x72B6;&#x6001;&#x548C;&#x8C03;&#x6574;&#x6D41;&#x5206;&#x533A;&#x3002;&#x62FF;&#x5B98;&#x7F51;&#x4E0A;&#x8FD9;&#x5F20;&#x56FE;&#x4E3E;&#x4F8B;&#x5B50;&#x6765;&#x8BF4;&#xFF0C;Keys(A,B,Y) &#x88AB;&#x5206;&#x53D1;&#x5230;&#x4E86; task1 &#x4E0A;&#xFF0C;A,B,Y &#x7684;&#x540E;&#x7EED;&#x72B6;&#x6001;&#x4F1A;&#x5728; task1 &#x4E0A;&#x8FDB;&#x884C;&#x7BA1;&#x7406;&#xFF0C;&#x7BA1;&#x7406;&#x4E86;&#x4E09;&#x4E2A; key &#x7684; state&#x3002;</p>
+<div align="center"><img src="https://ci.apache.org/projects/flink/flink-docs-release-1.13/fig/state_partitioning.svg" width="60%" height="60%"></div>
+
+<p>Keyed State &#x88AB;&#x8FDB;&#x4E00;&#x6B65;&#x7EC4;&#x7EC7;&#x6210; Keyed Groups&#xFF0C;&#x8FD9;&#x662F; Flink &#x91CD;&#x65B0;&#x5206;&#x53D1; Keyed State &#x7684;&#x6700;&#x5C0F;&#x5355;&#x4F4D;&#xFF0C;Keyed Groups &#x7684;&#x6570;&#x91CF;&#x4E0E;&#x8BBE;&#x7F6E;&#x7684;&#x6700;&#x5927;&#x5E76;&#x884C;&#x5EA6;&#x4E00;&#x81F4;&#x3002;
+&#x5728;&#x6267;&#x884C;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;Keyed Operator &#x7684;&#x6BCF;&#x4E2A;&#x5E76;&#x884C;&#x5B9E;&#x4F8B;&#x90FD;&#x4E0E;&#x4E00;&#x4E2A;&#x6216;&#x591A;&#x4E2A; Key Groups &#x7684;&#x952E;&#x4E00;&#x8D77;&#x5DE5;&#x4F5C;&#x3002;</p>
+<h3 id="&#x72B6;&#x6001;&#x6301;&#x4E45;&#x5316;"><a name="&#x72B6;&#x6001;&#x6301;&#x4E45;&#x5316;" class="anchor-navigation-ex-anchor" href="#&#x72B6;&#x6001;&#x6301;&#x4E45;&#x5316;"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.3. &#x72B6;&#x6001;&#x6301;&#x4E45;&#x5316;</h3>
+<p>Flink &#x4F7F;&#x7528;&#x6D41;&#x91CD;&#x653E;&#x548C; Checkpoints &#x6765;&#x5B9E;&#x73B0;&#x5BB9;&#x9519;&#x3002;&#x6BCF;&#x4E2A; checkpoint &#x90FD;&#x662F;&#x8F93;&#x5165;&#x6D41;&#x4E2D;&#x4E00;&#x4E2A;&#x7279;&#x5B9A;&#x70B9;&#x4EE5;&#x53CA;&#x8FD9;&#x4E2A;&#x7279;&#x5B9A;&#x70B9;&#x65F6;&#x95F4;&#x5F53;&#x65F6;&#x5404;&#x4E2A; operator &#x7684;&#x72B6;&#x6001;&#x3002;&#x4E00;&#x4E2A;&#x5B9E;&#x65F6;&#x6570;&#x636E;&#x6D41;&#x53EF;&#x4EE5;&#x4ECE;&#x4E0A;&#x6B21;&#x6210;&#x529F;&#x7684; checkpoint &#x6062;&#x590D;&#xFF0C;&#x6062;&#x590D;&#x5404;&#x4E2A; operator &#x7684;&#x72B6;&#x6001;&#xFF0C;&#x5E76;&#x91CD;&#x653E;&#x6570;&#x636E;&#xFF0C;&#x91CD;&#x65B0;&#x5904;&#x7406;&#x4E0A;&#x6B21; checkpoint &#x540E;&#x6765;&#x7684;&#x6570;&#x636E;&#x3002;checkpoint &#x7684;&#x95F4;&#x9694;&#x9700;&#x8981;&#x8861;&#x91CF;&#x5BB9;&#x9519;&#x5F00;&#x9500;&#x4E0E;&#x6062;&#x590D;&#x65F6;&#x95F4;&#xFF08;&#x9700;&#x8981;&#x91CD;&#x65B0;&#x5904;&#x7406;&#x7684;&#x8BB0;&#x5F55;&#x6570;&#xFF09;&#x3002;</p>
+<p>&#x8FD9;&#x79CD;&#x5BB9;&#x9519;&#x673A;&#x5236;&#x4F1A;&#x6E90;&#x6E90;&#x4E0D;&#x65AD;&#x7684;&#x4EA7;&#x751F;&#x5206;&#x5E03;&#x5F0F;&#x5FEB;&#x7167;&#xFF0C;&#x5BF9;&#x4E8E;&#x72B6;&#x6001;&#x6BD4;&#x8F83;&#x5C0F;&#x7684;&#x6D41;&#x5F0F;&#x5904;&#x7406;&#x7A0B;&#x5E8F;&#xFF0C;&#x5373;&#x4F7F; checkpoint &#x6BD4;&#x8F83;&#x9891;&#x7E41;&#xFF0C;&#x8FD9;&#x79CD;&#x65B9;&#x5F0F;&#x4E5F;&#x6BD4;&#x8F83;&#x8F7B;&#x91CF;&#x4E14;&#x5BF9;&#x6027;&#x80FD;&#x6CA1;&#x6709;&#x592A;&#x5927;&#x5F71;&#x54CD;&#x3002;checkpoint &#x88AB;&#x5B58;&#x50A8;&#x5728;&#x914D;&#x7F6E;&#x7684;&#x4F4D;&#x7F6E;&#xFF0C;&#x5F80;&#x5F80;&#x662F;&#x4E00;&#x4E2A;&#x5206;&#x5E03;&#x5F0F;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x4E2D;&#x3002;</p>
+<p>&#x5728;&#x7A0B;&#x5E8F;&#x7531;&#x4E8E;&#x673A;&#x5668;&#xFF0C;&#x7F51;&#x7EDC;&#xFF0C;&#x5904;&#x7406;&#x903B;&#x8F91;&#x95EE;&#x9898;&#x6302;&#x6389;&#x540E;&#xFF0C;flink &#x4F1A;&#x5C06;&#x7A0B;&#x5E8F;&#x91CD;&#x7F6E;&#x5230;&#x4E0A;&#x6B21;&#x6210;&#x529F;&#x7684; checkpoint &#x5904;&#xFF0C;&#x91CD;&#x542F;&#x540E;&#x7684; flink &#x7A0B;&#x5E8F;&#x5E76;&#x4E0D;&#x4F1A;&#x5F71;&#x54CD;&#x4EE5;&#x524D;&#x4EA7;&#x751F;&#x7684; checkpoint&#x3002;</p>
+<blockquote>
+<p>checkpoint &#x9ED8;&#x8BA4;&#x662F;&#x5173;&#x95ED;&#x7684;&#xFF0C;&#x53EF;&#x4EE5;&#x9605;&#x8BFB; <a href="https://ci.apache.org/projects/flink/flink-docs-release-1.13/docs/dev/datastream/fault-tolerance/checkpointing/" target="_blank">Checkpointing </a> &#x67E5;&#x770B;&#x5982;&#x4F55;&#x914D;&#x7F6E;&#x5F00;&#x542F;&#x3002;</p>
+<p>&#x4E3A;&#x4E86;&#x4FDD;&#x8BC1; checkpoint &#x673A;&#x5236;&#x6B63;&#x5E38;&#x4F7F;&#x7528;&#xFF0C;&#x6570;&#x636E;&#x6E90;&#xFF08;&#x4F8B;&#x5982;&#x6D88;&#x606F;&#x961F;&#x5217;&#xFF09;&#x9700;&#x8981;&#x652F;&#x6301;&#x6570;&#x636E;&#x91CD;&#x653E;&#x3002;Kafka &#x5177;&#x6709;&#x8FD9;&#x79CD;&#x80FD;&#x529B;&#xFF0C;&#x5E76;&#x4E14;&#x5BF9;&#x5E94;&#x7684; Flink connector &#x4E5F;&#x652F;&#x6301;&#x3002;&#x53EF;&#x4EE5;&#x53BB; <a href="https://ci.apache.org/projects/flink/flink-docs-release-1.13/docs/connectors/datastream/guarantees/" target="_blank">Fault Tolerance Guarantees of Data Sources and Sinks </a> &#x67E5;&#x770B;&#x66F4;&#x591A;&#x4FE1;&#x606F;&#x3002;</p>
+<p>&#x56E0;&#x4E3A; Flink &#x7684; checkpoint &#x4F7F;&#x7528;&#x5206;&#x5E03;&#x5F0F;&#x5FEB;&#x7167;&#x5B9E;&#x73B0;&#xFF0C;&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x7ECF;&#x5E38;&#x7528;&#x5FEB;&#x7167;&#x8868;&#x793A; checkpoint &#x6216;&#x8005; savepoint&#x3002;</p>
+</blockquote>
+<h3 id="checkpointing"><a name="checkpointing" class="anchor-navigation-ex-anchor" href="#checkpointing"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.4. Checkpointing</h3>
+<p>Flink &#x5BB9;&#x9519;&#x673A;&#x5236;&#x7684;&#x6838;&#x5FC3;&#x5C31;&#x662F;&#x4EA7;&#x751F;&#x6570;&#x636E;&#x6D41;&#x548C;&#x5BF9;&#x5E94; operator &#x72B6;&#x6001;&#x7684;&#x5206;&#x5E03;&#x5F0F;&#x4E00;&#x81F4;&#x6027;&#x5FEB;&#x7167;&#x3002;&#x8FD9;&#x4E9B;&#x5FEB;&#x7167;&#x5145;&#x5F53;&#x4E00;&#x81F4;&#x6027;&#x68C0;&#x67E5;&#x70B9;&#xFF0C;&#x4EE5;&#x4FBF;&#x5728;&#x4EFB;&#x52A1;&#x5931;&#x8D25;&#x65F6;&#x53EF;&#x4EE5;&#x56DE;&#x9000;&#x91CD;&#x542F;&#x3002;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;&#xFF0C;checkpoint &#x662F;&#x5F02;&#x6B65;&#x5B8C;&#x6210;&#x7684;&#x3002;&#x72B6;&#x6001;&#x7684;&#x5206;&#x5E03;&#x5F0F;&#x4E00;&#x81F4;&#x6027;&#x5FEB;&#x7167;&#x3002;&#x8FD9;&#x4E9B;&#x5FEB;&#x7167;&#x5145;&#x5F53;&#x4E00;&#x81F4;&#x6027;&#x68C0;&#x67E5;&#x70B9;&#xFF0C;&#x4EE5;&#x4FBF;&#x5728;&#x4EFB;&#x52A1;&#x5931;&#x8D25;&#x65F6;&#x53EF;&#x4EE5;&#x56DE;&#x9000;&#x91CD;&#x542F;&#x3002;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;&#xFF0C;checkpoint barriers &#x4E0D;&#x4F1A;&#x5BF9;&#x64CD;&#x4F5C;&#x52A0;&#x9501;&#xFF0C;&#x56E0;&#x6B64; operator &#x53EF;&#x4EE5;&#x5F02;&#x6B65;&#x6301;&#x4E45;&#x5316;&#x4ED6;&#x4EEC;&#x7684;&#x72B6;&#x6001;&#x3002;</p>
+<p>&#x4ECE; Flink 1.11 &#x5F00;&#x59CB;&#xFF0C;checkpoints &#x53EF;&#x4EE5;&#x9009;&#x62E9;&#x5BF9;&#x9F50;&#x6216;&#x8005;&#x4E0D;&#x5BF9;&#x9F50;&#xFF0C;&#x4E0B;&#x9762;&#x6211;&#x4EEC;&#x9996;&#x5148;&#x4ECB;&#x7ECD;&#x5BF9;&#x9F50;&#x60C5;&#x51B5;&#x4E0B;&#x7684; checkpoints&#x3002;</p>
+<h4 id="barriers"><a name="barriers" class="anchor-navigation-ex-anchor" href="#barriers"><i class="fa fa-link" aria-hidden="true"></i></a>Barriers</h4>
+<p>Flink &#x5206;&#x5E03;&#x5F0F;&#x5FEB;&#x7167;&#x4E2D;&#x7684;&#x6838;&#x5FC3;&#x662F; stream barriers&#xFF0C;&#x6682;&#x4E14;&#x53EB;&#x5B83;&#x6D41;&#x5F0F;&#x5C4F;&#x969C;&#x5427;&#x3002;&#x8FD9;&#x4E9B; barriers &#x88AB;&#x6CE8;&#x5165;&#x5230;&#x6570;&#x636E;&#x6D41;&#x4E2D;&#x968F;&#x7740;&#x6570;&#x636E;&#x4E00;&#x8D77;&#x6D41;&#x52A8;&#xFF0C;barriers &#x6C38;&#x8FDC;&#x4E0D;&#x4F1A;&#x8D85;&#x8FC7;&#x6700;&#x65B0;&#x8BB0;&#x5F55;&#xFF0C;&#x5E76;&#x4E14;&#x662F;&#x4E25;&#x683C;&#x987A;&#x5E8F;&#x7684;&#x3002;&#x4E00;&#x4E2A; barrier &#x5C06;&#x8BB0;&#x5F55;&#x5206;&#x6210;&#x8FDB;&#x5165;&#x5F53;&#x524D;&#x5FEB;&#x7167;&#x548C;&#x8FDB;&#x5165;&#x4E0B;&#x4E00;&#x4E2A;&#x5FEB;&#x7167;&#x7684;&#x8BB0;&#x5F55;&#x3002;&#x6BCF;&#x4E2A; barrier &#x643A;&#x5E26;&#x8005;&#x5FEB;&#x7167; id&#x3002;barriers &#x4E0D;&#x4F1A;&#x4E2D;&#x65AD;&#x6570;&#x636E;&#x6D41;&#x7684;&#x5904;&#x7406;&#xFF0C;&#x56E0;&#x6B64;&#x975E;&#x5E38;&#x8F7B;&#x91CF;&#x3002;&#x5728;&#x540C;&#x4E00;&#x65F6;&#x95F4;&#x6570;&#x636E;&#x6D41;&#x4E2D;&#x53EF;&#x80FD;&#x5B58;&#x5728;&#x591A;&#x4E2A; barrier&#xFF0C;&#x8FD9;&#x610F;&#x5473;&#x7740;&#x4E0D;&#x540C;&#x7684;&#x5FEB;&#x7167;&#x5728;&#x540C;&#x65F6;&#x5E76;&#x884C;&#x53D1;&#x751F;&#x3002;</p>
+<div align="center"><img src="https://ci.apache.org/projects/flink/flink-docs-release-1.13/fig/stream_barriers.svg" width="60%" height="60%"></div>
+
+<p>stream barriers &#x4ECE;&#x8BFB;&#x53D6;&#x6570;&#x636E;&#x6E90;&#x5F00;&#x59CB;&#xFF0C;&#x5C31;&#x88AB;&#x6CE8;&#x5165;&#x5230;&#x6570;&#x636E;&#x6D41;&#x4E2D;&#xFF0C;&#x968F;&#x7740;&#x6570;&#x636E;&#x6E90;&#x4E00;&#x8D77;&#x6D41;&#x52A8;&#xFF0C;&#x5728;&#x67D0;&#x4E00;&#x65F6;&#x523B;&#xFF0C;barrier &#x6D41;&#x52A8;&#x5230;&#x70B9; n&#xFF0C;&#x8FD9;&#x610F;&#x5473;&#x7740;&#x5FEB;&#x7167; n &#x5C06;&#x4F1A;&#x8986;&#x76D6;&#x6570;&#x636E;&#x6E90; n &#x4F4D;&#x7F6E;&#x4E4B;&#x524D;&#x7684;&#x6240;&#x6709;&#x6570;&#x636E;&#x3002;&#x6BD4;&#x5982;&#xFF0C;&#x5728; Kafka &#x4E2D;&#xFF0C;&#x8FD9;&#x4E2A;&#x4F4D;&#x7F6E;&#x662F;&#x5206;&#x533A; offset&#x3002;&#x8FD9;&#x4E2A;&#x4F4D;&#x7F6E; n &#x4F1A;&#x88AB;&#x63D0;&#x4EA4;&#x7ED9; JM &#x4E0A;&#x7684; coordinator &#x8FDB;&#x7A0B;&#xFF0C;&#x7528;&#x4E8E;&#x540E;&#x7EED;&#x534F;&#x8C03;&#x6574;&#x4E2A;&#x4F5C;&#x4E1A;&#x7684; checkpoint &#x751F;&#x6210;&#x3002;</p>
+<p>barrier &#x63A5;&#x7740;&#x4F1A;&#x6D41;&#x5F80;&#x4E0B;&#x6E38;&#xFF0C;&#x5F53;&#x4E0B;&#x6E38;&#x4E2D;&#x95F4;&#x7684;&#x7B97;&#x5B50;&#x63A5;&#x53D7;&#x5230;&#x6240;&#x6709;&#x4EE3;&#x8868; n &#x4F4D;&#x7F6E;&#x7684; barrier &#x65F6;&#xFF0C;&#x5B83;&#x7EE7;&#x7EED;&#x5C06; barrier n &#x53D1;&#x5F80;&#x4E0B;&#x6E38;&#xFF0C;&#x5982;&#x6B64;&#x5F80;&#x590D;&#xFF0C;&#x76F4;&#x5230; sink operator &#x4ECE;&#x5176;&#x4E0A;&#x6E38;&#x6240;&#x6709;&#x8F93;&#x5165;&#x6D41;&#x4E2D;&#x63A5;&#x6536;&#x5230; barrier n &#x3002;&#x6B64;&#x65F6;&#x4F1A;&#x901A;&#x77E5; JM &#x4E0A;&#x7684; checkpoint &#x7BA1;&#x7406;&#x8FDB;&#x7A0B;&#x8BE5; sink operator &#x7684;&#x5FEB;&#x7167; n &#x5DF2;&#x7ECF;&#x51C6;&#x5907;&#x597D;&#x4E86;&#xFF0C;&#x5F53;&#x6240;&#x6709;&#x7684; sink operator &#x90FD;&#x63A5;&#x6536;&#x5230;&#x5FEB;&#x7167; n &#x65F6;&#xFF0C;checkpoint n &#x7684;&#x4EA7;&#x751F;&#x4E5F;&#x968F;&#x4E4B;&#x5B8C;&#x6210;&#x3002;&#x4E00;&#x65E6;&#x5FEB;&#x7167; n &#x5B8C;&#x6210;&#xFF0C;Flink &#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x5C06;&#x4E0D;&#x4F1A;&#x518D;&#x8BBF;&#x95EE; barrier n &#x4E4B;&#x524D;&#x7684;&#x6570;&#x636E;&#x3002;</p>
+<div align="center"><img src="https://ci.apache.org/projects/flink/flink-docs-release-1.13/fig/stream_aligning.svg" width="60%" height="60%"></div>
+
+<p>&#x5BF9;&#x4E8E;&#x6709;&#x591A;&#x4E2A;&#x8F93;&#x5165;&#x6D41;&#x7684; operator&#xFF0C;&#x9700;&#x8981;&#x5BF9;&#x9F50; barrier&#x3002;&#x4E0A;&#x56FE;&#x8BF4;&#x660E;&#x4E86;&#x8FD9;&#x4E00;&#x70B9;</p>
+<ul>
+<li>&#x4E0B;&#x6E38; operator &#x63A5;&#x53D7;&#x5230;&#x4E00;&#x6761;&#x4E0A;&#x6E38;&#x6570;&#x636E;&#x8F93;&#x5165;&#x6D41;&#x53D1;&#x8FC7;&#x6765;&#x7684; barrier n &#xFF0C;&#x76F4;&#x5230;&#x5B83;&#x7684;&#x6240;&#x6709;&#x8F93;&#x5165;&#x6D41;&#x90FD;&#x63A5;&#x53D7;&#x5230; barrier n&#xFF0C;&#x8FD9;&#x4E2A; operator &#x624D;&#x53EF;&#x4EE5;&#x5904;&#x7406;&#x4F4D;&#x7F6E; n &#x4E4B;&#x540E;&#x7684;&#x6570;&#x636E;&#x3002;&#x5426;&#x5219;&#x7684;&#x8BDD;&#xFF0C;&#x5FEB;&#x7167; n &#x91CC;&#x5C06;&#x6DF7;&#x5408;&#x4F4D;&#x7F6E; n &#x548C; n+1 &#x4E4B;&#x540E;&#x7684;&#x6570;&#x636E;&#x3002;&#xFF08;&#x8FD9;&#x6837;&#x6765;&#x60F3;&#xFF0C;&#x5982;&#x679C; barrier n &#x4E0D;&#x7B49;&#x5F85;&#x5BF9;&#x9F50;&#xFF0C;&#x800C;&#x662F;&#x7EE7;&#x7EED;&#x53D1;&#x5F80;&#x4E0B;&#x6E38;&#xFF0C;&#x5904;&#x7406;&#x65B0;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x6700;&#x7EC8;&#x5FEB;&#x7684; barrier &#x5148;&#x5230;&#x8FBE; sink &#x5904;&#xFF0C;&#x5E76;&#x7EE7;&#x7EED;&#x5904;&#x7406;&#x6570;&#x636E;&#xFF0C;&#x7B49;&#x8F83;&#x6162;&#x7684; barrier &#x5230;&#x8FBE; sink &#x65F6;&#xFF0C;&#x8BF7;&#x6C42; JM &#x751F;&#x6210;&#x5FEB;&#x7167; n&#xFF0C;&#x6B64;&#x65F6;&#x751F;&#x6210;&#x7684;&#x5FEB;&#x7167; n &#x8FD8;&#x662F;&#x53EA;&#x5904;&#x7406;&#x7684;&#x4F4D;&#x7F6E; n &#x4E4B;&#x524D;&#x7684;&#x6570;&#x636E;&#x5417;&#xFF1F;&#x5DF2;&#x7ECF;&#x4E0D;&#x662F;&#x4E86;&#xFF0C;&#x5FEB;&#x7684; task &#x5DF2;&#x7ECF;&#x5904;&#x7406;&#x4E86;&#x4F4D;&#x7F6E; n &#x4E4B;&#x540E;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x8FD9;&#x6837;&#x7684;&#x68C0;&#x67E5;&#x70B9;&#x5728;&#x4EFB;&#x52A1;&#x91CD;&#x542F;&#x65F6;&#xFF0C;&#x80AF;&#x5B9A;&#x4F1A;&#x91CD;&#x590D;&#x5904;&#x7406;&#x6570;&#x636E;&#xFF0C;&#x4E5F;&#x5C31;&#x65E0;&#x6CD5;&#x505A;&#x5230;&#x7CBE;&#x786E;&#x4E00;&#x6B21;&#x5904;&#x7406;&#x3002;&#xFF09;</li>
+<li>&#x4E00;&#x65E6;&#x67D0;&#x4E2A;&#x5E76;&#x53D1;&#x7684; operator &#x6700;&#x540E;&#x4E00;&#x6761;&#x6D41;&#x6536;&#x5230;&#x4E86;&#x6240;&#x6709;&#x7684; barrier n&#xFF0C;operator &#x5C31;&#x4F1A;&#x7EE7;&#x7EED;&#x5904;&#x7406;&#x540E;&#x7EED;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x5E76;&#x4E14;&#x53D1;&#x9001; barrier n &#x5230;&#x4E0B;&#x6E38;&#x3002;</li>
+<li>&#x63A5;&#x4E0B;&#x6765;&#xFF0C;&#x8FD9;&#x4E2A; operator &#x4F1A;&#x7EE7;&#x7EED;&#x5904;&#x7406;&#x8F93;&#x5165;&#x6D41;&#x4E2D;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x5728;&#x771F;&#x6B63;&#x8BFB;&#x53D6;&#x6D41;&#x6570;&#x636E;&#x524D;&#xFF0C;&#x4F1A;&#x5148;&#x4ECE;&#x8F93;&#x5165;&#x7F13;&#x51B2;&#x533A;&#x4E2D;&#x8BFB;&#x53D6;&#x6570;&#x636E;&#x3002;</li>
+<li>&#x6700;&#x540E;&#xFF0C;operator &#x4F1A;&#x5C06;&#x81EA;&#x5DF1;&#x7684;&#x72B6;&#x6001;&#x5F02;&#x6B65;&#x5199;&#x5165;&#x72B6;&#x6001;&#x540E;&#x7AEF;&#x4E2D;&#x3002;</li>
+</ul>
+<p>&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;&#x5BF9;&#x9F50;&#x64CD;&#x4F5C;&#x9002;&#x7528;&#x4E8E;&#x591A;&#x6761;&#x8F93;&#x5165;&#x6D41;&#x7684; operator&#xFF0C;&#x6BD4;&#x5982;&#x591A;&#x5206;&#x533A;&#x7684; kafka topic &#x6570;&#x636E;&#x6E90;&#x3001;&#x53D1;&#x751F; shuffle &#x8FC7;&#x7A0B;&#x540E;&#xFF0C;&#x9700;&#x8981;&#x8BFB;&#x53D6;&#x4E0A;&#x6E38;&#x6570;&#x636E;&#x7684;&#x4E0B;&#x6E38; operator&#x3002;</p>
+<h4 id="snapshotting-operator-state"><a name="snapshotting-operator-state" class="anchor-navigation-ex-anchor" href="#snapshotting-operator-state"><i class="fa fa-link" aria-hidden="true"></i></a>Snapshotting Operator State</h4>
+<p>&#x5F53; operator &#x672C;&#x8EAB;&#x4E5F;&#x5305;&#x542B;&#x72B6;&#x6001;&#x65F6;&#xFF0C;&#x8FD9;&#x79CD;&#x72B6;&#x6001;&#x4E5F;&#x5FC5;&#x987B;&#x662F;&#x5FEB;&#x7167;&#x7684;&#x4E00;&#x90E8;&#x5206;&#x3002;
+Operators &#x63A5;&#x6536;&#x5230;&#x6765;&#x81EA;&#x6240;&#x6709;&#x8F93;&#x5165;&#x6D41;&#x7684; barrier &#x540E;&#xFF0C;&#x5728;&#x53D1;&#x9001; barrier &#x5230;&#x4E0B;&#x6E38;&#x6570;&#x636E;&#x524D;&#x5FEB;&#x7167;&#x81EA;&#x5DF1;&#x7684;&#x72B6;&#x6001;&#x3002;&#x5728;&#x6B64;&#x65F6;&#xFF0C;barrier &#x4E4B;&#x524D;&#x7684;&#x6570;&#x636E;&#x90FD;&#x5DF2;&#x7ECF;&#x88AB;&#x5904;&#x7406;&#xFF0C;&#x72B6;&#x6001;&#x4E5F;&#x5DF2;&#x7ECF;&#x8BB0;&#x5F55;&#x3002;&#x56E0;&#x4E3A;&#x5FEB;&#x7167;&#x4E00;&#x822C;&#x6BD4;&#x8F83;&#x5927;&#xFF0C;&#x6240;&#x4EE5;&#x4F1A;&#x5B58;&#x50A8;&#x5230;&#x914D;&#x7F6E;&#x7684;&#x72B6;&#x6001;&#x540E;&#x7AEF;&#xFF08;&#x6BD4;&#x5982; HDFS&#xFF09;&#xFF0C;&#x9ED8;&#x8BA4;&#x60C5;&#x51B5;&#x4E0B;&#x662F;&#x4F7F;&#x7528; JM &#x7684;&#x5185;&#x5B58;&#x3002;&#x5F53;&#x72B6;&#x6001;&#x88AB;&#x5B58;&#x50A8;&#x4E0B;&#x6765;&#x540E;&#xFF0C;operator &#x4F1A;&#x901A;&#x77E5;&#x68C0;&#x67E5;&#x70B9;&#xFF0C;&#x5E76;&#x4E14;&#x4F1A;&#x5411;&#x4E0B;&#x6E38;&#x8F93;&#x51FA;&#x6D41;&#x53D1;&#x9001; barrier&#x3002;</p>
+<p>&#x751F;&#x6210;&#x7684;&#x5FEB;&#x7167;&#x73B0;&#x5728;&#x5305;&#x542B;</p>
+<ul>
+<li>&#x5BF9;&#x4E8E;&#x6BCF;&#x4E00;&#x4E2A;&#x5E76;&#x884C;&#x7684;&#x6570;&#x636E;&#x6E90;&#xFF0C;&#x5FEB;&#x7167;&#x5BF9;&#x5E94;&#x7684;&#x8D77;&#x59CB;&#x8BFB;&#x53D6;&#x4F4D;&#x7F6E;&#x3002;</li>
+<li>&#x5BF9;&#x4E8E;&#x6BCF;&#x4E00;&#x4E2A; operator&#xFF0C;&#x5B58;&#x50A8;&#x6307;&#x5411;&#x5BF9;&#x5E94;&#x72B6;&#x6001;&#x7684;&#x6307;&#x9488;&#x3002;&#x6B64;&#x5904;&#x731C;&#x60F3;&#x4E00;&#x4E0B;&#xFF0C;checkpoint &#x5B58;&#x50A8;&#x5E94;&#x8BE5;&#x5206;&#x4E3A; metadata &#x548C; operator state &#x4E24;&#x5927;&#x90E8;&#x5206;&#xFF0C;&#x5728;&#x5B58;&#x50A8; operator state &#x7684;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x5C06;&#x5143;&#x6570;&#x636E;&#x63D0;&#x4EA4;&#x7ED9; JM coordinator &#x8FDB;&#x7A0B;&#xFF0C;&#x7F13;&#x5B58;&#x5143;&#x6570;&#x636E;&#xFF0C;&#x6700;&#x540E;&#x5728; sink operator &#x5B8C;&#x6210;&#x540E;&#xFF0C;&#x5143;&#x6570;&#x636E;&#x5B8C;&#x5168;&#x5199;&#x5165;&#x72B6;&#x6001;&#x540E;&#x7AEF;&#xFF0C;&#x6700;&#x7EC8;&#x5F62;&#x6210;&#x4E00;&#x4E2A;&#x5B8C;&#x6574;&#x7684; checkpoint&#x3002;
+<img src="https://ci.apache.org/projects/flink/flink-docs-release-1.13/fig/checkpointing.svg" alt=""></li>
+</ul>
+<h4 id="recovery"><a name="recovery" class="anchor-navigation-ex-anchor" href="#recovery"><i class="fa fa-link" aria-hidden="true"></i></a>Recovery</h4>
+<p>&#x8FD9;&#x79CD;&#x673A;&#x5236;&#x4E0B;&#x7684;&#x4EFB;&#x52A1;&#x6062;&#x590D;&#x6BD4;&#x8F83;&#x7B80;&#x5355;&#xFF0C;&#x5F53;&#x4EFB;&#x52A1;&#x5931;&#x8D25;&#x91CD;&#x542F;&#x65F6;&#xFF0C;Flink &#x9009;&#x62E9;&#x6700;&#x65B0;&#x6210;&#x529F;&#x7684; checkpoint &#x5E76;&#x5E94;&#x7528;&#x3002;&#x7A0B;&#x5E8F;&#x4F1A;&#x91CD;&#x65B0;&#x63D0;&#x4EA4; job grpgh&#xFF0C;&#x5E76;&#x5C06;&#x68C0;&#x67E5;&#x70B9;&#x7684; operator state &#x5E94;&#x7528;&#x5230;&#x5BF9;&#x5E94;&#x7684; operator &#x4E0A;&#xFF0C;source operator &#x4E5F;&#x4F1A;&#x88AB;&#x91CD;&#x7F6E;&#x5230;&#x4E0A;&#x6B21; checkpoint &#x8BB0;&#x5F55;&#x7684;&#x4F4D;&#x7F6E;&#xFF0C;&#x5BF9;&#x4E8E; kafka &#x6765;&#x8BF4;&#xFF0C;&#x5C31;&#x662F;&#x91CD;&#x7F6E; offset&#x3002;</p>
+<p>&#x5982;&#x679C;&#x5FEB;&#x7167;&#x662F;&#x589E;&#x91CF;&#x66F4;&#x65B0;&#x7684;&#x8BDD;&#xFF0C;operator &#x4F1A;&#x4ECE;&#x6700;&#x65B0;&#x7684;&#x5B8C;&#x6574;&#x72B6;&#x6001;&#x7684;&#x5FEB;&#x7167;&#x5F00;&#x59CB;&#xFF0C;&#x5E76;&#x9010;&#x6B65;&#x5E94;&#x7528;&#x6700;&#x65B0;&#x7684;&#x589E;&#x91CF;&#x5FEB;&#x7167;&#x3002;</p>
+<p>&#x53EF;&#x4EE5;&#x67E5;&#x770B; <a href="https://ci.apache.org/projects/flink/flink-docs-release-1.13/docs/dev/execution/task_failure_recovery/#restart-strategies" target="_blank">Restart Strategies</a>&#x83B7;&#x53D6;&#x66F4;&#x591A;&#x4FE1;&#x606F;&#x3002;</p>
+<h3 id="unaligned-checkpointing"><a name="unaligned-checkpointing" class="anchor-navigation-ex-anchor" href="#unaligned-checkpointing"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.5. Unaligned Checkpointing</h3>
+<p>&#x975E;&#x5BF9;&#x9F50;&#x7684; checkpoint&#x3002;
+checkpoint &#x5141;&#x8BB8;&#x4E0D;&#x5BF9;&#x9F50; barrier&#xFF0C;&#x5176;&#x57FA;&#x672C;&#x6838;&#x5FC3;&#x601D;&#x60F3;&#x662F;&#x5F53;&#x67D0;&#x4E2A; operator &#x7684;&#x67D0;&#x6761;&#x8F93;&#x5165;&#x6D41;&#x7684; barrier &#x5230;&#x6765;&#x65F6;&#xFF0C;&#x4E0D;&#x5728;&#x7B49;&#x5F85;&#x672A;&#x5230;&#x8FBE; barrier &#x7684;&#x8F93;&#x5165;&#x6D41;&#xFF0C;&#x800C;&#x662F;&#x7ACB;&#x5373;&#x50CF;&#x4E0B;&#x6E38;&#x53D1;&#x9001; barrier&#xFF0C;&#x5E76;&#x901A;&#x77E5; JM &#x751F;&#x6210; operator &#x7684;&#x5C40;&#x90E8;&#x5FEB;&#x7167;&#xFF0C;&#x8FD9;&#x6837;&#x505A;&#x4F1A;&#x9020;&#x6210; checkpoint &#x4E0D;&#x5BF9;&#x9F50;&#xFF0C;&#x56E0;&#x800C;&#x9700;&#x8981;&#x5728;&#x8FD9;&#x4E2A;&#x5FEB;&#x7167;&#x4E2D;&#x4FDD;&#x5B58;&#x8F83;&#x6162;&#x8F93;&#x5165;&#x6D41;&#x672A;&#x5904;&#x7406;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x4ECE;&#x800C;&#x5728; failover &#x65F6;&#x80FD;&#x91CD;&#x653E;&#x72B6;&#x6001;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x8BA9;&#x7A0B;&#x5E8F;&#x77E5;&#x9053;&#x6BCF;&#x4E2A; operator &#x7684;&#x6BCF;&#x6761;&#x8F93;&#x5165;&#x6D41;&#x5904;&#x7406;&#x5230;&#x4E86;&#x4EC0;&#x4E48;&#x4F4D;&#x7F6E;&#xFF0C;&#x548B;&#x542C;&#x8D77;&#x6765;&#xFF0C;&#x8FD9;&#x79CD;&#x65B9;&#x5F0F;&#x66F4;&#x590D;&#x6742;&#x3002;</p>
+<p><img src="https://ci.apache.org/projects/flink/flink-docs-release-1.13/fig/stream_unaligning.svg" alt=""> 
+&#x5B98;&#x7F51;&#x7684;&#x56FE;&#x611F;&#x89C9;&#x4E0D;&#x592A;&#x5F62;&#x8C61;&#xFF0C;&#x6CA1;&#x592A;&#x7406;&#x89E3;&#x3002;&#x5728;&#x8FD9;&#x91CC;&#xFF0C;&#x4E2A;&#x4EBA;&#x7406;&#x89E3;&#x4E0B;&#x4E0A;&#x9762;&#x7684;&#x6D41;&#x7A0B;</p>
+<ul>
+<li>operator &#x9996;&#x5148;&#x63A5;&#x6536;&#x5230;&#x4E0A;&#x6E38;&#x7684;&#x7B2C;&#x4E00;&#x4E2A; barrier&#xFF0C;&#x53CA; 3 &#x4E4B;&#x524D;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x5E76;&#x653E;&#x5728;&#x4E86; input buffer &#x4E2D;&#x3002;</li>
+<li>&#x63A5;&#x4E0B;&#x6765;&#x628A; 3 &#x8FD9;&#x4E2A; barrier &#x7ACB;&#x5373;&#x53D1;&#x5F80;&#x4E0B;&#x6E38;&#xFF0C;&#x5E76;&#x653E;&#x5728; output buffer &#x7684;&#x672B;&#x7AEF;&#x3002;</li>
+<li>operator &#x4F1A;&#x88AB;&#x8D85;&#x8D8A;&#x7684;&#x8FC7;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x53CA;&#x76F8;&#x5BF9; 3 &#x8FD9;&#x4E2A; barrire &#x6765;&#x8BF4;&#xFF0C;&#x5176;&#x4ED6;&#x8F83;&#x6162;&#x8F93;&#x5165;&#x6D41;&#x4E4B;&#x524D;&#x7684;&#x4F4D;&#x7F6E;&#x7684;&#x6570;&#x636E;&#x8FDB;&#x884C;&#x7F13;&#x5B58;&#x5E76;&#x751F;&#x6210;&#x5FEB;&#x7167;&#x3002;</li>
+</ul>
+<p>&#x56E0;&#x6B64;&#xFF0C;&#x975E;&#x5BF9;&#x9F50;&#x7684; checkpoint &#x4EC5;&#x4EC5;&#x662F;&#x7F13;&#x5B58;&#x6570;&#x636E;&#x5E76;&#x4E14;&#x8F6C;&#x53D1; barrier&#xFF0C;&#x5E76;&#x4E0D;&#x9700;&#x8981;&#x8FC7;&#x591A;&#x7684;&#x5BF9;&#x9F50;&#x65F6;&#x95F4;&#xFF0C;&#x8FD9;&#x70B9;&#x5BF9;&#x4E8E;&#x541E;&#x5410;&#x91CF;&#x662F;&#x6709;&#x63D0;&#x5347;&#x7684;&#x3002;</p>
+<p>&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F; savepoint &#x5F80;&#x5F80;&#x662F;&#x5BF9;&#x9F50;&#x7684;&#x3002;</p>
+<h4 id="unaligned-recovery"><a name="unaligned-recovery" class="anchor-navigation-ex-anchor" href="#unaligned-recovery"><i class="fa fa-link" aria-hidden="true"></i></a>Unaligned Recovery</h4>
+<p>&#x975E;&#x5BF9;&#x9F50;&#x72B6;&#x6001;&#x7684;&#x6062;&#x590D;&#x9996;&#x5148;&#x662F;&#x8981;&#x6062;&#x590D; operator &#x6B63;&#x5728;&#x5904;&#x7406;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x5176;&#x4ED6;&#x548C;&#x5BF9;&#x9F50; checkpoint &#x7684;&#x6B65;&#x9AA4;&#x662F;&#x4E00;&#x6837;&#x7684;&#x3002; </p>
+<h3 id="state-backends"><a name="state-backends" class="anchor-navigation-ex-anchor" href="#state-backends"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.6. State Backends</h3>
+<p>&#x72B6;&#x6001;&#x5B58;&#x50A8;&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x53D6;&#x51B3;&#x4E8E;&#x4F7F;&#x7528;&#x54EA;&#x79CD;&#x72B6;&#x6001;&#x540E;&#x7AEF;&#xFF0C;&#x4E00;&#x79CD;&#x72B6;&#x6001;&#x540E;&#x7AEF;&#x662F;&#x5185;&#x5B58;&#x4E2D;&#x7684; hashmap&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; rocksdb &#x7684;&#x952E;&#x503C;&#x5BF9;&#x5B58;&#x50A8;&#x3002;&#x72B6;&#x6001;&#x540E;&#x7AEF;&#x53EF;&#x4EE5;&#x5728;&#x4E0D;&#x6539;&#x53D8;&#x5E94;&#x7528;&#x903B;&#x8F91;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#x8FDB;&#x884C;&#x914D;&#x7F6E;&#x3002;</p>
+<div align="center"><img src="https://ci.apache.org/projects/flink/flink-docs-release-1.13/fig/checkpoints.svg" width="60%" height="60%"></div>
+
+
+<h3 id="savepoints"><a name="savepoints" class="anchor-navigation-ex-anchor" href="#savepoints"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.7. Savepoints</h3>
+<p>checkpoint &#x662F;&#x81EA;&#x52A8;&#x7684;&#xFF0C;savepoint &#x662F;&#x624B;&#x52A8;&#x89E6;&#x53D1;&#x7684;&#xFF0C;&#x5E76;&#x4E14;&#x4E0D;&#x4F1A;&#x81EA;&#x52A8;&#x8FC7;&#x671F;&#xFF0C;&#x4E00;&#x822C;&#x7528;&#x4E8E;&#x624B;&#x52A8;&#x505C;&#x6B62;&#x7A0B;&#x5E8F;&#x540E;&#x7684;&#x6062;&#x590D;&#x64CD;&#x4F5C;&#x3002;</p>
+<h3 id="exactly-once-vs-at-least-once"><a name="exactly-once-vs-at-least-once" class="anchor-navigation-ex-anchor" href="#exactly-once-vs-at-least-once"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.8. Exactly Once vs. At Least Once</h3>
+<p>barrier &#x7684;&#x5BF9;&#x9F50;&#x4F1A;&#x589E;&#x52A0;&#x5B9E;&#x65F6;&#x6D41;&#x7A0B;&#x5E8F;&#x5904;&#x7406;&#x7684;&#x5EF6;&#x8FDF;&#xFF0C;&#x901A;&#x5E38;&#xFF0C;&#x8FD9;&#x4E9B;&#x5EF6;&#x8FDF;&#x5728;&#x51E0;&#x6BEB;&#x79D2;&#x5185;&#xFF0C;&#x4F46;&#x662F;&#x5728;&#x67D0;&#x4E9B;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x5BF9;&#x9F50;&#x5EF6;&#x8FDF;&#x53EF;&#x80FD;&#x4F1A;&#x5728;&#x5206;&#x949F;&#x751A;&#x81F3;&#x5C0F;&#x65F6;&#x7EA7;&#x522B;&#x3002;&#x5982;&#x679C;&#x4F60;&#x786E;&#x5B9E;&#x9700;&#x8981;&#x8D85;&#x4F4E;&#x5EF6;&#x65F6;&#x7684;&#x7684;&#x6D41;&#x5904;&#x7406;&#xFF0C;Flink &#x63D0;&#x4F9B;&#x4E86;&#x975E;&#x5BF9;&#x9F50;&#x7684; checkpoint&#xFF0C;barrier &#x4F1A;&#x5C3D;&#x53EF;&#x80FD;&#x5FEB;&#x7684;&#x6D41;&#x5411; sink&#xFF0C;&#x800C;&#x4E0D;&#x9700;&#x8981;&#x7B49;&#x5F85;&#x6162;&#x7684;&#x8F93;&#x5165;&#x6D41;&#x3002;</p>
+<p>&#x5728;&#x8DF3;&#x8FC7;&#x5BF9;&#x9F50;&#x64CD;&#x4F5C;&#x540E;&#xFF0C;operator &#x4F1A;&#x6301;&#x7EED;&#x5904;&#x7406;&#x8F93;&#x5165;&#xFF0C;&#x4EA7;&#x751F;&#x7684; checkpoint &#x4E5F;&#x662F;&#x975E;&#x5BF9;&#x9F50;&#x7684;&#xFF0C;&#x56E0;&#x6B64;&#x5728;&#x4EFB;&#x52A1; failover&#xFF0C;&#x91CD;&#x653E;&#x6570;&#x636E;&#x65F6;&#xFF0C;&#x6709;&#x53EF;&#x80FD;&#x9020;&#x6210;&#x6570;&#x636E;&#x91CD;&#x590D;&#xFF0C;&#x53CA;&#x81F3;&#x5C11;&#x4E00;&#x6B21;&#x7684;&#x5904;&#x7406;&#x8BED;&#x4E49;&#x3002;</p>
+<h3 id="state-and-fault-tolerance-in-batch-programs"><a name="state-and-fault-tolerance-in-batch-programs" class="anchor-navigation-ex-anchor" href="#state-and-fault-tolerance-in-batch-programs"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.9. State and Fault Tolerance in Batch Programs</h3>
+<p>Flink &#x5C06;&#x6279;&#x4EFB;&#x52A1;&#x8FD0;&#x884C;&#x5F53;&#x505A;&#x6D41;&#x4EFB;&#x52A1;&#x7684;&#x7279;&#x4F8B;&#x3002;&#x56E0;&#x6B64;&#xFF0C;&#x4E0A;&#x8FF0;&#x72B6;&#x6001;&#x7684;&#x7BA1;&#x7406;&#x7A0B;&#x5E8F;&#x5BB9;&#x9519;&#x673A;&#x5236;&#x540C;&#x6837;&#x9002;&#x7528;&#x4E8E;&#x6279;&#x5904;&#x7406;&#xFF0C;&#x4E0D;&#x8FC7;&#x6709;&#x4EE5;&#x4E0B;&#x51E0;&#x70B9;&#x4E0D;&#x540C;&#xFF1A;</p>
+<ul>
+<li>&#x6279;&#x5904;&#x7406;&#x7A0B;&#x5E8F;&#x6CA1;&#x6709;&#x68C0;&#x67E5;&#x70B9;&#xFF0C;&#x5728; failover &#x65F6;&#x76F4;&#x63A5;&#x91CD;&#x653E;&#x6240;&#x6709;&#x6570;&#x636E;&#xFF0C;&#x5C06;&#x6027;&#x80FD;&#x538B;&#x529B;&#x653E;&#x5728;&#x4E86; source &#x7AEF;&#xFF0C;&#x53BB;&#x9664;&#x4E86;&#x6570;&#x636E;&#x5904;&#x7406;&#x65F6;&#x7684; checkpoint &#x6D88;&#x8017;&#x3002;</li>
+<li>Dataset &#x4E2D;&#x72B6;&#x6001;&#x7684;&#x5904;&#x7406;&#x4F7F;&#x7528;&#x5185;&#x5B58;&#x6570;&#x636E;&#x7ED3;&#x6784;&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x952E;&#x503C;&#x5BF9;&#x3002;</li>
+</ul>
+<h3 id="&#x601D;&#x8003;"><a name="&#x601D;&#x8003;" class="anchor-navigation-ex-anchor" href="#&#x601D;&#x8003;"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.10. &#x601D;&#x8003;</h3>
+<p><strong>1.Keyed State &#x4E2D;&#x7684;&#x5BF9;&#x9F50;&#x662F;&#x6307;&#xFF1F;</strong></p>
+<p>&#x8FD9;&#x91CC;&#x6CA1;&#x592A;&#x7406;&#x89E3;&#xFF0C;keyed state &#x9700;&#x8981;&#x5BF9;&#x9F50;&#x7684;&#x662F;&#x4EC0;&#x4E48;&#x4FE1;&#x606F;&#x5462;&#xFF1F;</p>
+<p><strong>2.Keyed Groups &#x662F;&#x548C;&#x4EC0;&#x4E48;&#x6700;&#x5927;&#x5E76;&#x884C;&#x5EA6;&#x4FDD;&#x6301;&#x4E00;&#x81F4;&#xFF0C;&#x5982;&#x4F55;&#x8BA1;&#x7B97;&#x51FA;&#x6765;&#x7684;&#x5462;&#xFF1F;</strong></p>
+<p>&#x4E2A;&#x4EBA;&#x611F;&#x89C9;&#x662F;&#x548C; operator &#x7684;&#x5E76;&#x884C;&#x5EA6;&#x4FDD;&#x6301;&#x4E00;&#x81F4;&#xFF08;&#x8FD9;&#x70B9;&#x9700;&#x8981;&#x5728;&#x540E;&#x7EED;&#x9605;&#x8BFB;&#x4E2D;&#x9A8C;&#x8BC1;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x67E5;&#x770B;&#x6E90;&#x7801;&#xFF09;&#x3002;&#x5728;&#x5E76;&#x884C;&#x5EA6;&#x6539;&#x53D8;&#x65F6;&#xFF0C;&#x4EE5; key groups &#x4E3A;&#x5355;&#x4F4D;&#x91CD;&#x65B0;&#x5206;&#x914D; keyed state &#x5230;&#x5BF9;&#x5E94;&#x7684; subtask&#x3002;
+&#x6B64;&#x5904;&#x53EF;&#x4EE5;&#x53C2;&#x8003; <a href="https://www.jianshu.com/p/f0a13f98dac2" target="_blank">Flink&#x72B6;&#x6001;&#x7684;&#x7F29;&#x653E;&#xFF08;rescale&#xFF09;&#x4E0E;&#x952E;&#x7EC4;&#xFF08;Key Group&#xFF09;&#x8BBE;&#x8BA1;</a></p>
+<p><strong>3.&#x5728; shuffle &#x4EA7;&#x751F;&#x6570;&#x636E;&#x503E;&#x659C;&#x65F6;&#xFF0C;&#x4F1A;&#x4E0D;&#x4F1A;&#x5F71;&#x54CD; operator barrier &#x7684;&#x5BF9;&#x9F50;&#x8FC7;&#x7A0B;&#xFF1F;</strong></p>
+<p>&#x611F;&#x89C9;&#x4F1A;&#x5F71;&#x54CD;&#xFF0C;&#x4E0B;&#x6E38;&#x5728;&#x8BFB;&#x53D6;&#x4E0A;&#x6E38;&#x6570;&#x636E;&#x65F6;&#xFF0C;&#x5904;&#x7406;&#x5927; key &#x7684; task &#x80AF;&#x5B9A;&#x6BD4;&#x8F83;&#x6162;&#xFF0C;&#x6210;&#x4E3A; barrier &#x5BF9;&#x9F50;&#x7B49;&#x5F85;&#x7684;&#x4E00;&#x65B9;</p>
+<p><strong>4.&#x600E;&#x4E48;&#x63CF;&#x8FF0;&#x6574;&#x4E2A; checkpoint &#x7684;&#x8FC7;&#x7A0B;&#xFF1F;</strong></p>
+<p>&#x4ECE;&#x8BFB;&#x53D6; source &#x7AEF;&#x5F00;&#x59CB;&#xFF0C;barrier &#x88AB;&#x6CE8;&#x5165;&#x5230;&#x6570;&#x636E;&#x6D41;&#x4E2D;&#xFF0C;&#x4E0B;&#x6E38; operator &#x5728;&#x63A5;&#x6536;&#x5230;&#x5176;&#x6240;&#x6709;&#x8F93;&#x5165;&#x6D41;&#x7684; barrier &#x540E;&#xFF08;&#x5373;&#x5BF9;&#x9F50;&#x8FC7;&#x7A0B;&#xFF09;&#xFF0C;&#x901A;&#x77E5; JM checkpoint coordinator &#x5B58;&#x50A8;&#x72B6;&#x6001;&#x751F;&#x6210;&#x5C40;&#x90E8;&#x5FEB;&#x7167;&#xFF0C;&#x8BB0;&#x5F55;&#x5143;&#x6570;&#x636E;&#xFF0C;&#x5E76;&#x5C06; barrier &#x4F20;&#x9012;&#x7ED9;&#x4E0B;&#x6E38;&#xFF0C;&#x5982;&#x6B64;&#x5F80;&#x590D;&#xFF0C;&#x76F4;&#x5230; sink operator&#xFF0C;&#x6700;&#x7EC8;&#x751F;&#x6210;&#x5168;&#x5C40;&#x5FEB;&#x7167;&#x3002;</p>
+<p><strong>5.&#x5BF9;&#x9F50;&#x548C;&#x4E0D;&#x5BF9;&#x9F50;&#x7684; checkpoint &#x7684;&#x6709;&#x4EC0;&#x4E48;&#x533A;&#x522B;&#xFF0C;&#x5BF9;&#x4E8E;&#x6027;&#x80FD;&#x7684;&#x5F71;&#x54CD;&#x548C;&#x8003;&#x91CF;&#x53C8;&#x5728;&#x54EA;&#x91CC;&#xFF1F;</strong></p>
+<p>&#x6B64;&#x5904;&#x53EF;&#x4EE5;&#x53C2;&#x8003; <a href="https://icode.best/i/78869133551744" target="_blank">Flink 1.11 &#x65B0;&#x7279;&#x6027;&#x8BE6;&#x89E3;:&#x3010;&#x975E;&#x5BF9;&#x9F50;&#x3011;Unaligned Checkpoint &#x4F18;&#x5316;&#x9AD8;&#x53CD;&#x538B;</a></p>
+<ul>
+<li>&#x5BF9;&#x9F50;&#x4F1A;&#x963B;&#x585E;&#x6570;&#x636E;&#x7684;&#x6570;&#x636E;&#x7684;&#x5904;&#x7406;&#xFF0C;&#x5728; input buffer &#x88AB;&#x586B;&#x6EE1;&#x540E;&#xFF0C;&#x8FD8;&#x6CA1;&#x7B49;&#x5230;&#x5BF9;&#x9F50;&#x65F6;&#xFF0C;&#x4F1A;&#x5BF9;&#x6027;&#x80FD;&#x4EA7;&#x751F;&#x5F71;&#x54CD;&#xFF0C;&#x589E;&#x5927;&#x6574;&#x4E2A;&#x6570;&#x636E;&#x5904;&#x7406;&#x7684;&#x5EF6;&#x65F6;&#xFF0C;&#x964D;&#x4F4E;&#x4E86;&#x7A0B;&#x5E8F;&#x541E;&#x5410;&#x91CF;&#xFF0C;&#x5C24;&#x5176;&#x662F;&#x5728;&#x5B58;&#x5728;&#x53CD;&#x538B;&#x7684;&#x65F6;&#x5019;&#x3002;&#x4F46;&#x662F;&#x903B;&#x8F91;&#x6E05;&#x6670;&#xFF0C;&#x4EE5;&#x7B97;&#x5B50;&#x5FEB;&#x7167;&#x4E3A;&#x754C;&#x9650;&#x5206;&#x9694;&#x3002;&#x672C;&#x8D28;&#x4E0A;&#x662F;&#x5728;&#x6700;&#x540E;&#x4E00;&#x4E2A; barrier &#x5230;&#x8FBE;&#x65F6;&#x89E6;&#x53D1; checkpoint&#x3002;</li>
+<li>&#x975E;&#x5BF9;&#x9F50;&#x63D0;&#x9AD8;&#x4E86;&#x7A0B;&#x5E8F;&#x541E;&#x5410;&#x91CF;&#xFF0C;&#x4F46;&#x662F;&#x7531;&#x4E8E;&#x6BCF;&#x4E2A; operator state &#x7F13;&#x5B58;&#x5F53;&#x524D;&#x88AB; barrier &#x8D8A;&#x8FC7;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x5FEB;&#x7167;&#x7684;&#x5927;&#x5C0F;&#x4F1A;&#x663E;&#x8457;&#x589E;&#x52A0;&#xFF0C;IO &#x538B;&#x529B;&#x4F1A;&#x589E;&#x5927;&#x3002;&#x672C;&#x8D28;&#x4E0A;&#x662F;&#x5728;&#x7B2C;&#x4E00;&#x4E2A; barrier &#x5230;&#x8FBE;&#x540E;&#x5C31;&#x89E6;&#x53D1; checkpoint&#x3002;</li>
+</ul>
+<p><strong>6.checkpoint &#x76F8;&#x5173;&#x7684;&#x914D;&#x7F6E;&#x53C2;&#x6570;&#xFF1F;</strong></p>
+<p>&#x4EE3;&#x7801;</p>
+<pre class="language-"><code>```java
+StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+
+// start a checkpoint every 1000 ms
+env.enableCheckpointing(1000);
+
+// advanced options:
+
+// set mode to exactly-once (this is the default)
+env.getCheckpointConfig().setCheckpointingMode(CheckpointingMode.EXACTLY_ONCE);
+
+// checkpoints have to complete within one minute, or are discarded
+env.getCheckpointConfig().setCheckpointTimeout(60000);
+
+// make sure 500 ms of progress happen between checkpoints
+env.getCheckpointConfig().setMinPauseBetweenCheckpoints(500);
+
+// allow only one checkpoint to be in progress at the same time
+env.getCheckpointConfig().setMaxConcurrentCheckpoints(1);
+
+// enable externalized checkpoints which are retained after job cancellation
+env.getCheckpointConfig().enableExternalizedCheckpoints(ExternalizedCheckpointCleanup.RETAIN_ON_CANCELLATION);
+
+// This determines if a task will be failed if an error occurs in the execution of the task&#x2019;s checkpoint procedure.
+env.getCheckpointConfig().setFailOnCheckpointingErrors(true);
+
+```
+</code></pre><p>flink-conf.yml</p>
+<pre class="language-"><code>```yml
+# &#x4F7F;&#x7528;&#x4F55;&#x79CD;&#x72B6;&#x6001;&#x540E;&#x7AEF;
+state.backends: filesystme
+# &#x68C0;&#x67E5;&#x70B9;&#x7684;&#x5B58;&#x50A8;&#x76EE;&#x5F55;
+state.checkpoint.dir: 
+# &#x4FDD;&#x5B58;&#x70B9;&#x7684;&#x5B58;&#x50A8;&#x76EE;&#x5F55;
+state.savepoints.dir
+# &#x662F;&#x5426;&#x5F00;&#x542F;&#x589E;&#x91CF;&#x5FEB;&#x7167;&#xFF0C;&#x9ED8;&#x8BA4; false
+state.backend.incremental: false
+
+```
+</code></pre><p><strong>7.&#x4E3A;&#x4EC0;&#x4E48;&#x9700;&#x8981;&#x589E;&#x91CF;&#x5FEB;&#x7167;&#xFF1F;</strong> 
+&#x5BF9;&#x4E8E; TB &#x7EA7;&#x522B;&#x7684;&#x4F5C;&#x4E1A;&#xFF0C;&#x72B6;&#x6001;&#x592A;&#x5927;&#xFF0C;&#x6BCF;&#x6B21;&#x505A;&#x5168;&#x91CF;&#x5FEB;&#x7167;&#x8017;&#x65F6;&#x592A;&#x957F;&#xFF0C;&#x5F71;&#x54CD;&#x6574;&#x4E2A;&#x94FE;&#x8DEF;&#x7684;&#x5904;&#x7406;&#x65F6;&#x5EF6;&#xFF0C;&#x6240;&#x4EE5;&#x9700;&#x8981;&#x589E;&#x91CF;&#x5FEB;&#x7167;&#x3002;&#x7C7B;&#x4F3C;&#x4E8E; Mac &#x7684; TimeMachine&#xFF0C;&#x5728;&#x505A;&#x5B8C;&#x4E00;&#x6B21;&#x5168;&#x91CF;&#x5FEB;&#x7167;&#x540E;&#xFF0C;&#x5269;&#x4E0B;&#x7684;&#x90FD;&#x662F;&#x589E;&#x91CF;&#x5FEB;&#x7167;&#xFF0C;&#x53EA;&#x5904;&#x7406;&#x53D8;&#x5316;&#x7684;&#x6570;&#x636E;&#x3002;
+&#x90A3;&#x4E48; Flink &#x662F;&#x5982;&#x4F55;&#x5B9E;&#x73B0;&#x589E;&#x91CF;&#x5FEB;&#x7167;&#x7684;&#x5462;&#xFF1F;&#x53EF;&#x4EE5;&#x53C2;&#x8003; <a href="https://cloud.tencent.com/developer/article/1506196" target="_blank">Apache Flink &#x7BA1;&#x7406;&#x5927;&#x578B;&#x72B6;&#x6001;&#x4E4B;&#x589E;&#x91CF; Checkpoint &#x8BE6;&#x89E3;</a></p>
+<footer class="page-footer-ex"> <span class="page-footer-ex-copyright"> By <a href="https://github.com/Flyraty" target="_blank">Flyraty</a>&#xFF0C;&#x4F7F;&#x7528;<a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">&#x77E5;&#x8BC6;&#x5171;&#x4EAB; &#x7F72;&#x540D;-&#x76F8;&#x540C;&#x65B9;&#x5F0F;&#x5171;&#x4EAB; 4.0&#x534F;&#x8BAE;</a>&#x53D1;&#x5E03; </span> &#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="page-footer-ex-footer-update"> <i>updated</i> 2023-01-10 14:39:27 </span> </footer>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="./" class="navigation navigation-prev " aria-label="Previous page: 基础概念">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="timely_stream_processing.html" class="navigation navigation-next " aria-label="Next page: Timely Stream Processing">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Stateful Stream Processing","level":"1.2.1","depth":2,"next":{"title":"Timely Stream Processing","level":"1.2.2","depth":2,"path":"Overview/timely_stream_processing.md","ref":"Overview/timely_stream_processing.md","articles":[]},"previous":{"title":"基础概念","level":"1.2","depth":1,"path":"Overview/README.md","ref":"Overview/README.md","articles":[{"title":"Stateful Stream Processing","level":"1.2.1","depth":2,"path":"Overview/stateful_stream_processing.md","ref":"Overview/stateful_stream_processing.md","articles":[]},{"title":"Timely Stream Processing","level":"1.2.2","depth":2,"path":"Overview/timely_stream_processing.md","ref":"Overview/timely_stream_processing.md","articles":[]},{"title":"Flink Architecture","level":"1.2.3","depth":2,"path":"Overview/flink_architecture.md","ref":"Overview/flink_architecture.md","articles":[]},{"title":"Flink API","level":"1.2.4","depth":2,"path":"Overview/flink_api.md","ref":"Overview/flink_api.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["-expandable-chapters","github-buttons","editlink","copy-code-button","page-footer-ex","anchor-navigation-ex","expandable-chapters-small","prism","-highlight","lunr","-search","search-pro","splitter"],"ignores":["_book","node_modules"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-solarizedlight.css"],"lang":{"flow":"typescript"}},"editlink":{"label":"Edit This Page","multilingual":false,"base":"https://github.com/Flyraty/flink_learning_notes/tree/gitbook"},"page-footer-ex":{"copyright":"By [Flyraty](https://github.com/Flyraty)，使用[知识共享 署名-相同方式共享 4.0协议](https://creativecommons.org/licenses/by-sa/4.0/)发布","markdown":true,"update_format":"YYYY-MM-DD HH:mm:ss","update_label":"<i>updated</i>"},"splitter":{},"search-pro":{},"lunr":{"ignoreSpecialCharacters":false,"maxIndexSize":1000000},"fontsettings":{"theme":"white","family":"sans","size":2},"anchor-navigation-ex":{"associatedWithSummary":true,"float":{"floatIcon":"fa fa-navicon","level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"mode":"float","multipleH1":true,"pageTop":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"printLog":false,"showGoTop":true,"showLevel":true},"github-buttons":{"buttons":[{"user":"Flyraty","repo":"flink_learning_notes","type":"star","size":"small"}]},"expandable-chapters-small":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"flink_learning_notes","language":"zh-hans","gitbook":"*"},"file":{"path":"Overview/stateful_stream_processing.md","mtime":"2023-01-10T14:39:27.411Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2023-01-10T14:40:20.271Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-github-buttons/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-editlink/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-copy-code-button/toggle.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

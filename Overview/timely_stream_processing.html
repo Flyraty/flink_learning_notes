@@ -1,0 +1,653 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Timely Stream Processing · flink_learning_notes</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-page-footer-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchor-navigation-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-prism/prism-solarizedlight.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search-pro/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="flink_architecture.html" />
+    
+    
+    <link rel="prev" href="stateful_stream_processing.html" />
+    
+
+    <style>
+    @media only screen and (max-width: 640px) {
+        .book-header .hidden-mobile {
+            display: none;
+        }
+    }
+    </style>
+    <script>
+        window["gitbook-plugin-github-buttons"] = {"buttons":[{"user":"Flyraty","repo":"flink_learning_notes","type":"star","size":"small"}]};
+    </script>
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    开篇
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    基础概念
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="stateful_stream_processing.html">
+            
+                <a href="stateful_stream_processing.html">
+            
+                    
+                    Stateful Stream Processing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2.2" data-path="timely_stream_processing.html">
+            
+                <a href="timely_stream_processing.html">
+            
+                    
+                    Timely Stream Processing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="flink_architecture.html">
+            
+                <a href="flink_architecture.html">
+            
+                    
+                    Flink Architecture
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="flink_api.html">
+            
+                <a href="flink_api.html">
+            
+                    
+                    Flink API
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../DataStream API/">
+            
+                <a href="../DataStream API/">
+            
+                    
+                    DataStream API
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../DataStream API/overview.html">
+            
+                <a href="../DataStream API/overview.html">
+            
+                    
+                    概览
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../DataStream API/execution_mode.html">
+            
+                <a href="../DataStream API/execution_mode.html">
+            
+                    
+                    流/批的运行模式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../DataStream API/event_time.html">
+            
+                <a href="../DataStream API/event_time.html">
+            
+                    
+                    事件时间与 Watermark
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="../DataStream API/datasource.html">
+            
+                <a href="../DataStream API/datasource.html">
+            
+                    
+                    Data Sources
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="../DataStream API/operators.html">
+            
+                <a href="../DataStream API/operators.html">
+            
+                    
+                    Operators
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6" data-path="../DataStream API/udf.html">
+            
+                <a href="../DataStream API/udf.html">
+            
+                    
+                    UDF
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../State & Fault Tolerance/">
+            
+                <a href="../State & Fault Tolerance/">
+            
+                    
+                    状态容错与管理
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../State & Fault Tolerance/work_with_state.html">
+            
+                <a href="../State & Fault Tolerance/work_with_state.html">
+            
+                    
+                    状态处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../State & Fault Tolerance/broadcast_state.html">
+            
+                <a href="../State & Fault Tolerance/broadcast_state.html">
+            
+                    
+                    状态广播
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="../State & Fault Tolerance/checkpointing.html">
+            
+                <a href="../State & Fault Tolerance/checkpointing.html">
+            
+                    
+                    Checkpointing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="../State & Fault Tolerance/queryable_state.html">
+            
+                <a href="../State & Fault Tolerance/queryable_state.html">
+            
+                    
+                    状态查询
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="../State & Fault Tolerance/state_backends.html">
+            
+                <a href="../State & Fault Tolerance/state_backends.html">
+            
+                    
+                    状态后端
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6" data-path="../State & Fault Tolerance/state_and_fault_tolerance.html">
+            
+                <a href="../State & Fault Tolerance/state_and_fault_tolerance.html">
+            
+                    
+                    状态容错
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7" data-path="../State & Fault Tolerance/state_schema_evolution.html">
+            
+                <a href="../State & Fault Tolerance/state_schema_evolution.html">
+            
+                    
+                    状态迁移与演化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8" data-path="../State & Fault Tolerance/custom_state_serialization.html">
+            
+                <a href="../State & Fault Tolerance/custom_state_serialization.html">
+            
+                    
+                    自定义状态序列化器
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../DataSet API/">
+            
+                <a href="../DataSet API/">
+            
+                    
+                    DataSet API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../Table API/">
+            
+                <a href="../Table API/">
+            
+                    
+                    Table API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../Data Types & Serialization/">
+            
+                <a href="../Data Types & Serialization/">
+            
+                    
+                    Data Types & Serialization
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            本书使用 GitBook 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Timely Stream Processing</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <div id="anchor-navigation-ex-navbar"><i class="fa fa-navicon"></i><ul><ul><ul><li><span class="title-icon "></span><a href="#&#x5373;&#x5E2D;&#x6D41;&#x5904;&#x7406;"><b>1.1.1. </b>&#x5373;&#x5E2D;&#x6D41;&#x5904;&#x7406;</a></li><li><span class="title-icon "></span><a href="#&#x4E8B;&#x4EF6;&#x65F6;&#x95F4;-vs-&#x5904;&#x7406;&#x65F6;&#x95F4;"><b>1.1.2. </b>&#x4E8B;&#x4EF6;&#x65F6;&#x95F4; vs &#x5904;&#x7406;&#x65F6;&#x95F4;</a></li><li><span class="title-icon "></span><a href="#&#x4E8B;&#x4EF6;&#x65F6;&#x95F4;&#x548C;-watermark"><b>1.1.3. </b>&#x4E8B;&#x4EF6;&#x65F6;&#x95F4;&#x548C; watermark</a></li><li><span class="title-icon "></span><a href="#&#x5EF6;&#x8FDF;"><b>1.1.4. </b>&#x5EF6;&#x8FDF;</a></li><li><span class="title-icon "></span><a href="#&#x7A97;&#x53E3;"><b>1.1.5. </b>&#x7A97;&#x53E3;</a></li><li><span class="title-icon "></span><a href="#&#x601D;&#x8003;"><b>1.1.6. </b>&#x601D;&#x8003;</a></li></ul></ul></ul></div><a href="#" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><h3 id="&#x5373;&#x5E2D;&#x6D41;&#x5904;&#x7406;"><a name="&#x5373;&#x5E2D;&#x6D41;&#x5904;&#x7406;" class="anchor-navigation-ex-anchor" href="#&#x5373;&#x5E2D;&#x6D41;&#x5904;&#x7406;"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.1. &#x5373;&#x5E2D;&#x6D41;&#x5904;&#x7406;</h3>
+<p>&#x8FD9;&#x91CC;&#x7FFB;&#x8BD1;&#x6210;&#x4E86;&#x5373;&#x5E2D;&#x6D41;&#x5904;&#x7406;&#xFF0C;&#x501F;&#x9274;&#x4E86;&#x5373;&#x5E2D;&#x67E5;&#x8BE2;&#x7684;&#x6982;&#x5FF5;&#xFF0C;&#x610F;&#x5473;&#x7740; Flink &#x4F1A;&#x5C3D;&#x53EF;&#x80FD;&#x5FEB;&#x7684;&#xFF0C;&#x4EE5;&#x4F4E;&#x5EF6;&#x8FDF;&#x7684;&#x65B9;&#x5F0F;&#x6765;&#x5904;&#x7406;&#x6E90;&#x6E90;&#x4E0D;&#x65AD;&#x7684;&#x6570;&#x636E;&#x3002;&#x5F15;&#x5165;&#x65F6;&#x95F4;&#x6982;&#x5FF5;&#x7684;&#x8BDD;&#xFF0C;&#x5C31;&#x662F; Flink &#x4F1A;&#x6309;&#x7167;&#x7ED9;&#x5B9A;&#x7684;&#x65F6;&#x95F4;&#xFF0C;&#x5728;&#x89E6;&#x53D1;&#x7ED9;&#x5B9A;&#x7684;&#x89C4;&#x5219;&#xFF08;&#x6BD4;&#x5982;&#x7A97;&#x53E3;&#xFF09;&#x540E;&#x5C3D;&#x53EF;&#x80FD;&#x5FEB;&#x7684;&#x5904;&#x7406;&#x6570;&#x636E;&#x3002;
+emmn&#xFF0C;&#x597D;&#x50CF;&#x8DDF;&#x4E0B;&#x9762;&#x8BB2;&#x7684;&#x6CA1;&#x5565;&#x5173;&#x7CFB;&#x3002;</p>
+<h3 id="&#x4E8B;&#x4EF6;&#x65F6;&#x95F4;-vs-&#x5904;&#x7406;&#x65F6;&#x95F4;"><a name="&#x4E8B;&#x4EF6;&#x65F6;&#x95F4;-vs-&#x5904;&#x7406;&#x65F6;&#x95F4;" class="anchor-navigation-ex-anchor" href="#&#x4E8B;&#x4EF6;&#x65F6;&#x95F4;-vs-&#x5904;&#x7406;&#x65F6;&#x95F4;"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.2. &#x4E8B;&#x4EF6;&#x65F6;&#x95F4; vs &#x5904;&#x7406;&#x65F6;&#x95F4;</h3>
+<p>&#x5F53;&#x63A5;&#x89E6;&#x5230;&#x6D41;&#x6570;&#x636E;&#x5904;&#x7406;&#x65F6;&#xFF0C;&#x5176;&#x4E2D;&#x6D89;&#x53CA;&#x5230;&#x7684;&#x65F6;&#x95F4;&#x6982;&#x5FF5;&#x662F;&#x4E0D;&#x540C;&#x7684;&#xFF08;&#x6BD4;&#x5982;&#x8BF4;&#x5B9A;&#x4E49;&#x7A97;&#x53E3;&#x7684;&#x65F6;&#x95F4;&#xFF09;&#x3002;</p>
+<ul>
+<li><p><strong>Processing time&#xFF1A;</strong> &#x5904;&#x7406;&#x65F6;&#x95F4;&#x662F;&#x6307;&#x6B63;&#x5728;&#x6267;&#x884C;&#x76F8;&#x5E94;&#x64CD;&#x4F5C;&#x7684;&#x673A;&#x5668;&#x4E0A;&#x7684;&#x7CFB;&#x7EDF;&#x65F6;&#x95F4;&#x3002;&#x5F53;&#x7A0B;&#x5E8F;&#x4F7F;&#x7528;&#x5904;&#x7406;&#x65F6;&#x95F4;&#x65F6;&#xFF0C;&#x6240;&#x6709;&#x57FA;&#x4E8E;&#x65F6;&#x95F4;&#x5904;&#x7406;&#x7684;&#x64CD;&#x4F5C;&#xFF08;&#x4F8B;&#x5982;&#x65F6;&#x95F4;&#x7A97;&#x53E3;&#xFF09;&#x90FD;&#x5C06;&#x57FA;&#x4E8E;&#x5404;&#x4E2A; operator &#x8FD0;&#x884C;&#x6240;&#x5728;&#x7684;&#x673A;&#x5668;&#x7684;&#x7CFB;&#x7EDF;&#x65F6;&#x949F;&#x3002;&#x6BD4;&#x5982;&#xFF0C;&#x4E00;&#x4E2A;&#x5C0F;&#x65F6;&#x7EA7;&#x522B;&#x7684;&#x7A97;&#x53E3;&#xFF0C;&#x7A0B;&#x5E8F;&#x5728; 9:15 &#x5206;&#x5F00;&#x59CB;&#x8FD0;&#x884C;&#xFF0C;&#x5219;&#x8BE5;&#x65F6;&#x95F4;&#x7A97;&#x53E3;&#x5185;&#xFF0C;&#x5C06;&#x4F1A;&#x5904;&#x7406; 9:15~10:00 &#x95F4;&#x5230;&#x8FBE; operator &#x7684;&#x6570;&#x636E;&#xFF0C;&#x4E0B;&#x4E00;&#x4E2A;&#x65F6;&#x95F4;&#x7A97;&#x53E3;&#x5C06;&#x4F1A;&#x5904;&#x7406; 10:00~11:00 &#x95F4;&#x7684;&#x6570;&#x636E;&#x3002;&#x5904;&#x7406;&#x65F6;&#x95F4;&#x662F;&#x6700;&#x7B80;&#x5355;&#x7684;&#x65F6;&#x95F4;&#x6982;&#x5FF5;&#xFF0C;&#x4E0D;&#x9700;&#x8981;&#x6570;&#x636E;&#x6D41;&#x4E0E;&#x673A;&#x5668;&#x4E4B;&#x95F4;&#x7684;&#x534F;&#x8C03;&#xFF0C;&#x5B83;&#x63D0;&#x4F9B;&#x4E86;&#x66F4;&#x9AD8;&#x7684;&#x6027;&#x80FD;&#x548C;&#x4F4E;&#x5EF6;&#x65F6;&#x7684;&#x4FDD;&#x8BC1;&#xFF0C;&#x4F46;&#x662F;&#x5728;&#x4E00;&#x4E2A;&#x5206;&#x5E03;&#x5F0F;&#x6267;&#x884C;&#x73AF;&#x5883;&#x4E2D;&#xFF0C;&#x8FD9;&#x6837;&#x5E26;&#x6765;&#x4E86;&#x5E42;&#x7B49;&#x6027;&#x95EE;&#x9898;&#xFF0C;&#x540C;&#x4E00;&#x6279;&#x6570;&#x636E;&#x7ECF;&#x8FC7;&#x76F8;&#x540C;&#x7A0B;&#x5E8F;&#x8BA1;&#x7B97;&#x540E;&#x7684;&#x7ED3;&#x679C;&#x662F;&#x4E0D;&#x4E00;&#x6837;&#x7684;&#xFF0C;&#x5E76;&#x4E14;&#x7ED3;&#x679C;&#x5BB9;&#x6613;&#x53D7;&#x5230;&#x5904;&#x7406;&#x901F;&#x5EA6;&#x53CA; task &#x8C03;&#x5EA6;&#x7684;&#x5F71;&#x54CD;&#x3002;</p>
+</li>
+<li><p><strong>Event Time&#xFF1A;</strong>&#x4E8B;&#x4EF6;&#x65F6;&#x95F4;&#x662F;&#x4E8B;&#x4EF6;&#x771F;&#x5B9E;&#x4EA7;&#x751F;&#x7684;&#x65F6;&#x95F4;&#xFF0C;&#x5B83;&#x7ECF;&#x5E38;&#x4F1A;&#x76F4;&#x63A5;&#x5D4C;&#x5957;&#x5728;&#x8BB0;&#x5F55;&#x4E2D;&#x8FDB;&#x5165; Flink &#x7CFB;&#x7EDF;&#xFF0C;&#x5E76;&#x4E14;&#x6BCF;&#x6761;&#x8BB0;&#x5F55;&#x90FD;&#x53EF;&#x4EE5;&#x88AB;&#x63D0;&#x53D6;&#x51FA;&#x4E8B;&#x4EF6;&#x4EA7;&#x751F;&#x7684;&#x65F6;&#x95F4;&#x6233;&#x4F9B; Flink &#x4F7F;&#x7528;&#x3002;&#x4F7F;&#x7528;&#x4E8B;&#x4EF6;&#x65F6;&#x95F4;&#x65F6;&#xFF0C;&#x6570;&#x636E;&#x6D41;&#x7684;&#x5904;&#x7406;&#x53D6;&#x51B3;&#x4E8E;&#x6570;&#x636E;&#x672C;&#x8EAB;&#xFF0C;&#x4E0E;&#x5916;&#x90E8;&#x65F6;&#x949F;&#x65E0;&#x5173;&#x3002;&#x5728;&#x57FA;&#x4E8E;&#x4E8B;&#x4EF6;&#x65F6;&#x95F4;&#x6570;&#x636E;&#x6D41;&#x4E2D;&#xFF0C;&#x7A0B;&#x5E8F;&#x5FC5;&#x987B;&#x6307;&#x660E;&#x5982;&#x4F55;&#x751F;&#x6210; watermark&#xFF0C;&#x4ECE;&#x800C;&#x89E6;&#x53D1;&#x8BA1;&#x7B97;&#x3002;</p>
+<p>  &#x5728;&#x7406;&#x60F3;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x57FA;&#x4E8E; Event Time &#x7684;&#x6D41;&#x5904;&#x7406;&#x4E0D;&#x7BA1;&#x6570;&#x636E;&#x4F55;&#x65F6;&#x5230;&#x8FBE;&#x8FD8;&#x662F;&#x4E71;&#x5E8F;&#x8FDB;&#x5165;&#xFF0C;&#x90FD;&#x80FD;&#x4FDD;&#x8BC1;&#x4E00;&#x81F4;&#x786E;&#x5B9A;&#x7684;&#x7ED3;&#x679C;&#x3002;&#x7136;&#x540E;&#xFF0C;&#x5728;&#x771F;&#x5B9E;&#x4E16;&#x754C;&#x4E2D;&#xFF0C;&#x5F80;&#x5F80;&#x5B58;&#x5728;&#x4E71;&#x5E8F;&#x6570;&#x636E;&#xFF0C;&#x5728;&#x7B49;&#x5F85;&#x4E71;&#x5E8F;&#x6570;&#x636E;&#x7684;&#x8FC7;&#x7A0B;&#x4E2D;&#x5C31;&#x4F1A;&#x4EA7;&#x751F;&#x5EF6;&#x8FDF;&#xFF0C;&#x800C;&#x7A0B;&#x5E8F;&#x53C8;&#x4E0D;&#x80FD;&#x65E0;&#x9650;&#x7B49;&#x5F85;&#xFF0C;&#x7531;&#x6B64;&#x9020;&#x6210;&#x7684;&#x7ED3;&#x679C;&#x662F;&#x6570;&#x636E;&#x7684;&#x5904;&#x7406;&#x5E76;&#x4E0D;&#x662F;&#x5B8C;&#x5168;&#x6B63;&#x786E;&#x7684;&#x3002;</p>
+<p>  &#x5047;&#x8BBE;&#x6570;&#x636E;&#x90FD;&#x5230;&#x8FBE;&#x4E86;&#xFF0C;&#x57FA;&#x4E8E;&#x4E8B;&#x4EF6;&#x65F6;&#x95F4;&#x7684;&#x64CD;&#x4F5C;&#x4F1A;&#x5982;&#x671F;&#x8FDB;&#x884C;&#xFF0C;&#x5373;&#x4F7F;&#x5B58;&#x5728;&#x8FDF;&#x5230;&#x6570;&#x636E;&#xFF0C;&#x91CD;&#x65B0;&#x56DE;&#x6EAF;&#x5386;&#x53F2;&#x6570;&#x636E;&#x7684;&#x60C5;&#x51B5;&#xFF0C;&#x7A0B;&#x5E8F;&#x4E5F;&#x80FD;&#x4EA7;&#x751F;&#x6B63;&#x786E;&#x5E42;&#x7B49;&#x7684;&#x7ED3;&#x679C;&#x3002;&#x4F8B;&#x5982;&#xFF0C;&#x4E00;&#x4E2A;&#x57FA;&#x4E8E;&#x4E8B;&#x4EF6;&#x65F6;&#x95F4;&#x7684;&#x5C0F;&#x65F6;&#x7A97;&#x53E3;&#x4E2D;&#x4F1A;&#x5305;&#x542B;&#x6240;&#x6709; event timestamp &#x5728;&#x8FD9;&#x4E2A;&#x5C0F;&#x65F6;&#x5185;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x4E0D;&#x7BA1;&#x6570;&#x636E;&#x4E71;&#x5E8F;&#x8FD8;&#x662F;&#x5904;&#x7406;&#x65F6;&#x95F4;&#x8D85;&#x51FA;&#x8BE5;&#x5C0F;&#x65F6;&#x8303;&#x56F4;&#x3002;</p>
+<p>  &#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;&#xFF0C;&#x6709;&#x65F6;&#x5019;&#x5728;&#x4F7F;&#x7528; Event Time &#x5904;&#x7406;&#x5B9E;&#x65F6;&#x6D41;&#x65F6;&#xFF0C;&#x4E5F;&#x4F1A;&#x5F15;&#x5165; Processing Time &#x7684;&#x903B;&#x8F91;&#x7528;&#x6765;&#x4FDD;&#x8BC1;&#x4EA7;&#x751F;&#x7684;&#x6570;&#x636E;&#x53EF;&#x4EE5;&#x88AB;&#x53CA;&#x65F6;&#x5904;&#x7406;&#x3002;</p>
+  <div align="center"><img src="https://ci.apache.org/projects/flink/flink-docs-release-1.13/fig/event_processing_time.svg" width="70%" height="70%"></div>
+
+
+</li>
+</ul>
+<h3 id="&#x4E8B;&#x4EF6;&#x65F6;&#x95F4;&#x548C;-watermark"><a name="&#x4E8B;&#x4EF6;&#x65F6;&#x95F4;&#x548C;-watermark" class="anchor-navigation-ex-anchor" href="#&#x4E8B;&#x4EF6;&#x65F6;&#x95F4;&#x548C;-watermark"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.3. &#x4E8B;&#x4EF6;&#x65F6;&#x95F4;&#x548C; watermark</h3>
+<p><em>Note&#xFF1A;&#x5173;&#x4E8E; event time &#x548C; watermark &#x60F3;&#x4E86;&#x89E3;&#x66F4;&#x591A;&#x7684;&#x8BDD;&#xFF0C;&#x53EF;&#x4EE5;&#x53BB;&#x67E5;&#x770B; DataFlow Model &#x8BBA;&#x6587;</em>  </p>
+<p>&#x57FA;&#x4E8E; <em>event time</em> &#x7684;&#x4E8B;&#x4EF6;&#x5904;&#x7406;&#x7A0B;&#x5E8F;&#x9700;&#x8981;&#x4E00;&#x79CD;&#x673A;&#x5236;&#x6765;&#x76D1;&#x6D4B;&#x4E8B;&#x4EF6;&#x7684;&#x8FDB;&#x5EA6;&#xFF0C;&#x4ECE;&#x800C;&#x77E5;&#x9053;&#x4F55;&#x65F6;&#x8BE5;&#x89E6;&#x53D1;&#x8BA1;&#x7B97;&#xFF0C;&#x4F55;&#x65F6;&#x8BE5;&#x4E22;&#x5F03;&#x5EF6;&#x8FDF;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x4F55;&#x65F6;&#x5F53;&#x524D;&#x65F6;&#x95F4;&#x7A97;&#x53E3;&#x5185;&#x4E0D;&#x4F1A;&#x5728;&#x63A5;&#x6536;&#x5230;&#x65B0;&#x7684;&#x6570;&#x636E;&#x3002;<em>event time</em> &#x662F;&#x72EC;&#x7ACB;&#x4E8E;&#x5904;&#x7406;&#x65F6;&#x95F4;&#x7684;&#xFF0C;&#x4F8B;&#x5982;&#xFF0C;&#x4E00;&#x6761;&#x6D41;&#x4E2D;&#x5904;&#x7406;&#x65F6;&#x95F4;&#x4F1A;&#x5927;&#x4E8E;&#x4E8B;&#x4EF6;&#x65F6;&#x95F4;&#xFF0C;&#x4F46;&#x662F;&#x4ED6;&#x4EEC;&#x7684;&#x901F;&#x5EA6;&#x662F;&#x76F8;&#x540C;&#x7684;&#xFF0C;&#x4E0D;&#x5B58;&#x5728;&#x4E92;&#x76F8;&#x7B49;&#x5F85;&#x3002;&#x53E6;&#x5916;&#xFF0C;&#x4E00;&#x6761;&#x6D41;&#x4E5F;&#x53EF;&#x4EE5;&#x5728;&#x77ED;&#x65F6;&#x95F4;&#x56DE;&#x6EAF;&#x5927;&#x91CF;&#x5386;&#x53F2;&#x6570;&#x636E;&#x3002;</p>
+<p>Flink &#x4E2D;&#x7BA1;&#x7406;&#x4E8B;&#x4EF6;&#x8FDB;&#x5EA6;&#x7684;&#x673A;&#x5236;&#x53EB; <strong>Watermarks</strong>&#x3002;Watermarks &#x4F5C;&#x4E3A;&#x6570;&#x636E;&#x6D41;&#x7684;&#x4E00;&#x90E8;&#x5206;&#xFF0C;&#x643A;&#x5E26;&#x8005;&#x4E8B;&#x4EF6;&#x65F6;&#x95F4;&#x6233; t&#x3002;<em>Watermark(t)</em> &#x4EE3;&#x8868; t &#x65F6;&#x95F4;&#x524D;&#x7684;&#x6570;&#x636E;&#x90FD;&#x5DF2;&#x7ECF;&#x5230;&#x8FBE;&#xFF0C;&#x8FD9;&#x610F;&#x5473;&#x7740;&#x4E0D;&#x4F1A;&#x518D;&#x6709;  t&apos; &lt;= t &#x7684;&#x4E8B;&#x4EF6;&#x51FA;&#x73B0;&#x3002;</p>
+<p>&#x4E0B;&#x56FE;&#x8BF4;&#x660E;&#x4E86;&#x4E00;&#x6761;&#x6D41;&#x4E2D; watermark &#x7684;&#x4EA7;&#x751F;&#xFF0C;&#x8BE5;&#x6D41;&#x7684;&#x6570;&#x636E;&#x662F;&#x987A;&#x5E8F;&#x5230;&#x8FBE;&#x7684;&#xFF0C;&#x610F;&#x5473;&#x7740; watermark &#x53EA;&#x662F;&#x7B80;&#x5355;&#x7684;&#x5B9A;&#x65F6;&#x4ECE;&#x4E8B;&#x4EF6;&#x65F6;&#x95F4;&#x4E2D;&#x4EA7;&#x751F;&#x3002;</p>
+<div align="center"><img src="https://ci.apache.org/projects/flink/flink-docs-release-1.13/fig/stream_watermark_in_order.svg" width="70%" height="70%"></div>
+
+<p>Watermarks &#x5728;&#x9762;&#x5BF9;&#x65E0;&#x5E8F;&#x6570;&#x636E;&#x6D41;&#x65F6;&#x8868;&#x73B0;&#x7684;&#x5F88;&#x5947;&#x602A;&#xFF0C;&#x65F6;&#x5E38;&#x4F1A;&#x8BA9;&#x6211;&#x4EEC;&#x611F;&#x5230;&#x7591;&#x60D1;&#xFF0C;&#x5C31;&#x50CF;&#x4E0B;&#x56FE;&#x4E00;&#x6837;&#xFF0C;&#x4E8B;&#x4EF6;&#x4E71;&#x5E8F;&#x5230;&#x8FBE;&#x3002;&#x4E00;&#x822C;&#x6765;&#x8BF4;&#xFF0C;watermark &#x4EE3;&#x8868;&#x5C0F;&#x4E8E;&#x7B49;&#x4E8E;&#x8BE5;&#x65F6;&#x95F4;&#x7684;&#x6570;&#x636E;&#x90FD;&#x5DF2;&#x7ECF;&#x5230;&#x8FBE;&#xFF0C;watermark &#x6D41;&#x5230; operator &#x65F6;&#xFF0C;&#x8BE5; operator &#x5C31;&#x4F1A;&#x66F4;&#x65B0;&#x81EA;&#x5DF1;&#x7684;&#x5185;&#x90E8;&#x65F6;&#x949F;&#x5230; watermark &#x5904;&#xFF0C;&#x4E0D;&#x518D;&#x63A5;&#x53D7;&#x5176;&#x4E4B;&#x524D;&#x7684;&#x6570;&#x636E;&#x3002;</p>
+<div align="center"><img src="https://ci.apache.org/projects/flink/flink-docs-release-1.13/fig/stream_watermark_out_of_order.svg" width="70%" height="70%"></div>
+
+<h4 id="&#x5E76;&#x884C;&#x6570;&#x636E;&#x6D41;&#x4E2D;&#x7684;-watermark"><a name="&#x5E76;&#x884C;&#x6570;&#x636E;&#x6D41;&#x4E2D;&#x7684;-watermark" class="anchor-navigation-ex-anchor" href="#&#x5E76;&#x884C;&#x6570;&#x636E;&#x6D41;&#x4E2D;&#x7684;-watermark"><i class="fa fa-link" aria-hidden="true"></i></a>&#x5E76;&#x884C;&#x6570;&#x636E;&#x6D41;&#x4E2D;&#x7684; watermark</h4>
+<p>Watermarks &#x5728;&#x6570;&#x636E;&#x6E90;&#x6216;&#x4E4B;&#x540E;&#x7684;&#x4E00;&#x4E9B;&#x64CD;&#x4F5C;&#x751F;&#x6210;&#x3002;Source &#x7AEF;&#x5E76;&#x884C;&#x7684; subtask &#x5404;&#x81EA;&#x751F;&#x6210;&#x81EA;&#x5DF1;&#x7684; watermark&#xFF0C;&#x8FD9;&#x4E9B; watermark &#x5B9A;&#x4E49;&#x4E86;&#x6E90;&#x6570;&#x636E;&#x4E2D;&#x7684;&#x4E8B;&#x4EF6;&#x65F6;&#x95F4;&#x3002;&#x968F;&#x7740; watermark &#x5728;&#x6570;&#x636E;&#x6D41;&#x4E2D;&#x7684;&#x6D41;&#x52A8;&#xFF0C;&#x5F53;&#x5230;&#x8FBE;&#x4E0B;&#x6E38; operator &#x65F6;&#xFF0C;&#x8BE5; operator &#x5C31;&#x4F1A;&#x66F4;&#x65B0;&#x81EA;&#x5DF1;&#x7684;&#x5185;&#x90E8;&#x65F6;&#x949F;&#xFF0C;&#x5E76;&#x4E14;&#x751F;&#x6210;&#x4E00;&#x4E2A;&#x65B0;&#x7684; watermark &#x5230;&#x4E0B;&#x6E38;&#x3002;</p>
+<p>&#x5BF9;&#x4E8E;&#x5B58;&#x5728;&#x591A;&#x4E2A;&#x8F93;&#x5165;&#x6D41;&#x7684; operator&#xFF0C;&#x9700;&#x8981;&#x8FDB;&#x884C; watermark &#x7684;&#x5BF9;&#x9F50;&#xFF0C;operator &#x603B;&#x4F1A;&#x4F7F;&#x7528;&#x6700;&#x5C0F;&#x7684; watermark &#x4F5C;&#x4E3A;&#x66F4;&#x65B0;&#x5176;&#x5185;&#x90E8;&#x65F6;&#x949F;&#x7684;&#x57FA;&#x51C6;&#x3002;&#x4E0B;&#x56FE;&#x5C55;&#x793A;&#x4E86; watermark &#x5728;&#x5E76;&#x884C;&#x6570;&#x636E;&#x6D41;&#x4E2D;&#x7684;&#x6D41;&#x52A8;&#x3002;</p>
+<div align="center"><img src="https://ci.apache.org/projects/flink/flink-docs-release-1.13/fig/parallel_streams_watermarks.svg" width="70%" height="70%"></div>
+
+
+<h3 id="&#x5EF6;&#x8FDF;"><a name="&#x5EF6;&#x8FDF;" class="anchor-navigation-ex-anchor" href="#&#x5EF6;&#x8FDF;"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.4. &#x5EF6;&#x8FDF;</h3>
+<p>Watermarks &#x7684;&#x6761;&#x4EF6;&#x5E76;&#x4E0D;&#x662F;&#x5B8C;&#x5168;&#x6B63;&#x786E;&#x7684;&#xFF0C;&#x5728;&#x73B0;&#x5B9E;&#x4E16;&#x754C;&#x4E2D;&#xFF0C;&#x603B;&#x4F1A;&#x5B58;&#x5728;&#x5EF6;&#x8FDF;&#x6570;&#x636E;&#xFF0C;&#x8FD9;&#x610F;&#x5473;&#x7740;&#x603B;&#x4F1A;&#x6709; t&apos; &lt;= watermark &#x7684;&#x4E8B;&#x4EF6;&#x5728; watermark &#x88AB;&#x89E6;&#x53D1;&#x540E;&#x5230;&#x8FBE;&#xFF0C;&#x800C;&#x901A;&#x5E38;&#x7531;&#x4E8E;&#x6574;&#x4E2A;&#x6570;&#x636E;&#x94FE;&#x8DEF;&#x7684;&#x5EF6;&#x8FDF;&#x539F;&#x56E0;&#xFF0C;&#x6570;&#x636E;&#x6D41;&#x53C8;&#x4E0D;&#x53EF;&#x80FD;&#x65E0;&#x9650;&#x7684;&#x7B49;&#x5F85;&#x5EF6;&#x8FDF;&#x6570;&#x636E;&#x3002;&#x5982;&#x679C;&#x6B64;&#x65F6;&#x7A0B;&#x5E8F;&#x53C8;&#x8981;&#x6C42;&#x6781;&#x9AD8;&#x51C6;&#x786E;&#x6027;&#x7684;&#x8BDD;&#xFF0C;&#x90A3;&#x4E48;&#x5C31;&#x8981;&#x5904;&#x7406;&#x5EF6;&#x8FDF;&#x6570;&#x636E;&#xFF0C;&#x53EF;&#x4EE5;&#x9605;&#x8BFB; <a href="https://ci.apache.org/projects/flink/flink-docs-release-1.13/docs/dev/datastream/operators/windows/#allowed-lateness" target="_blank"> Allowed Lateness</a> &#x4E86;&#x89E3;&#x66F4;&#x591A;&#x4FE1;&#x606F;&#x3002;</p>
+<h3 id="&#x7A97;&#x53E3;"><a name="&#x7A97;&#x53E3;" class="anchor-navigation-ex-anchor" href="#&#x7A97;&#x53E3;"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.5. &#x7A97;&#x53E3;</h3>
+<p>&#x5B9E;&#x65F6;&#x6570;&#x636E;&#x5904;&#x7406;&#x4E0E;&#x6279;&#x5904;&#x7406;&#x5728;&#x805A;&#x5408;&#x64CD;&#x4F5C;&#x4E0A;&#x7684;&#x5904;&#x7406;&#x662F;&#x5B8C;&#x5168;&#x4E0D;&#x540C;&#x7684;&#xFF0C;&#x56E0;&#x4E3A;&#x5B9E;&#x65F6;&#x6D41;&#x662F;&#x65E0;&#x754C;&#x7684;&#xFF0C;&#x4E0D;&#x53EF;&#x80FD;&#x7B49;&#x5F85;&#x6240;&#x6709;&#x7684;&#x6570;&#x636E;&#x90FD;&#x5230;&#x8FBE;&#x540E;&#x5728;&#x505A;&#x805A;&#x5408;&#xFF0C;&#x56E0;&#x6B64; Flink &#x5F15;&#x5165;&#x4E86;&#x7A97;&#x53E3;&#x7684;&#x6982;&#x5FF5;&#xFF0C;&#x6BD4;&#x5982;&#x805A;&#x5408;&#x521A;&#x8FC7;&#x53BB;&#x7684; 5min &#x53D1;&#x751F;&#x7684;&#x4E8B;&#x4EF6;&#x3002;</p>
+<p>&#x7A97;&#x53E3;&#x53EF;&#x4EE5;&#x7531;&#x65F6;&#x95F4;&#x9A71;&#x52A8;&#x548C;&#x4E8B;&#x4EF6;&#x9A71;&#x52A8;&#xFF0C;&#x5E38;&#x89C1;&#x7684;&#x7A97;&#x53E3;&#x7C7B;&#x578B;&#x6709; &#x56FA;&#x5B9A;&#x7A97;&#x53E3;&#xFF08;&#x6CA1;&#x6709;&#x91CD;&#x53E0;&#xFF09;, &#x6ED1;&#x52A8;&#x7A97;&#x53E3;&#xFF08;&#x5B58;&#x5728;&#x91CD;&#x53E0;&#xFF09;, &#x4F1A;&#x8BDD;&#x7A97;&#x53E3; (&#x6D3B;&#x8DC3;&#x65F6;&#x95F4;&#x95F4;&#x9694;&#x5212;&#x5206;&#xFF09;.</p>
+<h3 id="&#x601D;&#x8003;"><a name="&#x601D;&#x8003;" class="anchor-navigation-ex-anchor" href="#&#x601D;&#x8003;"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.6. &#x601D;&#x8003;</h3>
+<p><strong>1.barriers &#x548C; watermark &#x90FD;&#x968F;&#x7740;&#x6570;&#x636E;&#x6D41;&#x79FB;&#x52A8;&#xFF0C;&#x8FD9;&#x4E9B;&#x662F;&#x600E;&#x4E48;&#x5B9E;&#x73B0;&#x7684;&#x5462;&#xFF1F;</strong></p>
+<p><strong>2.Watermarks &#x7684;&#x4E3B;&#x8981;&#x4F5C;&#x7528;&#xFF1F;</strong></p>
+<p>&#x89E6;&#x53D1;&#x8BA1;&#x7B97;&#xFF0C;&#x9650;&#x5236;&#x72B6;&#x6001;&#x7684;&#x65E0;&#x9650;&#x589E;&#x957F;&#x3002;&#x4E8B;&#x4EF6;&#x4E0D;&#x53EF;&#x80FD;&#x65E0;&#x9650;&#x7684;&#x7B49;&#x5F85;&#x4E0B;&#x53BB;&#xFF0C;&#x9700;&#x8981;&#x5728;&#x51C6;&#x786E;&#x6027;&#x548C;&#x5EF6;&#x65F6;&#x4E0B;&#x505A;&#x597D;&#x8861;&#x91CF;&#x3002;</p>
+<p><strong>3.Watermarks &#x5982;&#x4F55;&#x914D;&#x7F6E;&#xFF1F;</strong></p>
+<p><a href="https://cloud.tencent.com/developer/article/1629585" target="_blank">&#x8FD9;&#x4E00;&#x6B21;&#x5E26;&#x4F60;&#x5F7B;&#x5E95;&#x641E;&#x61C2; Flink Watermark</a></p>
+<p><strong>4.&#x5EF6;&#x8FDF;&#x6570;&#x636E;&#x7684;&#x5904;&#x7406;&#xFF1F;</strong> </p>
+<p>&#x5BF9;&#x4E8E;&#x65E0;&#x72B6;&#x6001;&#x7684;&#x8BA1;&#x7B97;&#xFF0C;&#x6BD4;&#x8F83;&#x5BB9;&#x6613;&#xFF0C;&#x53EF;&#x4EE5;&#x5148;&#x65C1;&#x8DEF;&#x8F93;&#x51FA;&#x5230;&#x5EF6;&#x8FDF;&#x961F;&#x5217;&#xFF0C;&#x5728;&#x505A;&#x5904;&#x7406;&#x3002;&#x5BF9;&#x4E8E;&#x6709;&#x72B6;&#x6001;&#x7684;&#x8BA1;&#x7B97;&#x5462;&#xFF1F;</p>
+<footer class="page-footer-ex"> <span class="page-footer-ex-copyright"> By <a href="https://github.com/Flyraty" target="_blank">Flyraty</a>&#xFF0C;&#x4F7F;&#x7528;<a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">&#x77E5;&#x8BC6;&#x5171;&#x4EAB; &#x7F72;&#x540D;-&#x76F8;&#x540C;&#x65B9;&#x5F0F;&#x5171;&#x4EAB; 4.0&#x534F;&#x8BAE;</a>&#x53D1;&#x5E03; </span> &#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="page-footer-ex-footer-update"> <i>updated</i> 2023-01-10 14:39:27 </span> </footer>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="stateful_stream_processing.html" class="navigation navigation-prev " aria-label="Previous page: Stateful Stream Processing">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="flink_architecture.html" class="navigation navigation-next " aria-label="Next page: Flink Architecture">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Timely Stream Processing","level":"1.2.2","depth":2,"next":{"title":"Flink Architecture","level":"1.2.3","depth":2,"path":"Overview/flink_architecture.md","ref":"Overview/flink_architecture.md","articles":[]},"previous":{"title":"Stateful Stream Processing","level":"1.2.1","depth":2,"path":"Overview/stateful_stream_processing.md","ref":"Overview/stateful_stream_processing.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-expandable-chapters","github-buttons","editlink","copy-code-button","page-footer-ex","anchor-navigation-ex","expandable-chapters-small","prism","-highlight","lunr","-search","search-pro","splitter"],"ignores":["_book","node_modules"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-solarizedlight.css"],"lang":{"flow":"typescript"}},"editlink":{"label":"Edit This Page","multilingual":false,"base":"https://github.com/Flyraty/flink_learning_notes/tree/gitbook"},"page-footer-ex":{"copyright":"By [Flyraty](https://github.com/Flyraty)，使用[知识共享 署名-相同方式共享 4.0协议](https://creativecommons.org/licenses/by-sa/4.0/)发布","markdown":true,"update_format":"YYYY-MM-DD HH:mm:ss","update_label":"<i>updated</i>"},"splitter":{},"search-pro":{},"lunr":{"ignoreSpecialCharacters":false,"maxIndexSize":1000000},"fontsettings":{"theme":"white","family":"sans","size":2},"anchor-navigation-ex":{"associatedWithSummary":true,"float":{"floatIcon":"fa fa-navicon","level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"mode":"float","multipleH1":true,"pageTop":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"printLog":false,"showGoTop":true,"showLevel":true},"github-buttons":{"buttons":[{"user":"Flyraty","repo":"flink_learning_notes","type":"star","size":"small"}]},"expandable-chapters-small":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"flink_learning_notes","language":"zh-hans","gitbook":"*"},"file":{"path":"Overview/timely_stream_processing.md","mtime":"2023-01-10T14:39:27.411Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2023-01-10T14:40:20.271Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-github-buttons/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-editlink/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-copy-code-button/toggle.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

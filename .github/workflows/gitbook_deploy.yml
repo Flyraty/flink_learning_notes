@@ -1,0 +1,43 @@
+name: CI
+on:                                 
+  push:
+    branches:
+    - gitbook
+
+jobs:
+  build:
+    runs-on: ubuntu-latest   
+    steps:                          
+      - name: Checkout gitbook
+        uses: actions/checkout@v2
+        with:
+          ref: gitbook
+
+      - name: Install nodejs
+        uses: actions/setup-node@v1
+
+      - name: Configue gitbook
+        run: |
+          npm install -g gitbook-cli          
+          gitbook install
+          npm install -g gitbook-summary
+      - name: Generate _book folder
+        run: |
+          gitbook build
+          cp SUMMARY.md _book
+      - name: push _book to branch main
+        env:
+          TOKEN: ${{ secrets.TOKEN }}
+          REF: github.com/${{github.repository}}
+          MYEMAIL: 1397554745@qq.com                  
+          MYNAME: ${{github.repository_owner}}          
+        run: |
+          cd _book
+          git config --global user.email "${MYEMAIL}"
+          git config --global user.name "${MYNAME}"
+          git init
+          git remote add origin https://${REF}
+          git add . 
+          git commit -m "Updated By Github Actions With Build ${{github.run_number}} of ${{github.workflow}} For Github Pages"
+          git branch -M gitbook
+          git push --force --quiet "https://${TOKEN}@${REF}" gitbook:main

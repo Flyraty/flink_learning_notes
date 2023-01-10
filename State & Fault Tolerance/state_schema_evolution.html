@@ -1,0 +1,623 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>状态迁移与演化 · flink_learning_notes</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-page-footer-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchor-navigation-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-prism/prism-solarizedlight.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search-pro/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="custom_state_serialization.html" />
+    
+    
+    <link rel="prev" href="state_and_fault_tolerance.html" />
+    
+
+    <style>
+    @media only screen and (max-width: 640px) {
+        .book-header .hidden-mobile {
+            display: none;
+        }
+    }
+    </style>
+    <script>
+        window["gitbook-plugin-github-buttons"] = {"buttons":[{"user":"Flyraty","repo":"flink_learning_notes","type":"star","size":"small"}]};
+    </script>
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    开篇
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../Overview/">
+            
+                <a href="../Overview/">
+            
+                    
+                    基础概念
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../Overview/stateful_stream_processing.html">
+            
+                <a href="../Overview/stateful_stream_processing.html">
+            
+                    
+                    Stateful Stream Processing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../Overview/timely_stream_processing.html">
+            
+                <a href="../Overview/timely_stream_processing.html">
+            
+                    
+                    Timely Stream Processing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../Overview/flink_architecture.html">
+            
+                <a href="../Overview/flink_architecture.html">
+            
+                    
+                    Flink Architecture
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="../Overview/flink_api.html">
+            
+                <a href="../Overview/flink_api.html">
+            
+                    
+                    Flink API
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../DataStream API/">
+            
+                <a href="../DataStream API/">
+            
+                    
+                    DataStream API
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../DataStream API/overview.html">
+            
+                <a href="../DataStream API/overview.html">
+            
+                    
+                    概览
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../DataStream API/execution_mode.html">
+            
+                <a href="../DataStream API/execution_mode.html">
+            
+                    
+                    流/批的运行模式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../DataStream API/event_time.html">
+            
+                <a href="../DataStream API/event_time.html">
+            
+                    
+                    事件时间与 Watermark
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="../DataStream API/datasource.html">
+            
+                <a href="../DataStream API/datasource.html">
+            
+                    
+                    Data Sources
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="../DataStream API/operators.html">
+            
+                <a href="../DataStream API/operators.html">
+            
+                    
+                    Operators
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6" data-path="../DataStream API/udf.html">
+            
+                <a href="../DataStream API/udf.html">
+            
+                    
+                    UDF
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    状态容错与管理
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="work_with_state.html">
+            
+                <a href="work_with_state.html">
+            
+                    
+                    状态处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="broadcast_state.html">
+            
+                <a href="broadcast_state.html">
+            
+                    
+                    状态广播
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="checkpointing.html">
+            
+                <a href="checkpointing.html">
+            
+                    
+                    Checkpointing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="queryable_state.html">
+            
+                <a href="queryable_state.html">
+            
+                    
+                    状态查询
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="state_backends.html">
+            
+                <a href="state_backends.html">
+            
+                    
+                    状态后端
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6" data-path="state_and_fault_tolerance.html">
+            
+                <a href="state_and_fault_tolerance.html">
+            
+                    
+                    状态容错
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.4.7" data-path="state_schema_evolution.html">
+            
+                <a href="state_schema_evolution.html">
+            
+                    
+                    状态迁移与演化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8" data-path="custom_state_serialization.html">
+            
+                <a href="custom_state_serialization.html">
+            
+                    
+                    自定义状态序列化器
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../DataSet API/">
+            
+                <a href="../DataSet API/">
+            
+                    
+                    DataSet API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../Table API/">
+            
+                <a href="../Table API/">
+            
+                    
+                    Table API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../Data Types & Serialization/">
+            
+                <a href="../Data Types & Serialization/">
+            
+                    
+                    Data Types & Serialization
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            本书使用 GitBook 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >状态迁移与演化</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <div id="anchor-navigation-ex-navbar"><i class="fa fa-navicon"></i><ul><ul><ul><li><span class="title-icon "></span><a href="#overview"><b>1.1.1. </b>Overview</a></li><li><span class="title-icon "></span><a href="#&#x72B6;&#x6001;-schema-&#x7684;&#x6F14;&#x5316;"><b>1.1.2. </b>&#x72B6;&#x6001; schema &#x7684;&#x6F14;&#x5316;</a></li><li><span class="title-icon "></span><a href="#&#x601D;&#x8003;"><b>1.1.3. </b>&#x601D;&#x8003;</a></li></ul></ul></ul></div><a href="#" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><h3 id="overview"><a name="overview" class="anchor-navigation-ex-anchor" href="#overview"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.1. Overview</h3>
+<p>Flink &#x5E38;&#x5E38;&#x7528;&#x4E8E;&#x5B9E;&#x65F6;&#x6D41;&#x5904;&#x7406;&#xFF0C;&#x5176;&#x7279;&#x70B9;&#x662F;&#x957F;&#x65F6;&#x95F4;&#x8FD0;&#x884C;&#x3002;&#x548C;&#x5176;&#x5B83;&#x957F;&#x65F6;&#x95F4;&#x8FD0;&#x884C;&#x7684;&#x670D;&#x52A1;&#x7C7B;&#x4F3C;&#xFF0C;&#x6211;&#x4EEC;&#x4E5F;&#x9700;&#x8981;&#x66F4;&#x65B0;&#x7A0B;&#x5E8F;&#x4EE5;&#x5E94;&#x5BF9;&#x4E0D;&#x65AD;&#x53D8;&#x5316;&#x7684;&#x9700;&#x6C42;&#x3002;&#x5BF9;&#x5B58;&#x5728;&#x4E8E;&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x4E2D;&#x7684; schema &#x4FE1;&#x606F;&#x4E5F;&#x662F;&#x5982;&#x6B64;&#xFF0C;&#x5176;&#x4F1A;&#x968F;&#x7740;&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x7684;&#x66F4;&#x65B0;&#x800C;&#x6F14;&#x5316;&#x53D1;&#x5C55;&#x3002;</p>
+<p>&#x672C;&#x7AE0;&#x8282;&#x4E3B;&#x8981;&#x8BB2;&#x89E3;&#x5982;&#x4F55;&#x66F4;&#x65B0;&#x5347;&#x7EA7;&#x72B6;&#x6001;&#x7684; schema &#x4FE1;&#x606F;&#x3002;&#x5BF9;&#x4E8E;&#x4E0D;&#x540C;&#x7684;&#x72B6;&#x6001;&#x7ED3;&#x6784;&#x548C;&#x7C7B;&#x578B;&#xFF0C;&#x5176;&#x5B9E;&#x73B0;&#x4F1A;&#x6709;&#x6240;&#x5DEE;&#x5F02;&#x3002;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;&#x4EC5;&#x5F53;&#x60A8;&#x4F7F;&#x7528;&#x7531; Flink &#x81EA;&#x5DF1;&#x7684;&#x7C7B;&#x578B;&#x5E8F;&#x5217;&#x5316;&#x6846;&#x67B6;&#x751F;&#x6210;&#x7684;&#x72B6;&#x6001;&#x5E8F;&#x5217;&#x5316;&#x7A0B;&#x5E8F;&#x65F6;&#xFF0C;&#x6B64;&#x9875;&#x9762;&#x4E0A;&#x7684;&#x4FE1;&#x606F;&#x624D;&#x76F8;&#x5173;&#x3002;&#x4E5F;&#x5C31;&#x662F;&#x8BF4;&#xFF0C;&#x5728;&#x58F0;&#x660E;&#x72B6;&#x6001;&#x65F6;&#xFF0C;&#x63D0;&#x4F9B;&#x7684;&#x72B6;&#x6001;&#x63CF;&#x8FF0;&#x7B26;&#x672A;&#x914D;&#x7F6E;&#x4E3A;&#x4F7F;&#x7528;&#x7279;&#x5B9A;&#x7684; TypeSerializer &#x6216; TypeInformation&#xFF0C;&#x5728;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;Flink &#x4F1A;&#x63A8;&#x65AD;&#x6709;&#x5173;&#x72B6;&#x6001;&#x7C7B;&#x578B;&#x7684;&#x4FE1;&#x606F;&#xFF1A;</p>
+<pre class="language-"><code class="lang-java"><span class="token class-name">ListStateDescriptor</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">MyPojoType</span><span class="token punctuation">&gt;</span></span> descriptor <span class="token operator">=</span>
+    <span class="token keyword">new</span> <span class="token class-name">ListStateDescriptor</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span>
+        <span class="token string">&quot;state-name&quot;</span><span class="token punctuation">,</span>
+        <span class="token class-name">MyPojoType</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+checkpointedState <span class="token operator">=</span> <span class="token function">getRuntimeContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getListState</span><span class="token punctuation">(</span>descriptor<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>&#x672C;&#x8D28;&#x4E0A;&#xFF0C;&#x72B6;&#x6001; schema &#x662F;&#x5426;&#x53EF;&#x4EE5;&#x81EA;&#x52A8;&#x63A8;&#x65AD;&#x53D6;&#x51B3;&#x4E8E;&#x7528;&#x4E8E;&#x8BFB;&#x53D6;/&#x5199;&#x5165;&#x6301;&#x4E45;&#x5316;&#x72B6;&#x6001;&#x7684;&#x7A0B;&#x5E8F;&#x3002;&#x7B80;&#x5355;&#x6765;&#x8BF4;&#xFF0C;&#x4E00;&#x4E2A;&#x72B6;&#x6001;&#x7684; schema &#x53EA;&#x6709;&#x5728;&#x4F7F;&#x7528;&#x6B63;&#x786E;&#x7684;&#x5E8F;&#x5217;&#x5316;&#x65F6;&#x624D;&#x53EF;&#x4EE5;&#x81EA;&#x52A8;&#x63A8;&#x65AD;&#x6F14;&#x5316;&#x3002;&#x8FD9;&#x7531; Flink &#x7684;&#x7C7B;&#x578B;&#x5E8F;&#x5217;&#x5316;&#x6846;&#x67B6;&#x751F;&#x6210;&#x7684;&#x5E8F;&#x5217;&#x5316;&#x7A0B;&#x5E8F;&#x900F;&#x660E;&#x5730;&#x5904;&#x7406;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x60A8;&#x6253;&#x7B97;&#x4E3A;&#x60A8;&#x7684;&#x72B6;&#x6001;&#x7C7B;&#x578B;&#x5B9E;&#x73B0;&#x81EA;&#x5B9A;&#x4E49; TypeSerializer&#xFF0C;&#x5E76;&#x4E14;&#x60F3;&#x4E86;&#x89E3;&#x5982;&#x4F55;&#x5B9E;&#x73B0;&#x5E8F;&#x5217;&#x5316;&#x5668;&#x4EE5;&#x652F;&#x6301;&#x72B6;&#x6001;&#x6A21;&#x5F0F;&#x6F14;&#x5316;&#xFF0C;&#x53EF;&#x4EE5;&#x67E5;&#x770B;<a href="https://nightlies.apache.org/flink/flink-docs-release-1.16/docs/dev/datastream/fault-tolerance/serialization/custom_serialization/" target="_blank">Custom State Serialization</a></p>
+<h3 id="&#x72B6;&#x6001;-schema-&#x7684;&#x6F14;&#x5316;"><a name="&#x72B6;&#x6001;-schema-&#x7684;&#x6F14;&#x5316;" class="anchor-navigation-ex-anchor" href="#&#x72B6;&#x6001;-schema-&#x7684;&#x6F14;&#x5316;"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.2. &#x72B6;&#x6001; schema &#x7684;&#x6F14;&#x5316;</h3>
+<p>&#x603B;&#x7ED3;&#x4E00;&#x53E5;&#x5C31;&#x662F;&#x4EE5;&#x65E7;&#x6A21;&#x5F0F;&#x8BFB;&#x53D6;&#x65E7;&#x6570;&#x636E;&#xFF0C;&#x4EE5;&#x65B0;&#x6A21;&#x5F0F;&#x7EE7;&#x7EED;&#x5904;&#x7406;&#x65B0;&#x7684;&#x6570;&#x636E;&#x3002;</p>
+<h3 id="&#x601D;&#x8003;"><a name="&#x601D;&#x8003;" class="anchor-navigation-ex-anchor" href="#&#x601D;&#x8003;"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.3. &#x601D;&#x8003;</h3>
+<p><strong>1. &#x72B6;&#x6001;&#x7684;&#x6F14;&#x5316;&#x662F;&#x5565;&#x542B;&#x4E49;&#xFF1F;&#x72B6;&#x6001;&#x7684; schema &#x4E3A;&#x5565;&#x4F1A;&#x53D1;&#x751F;&#x6539;&#x53D8;&#xFF1F;</strong></p>
+<footer class="page-footer-ex"> <span class="page-footer-ex-copyright"> By <a href="https://github.com/Flyraty" target="_blank">Flyraty</a>&#xFF0C;&#x4F7F;&#x7528;<a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">&#x77E5;&#x8BC6;&#x5171;&#x4EAB; &#x7F72;&#x540D;-&#x76F8;&#x540C;&#x65B9;&#x5F0F;&#x5171;&#x4EAB; 4.0&#x534F;&#x8BAE;</a>&#x53D1;&#x5E03; </span> &#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="page-footer-ex-footer-update"> <i>updated</i> 2023-01-10 14:39:27 </span> </footer>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="state_and_fault_tolerance.html" class="navigation navigation-prev " aria-label="Previous page: 状态容错">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="custom_state_serialization.html" class="navigation navigation-next " aria-label="Next page: 自定义状态序列化器">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"状态迁移与演化","level":"1.4.7","depth":2,"next":{"title":"自定义状态序列化器","level":"1.4.8","depth":2,"path":"State & Fault Tolerance/custom_state_serialization.md","ref":"State & Fault Tolerance/custom_state_serialization.md","articles":[]},"previous":{"title":"状态容错","level":"1.4.6","depth":2,"path":"State & Fault Tolerance/state_and_fault_tolerance.md","ref":"State & Fault Tolerance/state_and_fault_tolerance.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-expandable-chapters","github-buttons","editlink","copy-code-button","page-footer-ex","anchor-navigation-ex","expandable-chapters-small","prism","-highlight","lunr","-search","search-pro","splitter"],"ignores":["_book","node_modules"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-solarizedlight.css"],"lang":{"flow":"typescript"}},"editlink":{"label":"Edit This Page","multilingual":false,"base":"https://github.com/Flyraty/flink_learning_notes/tree/gitbook"},"page-footer-ex":{"copyright":"By [Flyraty](https://github.com/Flyraty)，使用[知识共享 署名-相同方式共享 4.0协议](https://creativecommons.org/licenses/by-sa/4.0/)发布","markdown":true,"update_format":"YYYY-MM-DD HH:mm:ss","update_label":"<i>updated</i>"},"splitter":{},"search-pro":{},"lunr":{"ignoreSpecialCharacters":false,"maxIndexSize":1000000},"fontsettings":{"theme":"white","family":"sans","size":2},"anchor-navigation-ex":{"associatedWithSummary":true,"float":{"floatIcon":"fa fa-navicon","level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"mode":"float","multipleH1":true,"pageTop":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"printLog":false,"showGoTop":true,"showLevel":true},"github-buttons":{"buttons":[{"user":"Flyraty","repo":"flink_learning_notes","type":"star","size":"small"}]},"expandable-chapters-small":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"flink_learning_notes","language":"zh-hans","gitbook":"*"},"file":{"path":"State & Fault Tolerance/state_schema_evolution.md","mtime":"2023-01-10T14:39:27.411Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2023-01-10T14:40:20.271Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-github-buttons/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-editlink/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-copy-code-button/toggle.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

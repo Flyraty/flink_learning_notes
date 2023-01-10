@@ -1,0 +1,925 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>状态处理 · flink_learning_notes</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-page-footer-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchor-navigation-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-prism/prism-solarizedlight.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search-pro/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="broadcast_state.html" />
+    
+    
+    <link rel="prev" href="./" />
+    
+
+    <style>
+    @media only screen and (max-width: 640px) {
+        .book-header .hidden-mobile {
+            display: none;
+        }
+    }
+    </style>
+    <script>
+        window["gitbook-plugin-github-buttons"] = {"buttons":[{"user":"Flyraty","repo":"flink_learning_notes","type":"star","size":"small"}]};
+    </script>
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    开篇
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../Overview/">
+            
+                <a href="../Overview/">
+            
+                    
+                    基础概念
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../Overview/stateful_stream_processing.html">
+            
+                <a href="../Overview/stateful_stream_processing.html">
+            
+                    
+                    Stateful Stream Processing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../Overview/timely_stream_processing.html">
+            
+                <a href="../Overview/timely_stream_processing.html">
+            
+                    
+                    Timely Stream Processing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../Overview/flink_architecture.html">
+            
+                <a href="../Overview/flink_architecture.html">
+            
+                    
+                    Flink Architecture
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="../Overview/flink_api.html">
+            
+                <a href="../Overview/flink_api.html">
+            
+                    
+                    Flink API
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../DataStream API/">
+            
+                <a href="../DataStream API/">
+            
+                    
+                    DataStream API
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../DataStream API/overview.html">
+            
+                <a href="../DataStream API/overview.html">
+            
+                    
+                    概览
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../DataStream API/execution_mode.html">
+            
+                <a href="../DataStream API/execution_mode.html">
+            
+                    
+                    流/批的运行模式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../DataStream API/event_time.html">
+            
+                <a href="../DataStream API/event_time.html">
+            
+                    
+                    事件时间与 Watermark
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="../DataStream API/datasource.html">
+            
+                <a href="../DataStream API/datasource.html">
+            
+                    
+                    Data Sources
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="../DataStream API/operators.html">
+            
+                <a href="../DataStream API/operators.html">
+            
+                    
+                    Operators
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6" data-path="../DataStream API/udf.html">
+            
+                <a href="../DataStream API/udf.html">
+            
+                    
+                    UDF
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    状态容错与管理
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="1.4.1" data-path="work_with_state.html">
+            
+                <a href="work_with_state.html">
+            
+                    
+                    状态处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="broadcast_state.html">
+            
+                <a href="broadcast_state.html">
+            
+                    
+                    状态广播
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="checkpointing.html">
+            
+                <a href="checkpointing.html">
+            
+                    
+                    Checkpointing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="queryable_state.html">
+            
+                <a href="queryable_state.html">
+            
+                    
+                    状态查询
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="state_backends.html">
+            
+                <a href="state_backends.html">
+            
+                    
+                    状态后端
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6" data-path="state_and_fault_tolerance.html">
+            
+                <a href="state_and_fault_tolerance.html">
+            
+                    
+                    状态容错
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7" data-path="state_schema_evolution.html">
+            
+                <a href="state_schema_evolution.html">
+            
+                    
+                    状态迁移与演化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8" data-path="custom_state_serialization.html">
+            
+                <a href="custom_state_serialization.html">
+            
+                    
+                    自定义状态序列化器
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../DataSet API/">
+            
+                <a href="../DataSet API/">
+            
+                    
+                    DataSet API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../Table API/">
+            
+                <a href="../Table API/">
+            
+                    
+                    Table API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../Data Types & Serialization/">
+            
+                <a href="../Data Types & Serialization/">
+            
+                    
+                    Data Types & Serialization
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            本书使用 GitBook 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >状态处理</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <div id="anchor-navigation-ex-navbar"><i class="fa fa-navicon"></i><ul><ul><ul><li><span class="title-icon "></span><a href="#keyed-datastream"><b>1.1.1. </b>Keyed DataStream</a></li><li><span class="title-icon "></span><a href="#using-keyed-state"><b>1.1.2. </b>Using Keyed State</a></li><li><span class="title-icon "></span><a href="#operator-state"><b>1.1.3. </b>Operator State</a></li><li><span class="title-icon "></span><a href="#broadcast-state"><b>1.1.4. </b>Broadcast State</a></li><li><span class="title-icon "></span><a href="#using-operator-state"><b>1.1.5. </b>Using Operator State</a></li><li><span class="title-icon "></span><a href="#&#x601D;&#x8003;"><b>1.1.6. </b>&#x601D;&#x8003;</a></li></ul></ul></ul></div><a href="#" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><h3 id="keyed-datastream"><a name="keyed-datastream" class="anchor-navigation-ex-anchor" href="#keyed-datastream"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.1. Keyed DataStream</h3>
+<p>&#x5982;&#x679C;&#x4F60;&#x60F3;&#x4F7F;&#x7528; keyed state&#xFF0C;&#x90A3;&#x4E48;&#x5C31;&#x9700;&#x8981;&#x6307;&#x5B9A;&#x4E00;&#x4E2A; key &#x5B57;&#x6BB5;&#x7528;&#x4E8E;&#x72B6;&#x6001;&#x4E0E;&#x6570;&#x636E;&#x7684;&#x5206;&#x533A;&#x3002;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; <code>keyBy(KeySelector)</code> &#x65B9;&#x6CD5;&#x6765;&#x6307;&#x5B9A; key&#xFF0C;&#x8FD9;&#x4F1A;&#x8FD4;&#x56DE; keyDataStream&#xFF0C;&#x7528;&#x6765;&#x540E;&#x7EED;&#x5728;&#x6570;&#x636E;&#x6D41;&#x4E0A;&#x4F7F;&#x7528; keyed state&#x3002;</p>
+<p>KeySelector &#x63A5;&#x53E3;&#x7684;&#x5B9E;&#x73B0;&#x5C31;&#x662F;&#x5C06;&#x6BCF;&#x6761;&#x8BB0;&#x5F55;&#x5F53;&#x505A;&#x8F93;&#x5165;&#xFF0C;&#x7136;&#x540E;&#x8FD4;&#x56DE;&#x8BE5;&#x6761;&#x8BB0;&#x5F55;&#x7684; key&#xFF0C;&#x53EF;&#x4EE5;&#x7406;&#x89E3;&#x4E3A;&#x4E1A;&#x52A1;&#x5904;&#x7406;&#x903B;&#x8F91;&#x4E0A;&#x6570;&#x636E;&#x552F;&#x4E00;&#x6807;&#x8BC6;&#x3002;&#x8FD4;&#x56DE;&#x7684; Key &#x53EF;&#x4EE5;&#x662F;&#x4EFB;&#x610F;&#x7C7B;&#x578B;&#xFF0C;&#x4F46;&#x662F;&#x4E00;&#x5B9A;&#x662F;&#x786E;&#x5B9A;&#x7684;&#xFF0C;&#x5373;&#x8F93;&#x5165;&#x76F8;&#x540C;&#x7684;&#x8BB0;&#x5F55;&#xFF0C;&#x5F97;&#x5230;&#x7684; key &#x5E94;&#x8BE5;&#x662F;&#x4E00;&#x6837;&#x7684;&#x3002;</p>
+<p>Flink &#x7684;&#x6570;&#x636E;&#x6A21;&#x578B;&#x5E76;&#x4E0D;&#x662F;&#x57FA;&#x4E8E;&#x952E;&#x503C;&#x5BF9;&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x6CA1;&#x5FC5;&#x8981;&#x5C06;&#x6570;&#x636E;&#x7269;&#x7406;&#x7684;&#x5904;&#x7406;&#x6210; key-value &#x7684;&#x683C;&#x5F0F;&#x3002;Key &#x7684;&#x6982;&#x5FF5;&#x662F;&#x865A;&#x62DF;&#x7684;&#xFF0C;&#x53EA;&#x662F;&#x901A;&#x8FC7;&#x67D0;&#x4E9B;&#x65B9;&#x6CD5;&#x63D0;&#x53D6;&#x51FA;&#x8BB0;&#x5F55;&#x7684; key &#x4F5C;&#x7528;&#x4E8E;&#x67D0;&#x4E9B; operator &#x4E0A;&#xFF08;&#x6BD4;&#x5982; group by &#x8FD9;&#x4E9B;&#xFF09;&#x3002;</p>
+<p>&#x4E0B;&#x9762;&#x662F; KeySelector &#x7684;&#x793A;&#x4F8B; </p>
+<pre class="language-"><code class="lang-java"><span class="token comment">// some ordinary POJO</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">WC</span> <span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token class-name">String</span> word<span class="token punctuation">;</span>
+  <span class="token keyword">public</span> <span class="token keyword">int</span> count<span class="token punctuation">;</span>
+
+  <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">getWord</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">return</span> word<span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token class-name">DataStream</span><span class="token generics"><span class="token punctuation">&lt;</span>WC<span class="token punctuation">&gt;</span></span> words <span class="token operator">=</span> <span class="token comment">// [...]</span>
+<span class="token class-name">KeyedStream</span><span class="token generics"><span class="token punctuation">&lt;</span>WC<span class="token punctuation">&gt;</span></span> keyed <span class="token operator">=</span> words
+  <span class="token punctuation">.</span><span class="token function">keyBy</span><span class="token punctuation">(</span><span class="token constant">WC</span><span class="token operator">::</span><span class="token function">getWord</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h4 id="tuple-keys-and-expression-keys"><a name="tuple-keys-and-expression-keys" class="anchor-navigation-ex-anchor" href="#tuple-keys-and-expression-keys"><i class="fa fa-link" aria-hidden="true"></i></a>Tuple Keys and Expression Keys</h4>
+<p>Flink &#x8FD8;&#x6709;&#x4E24;&#x79CD;&#x58F0;&#x660E; key &#x7684;&#x65B9;&#x5F0F;&#xFF0C;&#x4F46;&#x662F;&#x5728;&#x65B0;&#x7248;&#x672C;&#x4E2D;&#x5DF2;&#x7ECF;&#x4E0D;&#x7ECF;&#x5E38;&#x4F7F;&#x7528;&#xFF0C;&#x4F7F;&#x7528; KeySelector &#x5BF9;&#x4E8E;&#x5927;&#x591A;&#x6570;&#x573A;&#x666F;&#x66F4;&#x7B80;&#x5355;&#x5E76;&#x4E14;&#x63D0;&#x4F9B;&#x4E86;&#x66F4;&#x597D;&#x7684;&#x6027;&#x80FD;&#x4FDD;&#x8BC1;&#x3002;</p>
+<ul>
+<li>Tuple &#x6570;&#x636E;&#x7684;&#x4E0B;&#x6807;&#x6307;&#x5B9A;&#xFF0C;&#x6BD4;&#x5982;&#x5F88;&#x591A;&#x793A;&#x4F8B;&#x4E2D;&#x5E38;&#x89C1;&#x7684; <code>keyBy(0)</code>&#x3002;</li>
+<li>&#x8868;&#x8FBE;&#x5F0F;&#x6307;&#x5B9A;&#xFF0C;&#x5373; expression&#x3002;</li>
+</ul>
+<h3 id="using-keyed-state"><a name="using-keyed-state" class="anchor-navigation-ex-anchor" href="#using-keyed-state"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.2. Using Keyed State</h3>
+<p>Keyed State &#x63A5;&#x53E3;&#x63D0;&#x4F9B;&#x4E86;&#x5BF9;&#x4E0D;&#x540C;&#x7C7B;&#x578B;&#x72B6;&#x6001;&#x7684;&#x8BBF;&#x95EE;&#x3002;&#x76EE;&#x524D;&#xFF0C;Flink &#x63D0;&#x4F9B;&#x4E86;&#x4E86;&#x4EE5;&#x4E0B;&#x51E0;&#x79CD;&#x72B6;&#x6001;&#x539F;&#x8BED;&#xFF1A;</p>
+<ul>
+<li><p>ValueState<t>&#xFF1A;&#x8BE5;&#x72B6;&#x6001;&#x4FDD;&#x5B58;&#x4E00;&#x4E2A;&#x53EF;&#x4EE5;&#x88AB;&#x66F4;&#x65B0;&#x548C;&#x8BFB;&#x53D6;&#x7684;&#x503C;&#xFF08;&#x4F5C;&#x7528;&#x57DF;&#x4E3A;&#x8F93;&#x5165;&#x5143;&#x7D20;&#x7684;&#x952E;&#xFF0C;&#x8BFB;&#x53D6;&#x4E0D;&#x540C;&#x952E;&#x503C;&#x8FD4;&#x56DE;&#x7684;&#x7ED3;&#x679C;&#x662F;&#x4E0D;&#x4E00;&#x6837;&#x7684;&#xFF09;&#x3002;&#x901A;&#x8FC7; update(T) &#x66F4;&#x65B0;&#xFF0C;T value() &#x8BFB;&#x53D6;&#x3002;</t></p>
+</li>
+<li><p>ListState<t>&#xFF1A;&#x8BE5;&#x72B6;&#x6001;&#x4FDD;&#x5B58;&#x4E00;&#x4E2A;&#x5143;&#x7D20;&#x6570;&#x7EC4;&#xFF0C;&#x53EF;&#x4EE5;&#x6DFB;&#x52A0;&#x5143;&#x7D20;&#x548C;&#x901A;&#x8FC7;&#x8FED;&#x4EE3;&#x5668;&#x8BFB;&#x53D6;&#x5143;&#x7D20;&#x6570;&#x7EC4;&#x3002;&#x901A;&#x8FC7; add(T) &#x6216;&#x8005; <code>`addAll(List<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>T</span><span class="token punctuation">&gt;</span></span>)</code> &#x6DFB;&#x52A0;&#x5143;&#x7D20;&#x3001;Iterable<t> get() &#x8BFB;&#x53D6;&#x3001;update(List<t>) &#x8986;&#x76D6;&#x66F4;&#x65B0;&#x5DF2;&#x7ECF;&#x5B58;&#x5728;&#x7684;&#x72B6;&#x6001;&#x3002;</t></t></t></p>
+</li>
+<li><p>ReducingState<t>&#xFF1A;&#x8BE5;&#x72B6;&#x6001;&#x4FDD;&#x5B58;&#x4E00;&#x4E2A;&#x503C;&#xFF0C;&#x542B;&#x4E49;&#x662F;&#x8BE5; key &#x4E0B;&#x6240;&#x6709;&#x72B6;&#x6001;&#x503C;&#x7684;&#x805A;&#x5408;&#x3002;&#x63A5;&#x53E3;&#x7C7B;&#x4F3C;&#x4E8E; ListState&#xFF0C;&#x4F46;&#x662F;&#x662F;&#x901A;&#x8FC7; add(T) &#x6DFB;&#x52A0;&#x5143;&#x7D20;&#xFF0C;ReduceFunction &#x5B9E;&#x73B0;&#x805A;&#x5408;&#x8BA1;&#x7B97;&#x3002;</t></p>
+</li>
+<li><p>AggregatingState<in, out="">&#xFF1A;&#x8BE5;&#x72B6;&#x6001;&#x4FDD;&#x5B58;&#x4E00;&#x4E2A;&#x503C;&#xFF0C;&#x542B;&#x4E49;&#x662F;&#x8BE5; key &#x4E0B;&#x6240;&#x6709;&#x72B6;&#x6001;&#x503C;&#x7684;&#x805A;&#x5408;&#x3002;&#x4E0E; ReducingState &#x4E0D;&#x540C;&#x7684;&#x662F;&#xFF0C;&#x805A;&#x5408;&#x503C;&#x7684;&#x7C7B;&#x578B;&#x53EF;&#x80FD;&#x548C;&#x8F93;&#x5165;&#x5143;&#x7D20;&#x7684;&#x7C7B;&#x578B;&#x4E0D;&#x4E00;&#x6837;&#xFF08;&#x6BD4;&#x5982;&#x8F93;&#x5165;&#x4E00;&#x5806;&#x4E8B;&#x4EF6;&#xFF0C;&#x901A;&#x8FC7;&#x4E8B;&#x4EF6;&#x7684;&#x67D0;&#x4E9B;&#x6807;&#x8BB0;&#x8FDB;&#x884C;&#x805A;&#x5408;&#xFF09;&#x3002;&#x901A;&#x8FC7; add(IN) &#x6DFB;&#x52A0;&#x5143;&#x7D20;&#xFF0C;AggregateFunction &#x5B9E;&#x73B0;&#x805A;&#x5408;&#x8BA1;&#x7B97;&#x3002;</in,></p>
+</li>
+<li><p>MapState<uk, uv="">&#xFF1A;&#x8BE5;&#x72B6;&#x6001;&#x4FDD;&#x5B58;&#x4E00;&#x4E2A; mapping &#x6570;&#x7EC4;&#x3002;&#x53EF;&#x4EE5;&#x5411;&#x8BE5;&#x72B6;&#x6001;&#x4E2D;&#x6DFB;&#x52A0;&#x952E;&#x503C;&#x5BF9;&#x548C;&#x901A;&#x8FC7;&#x8FED;&#x4EE3;&#x5668;&#x8BFB;&#x53D6;&#x5DF2;&#x7ECF;&#x5B58;&#x5728;&#x7684; mapping&#x3002;&#x901A;&#x8FC7;  put(UK, UV) &#x6216;&#x8005; <code>putAll(Map<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>UK,</span> <span class="token attr-name">UV</span><span class="token punctuation">&gt;</span></span>)</code> &#x6DFB;&#x52A0;&#x5143;&#x7D20;&#x3001;get(UK) &#x83B7;&#x53D6;&#x6307;&#x5B9A; key &#x7684;&#x5143;&#x7D20;&#x3002;&#x53EF;&#x4EE5;&#x5206;&#x522B;&#x4F7F;&#x7528; entry()&#x3001;keys() &#x548C; values() &#x8BBF;&#x95EE;&#x8FED;&#x4EE3;&#x5668;&#x68C0;&#x7D22;&#x952E;&#x503C;&#x5BF9;&#x3001;&#x952E;&#x548C;&#x503C;&#x3002;&#x4F7F;&#x7528; isEmpty() &#x68C0;&#x6D4B;&#x72B6;&#x6001;&#x662F;&#x5426;&#x4E3A;&#x7A7A;&#x3002;</uk,></p>
+</li>
+</ul>
+<p>&#x6240;&#x6709;&#x7C7B;&#x578B;&#x7684;&#x72B6;&#x6001;&#x90FD;&#x6709; clear() &#x65B9;&#x6CD5;&#xFF0C;&#x7528;&#x6765;&#x6E05;&#x7A7A;&#x5F53;&#x524D; key &#x7684;&#x6240;&#x6709;&#x72B6;&#x6001;&#x3002;</p>
+<p>&#x9700;&#x8981;&#x91CD;&#x70B9;&#x6CE8;&#x610F;&#x7684;&#x662F;&#xFF0C;&#x72B6;&#x6001;&#x64CD;&#x4F5C;&#x66B4;&#x9732;&#x51FA;&#x6765;&#x7684;&#x63A5;&#x53E3;&#x4EC5;&#x7528;&#x4E8E;&#x4E0E;&#x72B6;&#x6001;&#x4EA4;&#x4E92;&#xFF0C;&#x4E0E;&#x72B6;&#x6001;&#x5B58;&#x50A8;&#x65E0;&#x5173;&#xFF0C;&#x72B6;&#x6001;&#x53EF;&#x4EE5;&#x5B58;&#x50A8;&#x518D;&#x5185;&#x90E8;&#x6216;&#x8005;&#x5916;&#x90E8;&#x7CFB;&#x7EDF;&#x4E0A;&#x3002;keyed state &#x7684;&#x53D6;&#x503C;&#x4EC5;&#x4E0E;&#x8C03;&#x7528;&#x65F6;&#x4F20;&#x5165;&#x7684; key &#x503C;&#x6709;&#x5173;&#xFF0C;&#x56E0;&#x6B64;&#x4E0D;&#x540C;&#x7684; key &#x53D6;&#x56DE;&#x6765;&#x7684;&#x72B6;&#x6001;&#x662F;&#x4E0D;&#x4E00;&#x6837;&#x7684;&#x3002;</p>
+<p>&#x8981;&#x83B7;&#x5F97;&#x72B6;&#x6001;&#x5904;&#x7406;&#x7684;&#x53E5;&#x67C4;&#xFF0C;&#x9700;&#x8981;&#x58F0;&#x660E; StateDescriptor&#xFF0C;&#x5305;&#x542B;&#x72B6;&#x6001;&#x7684;&#x540D;&#x79F0;&#xFF08;&#x4E0B;&#x9762;&#x4F1A;&#x8BB2;&#x5230;&#xFF0C;&#x5B58;&#x50A8;&#x7684;&#x72B6;&#x6001;&#x62E5;&#x6709;&#x4E00;&#x4E2A;&#x552F;&#x4E00;&#x540D;&#x79F0;&#xFF0C;&#x53EF;&#x4EE5;&#x7406;&#x89E3;&#x4E3A;&#x547D;&#x540D;&#x7A7A;&#x95F4;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x8BE5;&#x547D;&#x540D;&#x64CD;&#x4F5C;&#x6240;&#x6709;&#x72B6;&#x6001;&#xFF09;&#x3001;&#x72B6;&#x6001;&#x7684;&#x7C7B;&#x578B;&#xFF0C;&#x53EF;&#x9009;&#x7684;&#x7528;&#x6237;&#x81EA;&#x5B9A;&#x4E49;&#x65B9;&#x6CD5;&#xFF08;&#x6BD4;&#x5982; ReducingFunction&#xFF09;&#x3002;&#x6839;&#x636E;&#x4F60;&#x60F3;&#x53D6;&#x56DE;&#x6765;&#x7684;&#x72B6;&#x6001;&#x7C7B;&#x578B;&#xFF0C;&#x53EF;&#x4EE5;&#x58F0;&#x660E; ValueStateDescriptor&#x3001; ListStateDescriptor&#x3001;AggregatingStateDescriptor&#x3001; ReducingStateDescriptor&#x3001; MapStateDescriptor&#x3002;</p>
+<p>&#x72B6;&#x6001;&#x901A;&#x8FC7; RuntimeContext &#x8BBF;&#x95EE;&#xFF0C;&#x6240;&#x4EE5;&#x53EA;&#x80FD;&#x5E94;&#x7528;&#x4E8E; <em>rich functions</em>&#x3002;RichFunction &#x4E2D;&#x7684; RuntimeContext &#x901A;&#x8FC7;&#x4EE5;&#x4E0B;&#x65B9;&#x6CD5;&#x8BBF;&#x95EE;&#x72B6;&#x6001;&#xFF1A;</p>
+<ul>
+<li>ValueState<t> getState(ValueStateDescriptor<t>)</t></t></li>
+<li>ReducingState<t> getReducingState(ReducingStateDescriptor<t>)</t></t></li>
+<li>ListState<t> getListState(ListStateDescriptor<t>)</t></t></li>
+<li>AggregatingState<in, out=""> getAggregatingState(AggregatingStateDescriptor<in, acc,="" out="">)</in,></in,></li>
+<li>MapState<uk, uv=""> getMapState(MapStateDescriptor<uk, uv="">)</uk,></uk,></li>
+</ul>
+<p>&#x4E0B;&#x9762;&#x5C55;&#x793A;&#x4E86;&#x4E00;&#x4E2A;&#x793A;&#x4F8B;&#xFF0C;&#x5F53;&#x67D0;&#x4E2A; key &#x7684;&#x6570;&#x636E;&#x91CF;&#x5230;&#x8FBE;&#x4E24;&#x4E2A;&#x65F6;&#xFF0C;&#x5C31;&#x8BA1;&#x7B97;&#x5E73;&#x5747;&#x503C;&#xFF0C;&#x5E76;&#x6E05;&#x7A7A;&#x5F53;&#x524D;&#x7684;&#x72B6;&#x6001;&#xFF0C;&#x5982;&#x6B64;&#x5F80;&#x590D;&#x3002;</p>
+<pre class="language-"><code class="lang-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">CountWindowAverage</span> <span class="token keyword">extends</span> <span class="token class-name">RichFlatMapFunction</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Tuple2</span><span class="token punctuation">&lt;</span><span class="token class-name">Long</span><span class="token punctuation">,</span> <span class="token class-name">Long</span><span class="token punctuation">&gt;</span><span class="token punctuation">,</span> <span class="token class-name">Tuple2</span><span class="token punctuation">&lt;</span><span class="token class-name">Long</span><span class="token punctuation">,</span> <span class="token class-name">Long</span><span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span></span> <span class="token punctuation">{</span>
+
+    <span class="token comment">/**
+     * The ValueState handle. The first field is the count, the second field a running sum.
+     */</span>
+    <span class="token keyword">private</span> <span class="token keyword">transient</span> <span class="token class-name">ValueState</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Tuple2</span><span class="token punctuation">&lt;</span><span class="token class-name">Long</span><span class="token punctuation">,</span> <span class="token class-name">Long</span><span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span></span> sum<span class="token punctuation">;</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">flatMap</span><span class="token punctuation">(</span><span class="token class-name">Tuple2</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Long</span><span class="token punctuation">,</span> <span class="token class-name">Long</span><span class="token punctuation">&gt;</span></span> input<span class="token punctuation">,</span> <span class="token class-name">Collector</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Tuple2</span><span class="token punctuation">&lt;</span><span class="token class-name">Long</span><span class="token punctuation">,</span> <span class="token class-name">Long</span><span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span></span> out<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span> <span class="token punctuation">{</span>
+
+        <span class="token comment">// access the state value</span>
+        <span class="token class-name">Tuple2</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Long</span><span class="token punctuation">,</span> <span class="token class-name">Long</span><span class="token punctuation">&gt;</span></span> currentSum <span class="token operator">=</span> sum<span class="token punctuation">.</span><span class="token function">value</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// update the count</span>
+        currentSum<span class="token punctuation">.</span>f0 <span class="token operator">+=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// add the second field of the input value</span>
+        currentSum<span class="token punctuation">.</span>f1 <span class="token operator">+=</span> input<span class="token punctuation">.</span>f1<span class="token punctuation">;</span>
+
+        <span class="token comment">// update the state</span>
+        sum<span class="token punctuation">.</span><span class="token function">update</span><span class="token punctuation">(</span>currentSum<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// if the count reaches 2, emit the average and clear the state</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>currentSum<span class="token punctuation">.</span>f0 <span class="token operator">&gt;=</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            out<span class="token punctuation">.</span><span class="token function">collect</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Tuple2</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span>input<span class="token punctuation">.</span>f0<span class="token punctuation">,</span> currentSum<span class="token punctuation">.</span>f1 <span class="token operator">/</span> currentSum<span class="token punctuation">.</span>f0<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            sum<span class="token punctuation">.</span><span class="token function">clear</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token keyword">open</span><span class="token punctuation">(</span><span class="token class-name">Configuration</span> config<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">ValueStateDescriptor</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Tuple2</span><span class="token punctuation">&lt;</span><span class="token class-name">Long</span><span class="token punctuation">,</span> <span class="token class-name">Long</span><span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span></span> descriptor <span class="token operator">=</span>
+                <span class="token keyword">new</span> <span class="token class-name">ValueStateDescriptor</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span>
+                        <span class="token string">&quot;average&quot;</span><span class="token punctuation">,</span> <span class="token comment">// the state name</span>
+                        <span class="token class-name">TypeInformation</span><span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">TypeHint</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Tuple2</span><span class="token punctuation">&lt;</span><span class="token class-name">Long</span><span class="token punctuation">,</span> <span class="token class-name">Long</span><span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token comment">// type information</span>
+                        <span class="token class-name">Tuple2</span><span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span><span class="token number">0L</span><span class="token punctuation">,</span> <span class="token number">0L</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// default value of the state, if nothing was set</span>
+        sum <span class="token operator">=</span> <span class="token function">getRuntimeContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getState</span><span class="token punctuation">(</span>descriptor<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// this can be used in a streaming program like this (assuming we have a StreamExecutionEnvironment env)</span>
+env<span class="token punctuation">.</span><span class="token function">fromElements</span><span class="token punctuation">(</span>f<span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">keyBy</span><span class="token punctuation">(</span>value <span class="token operator">-&gt;</span> value<span class="token punctuation">.</span>f0<span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">flatMap</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">CountWindowAverage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// the printed output will be (1,4) and (1,5)</span>
+</code></pre>
+<h4 id="state-ttl"><a name="state-ttl" class="anchor-navigation-ex-anchor" href="#state-ttl"><i class="fa fa-link" aria-hidden="true"></i></a>State TTL</h4>
+<p>&#x72B6;&#x6001;&#x4E0D;&#x53EF;&#x80FD;&#x65E0;&#x9650;&#x671F;&#x4FDD;&#x5B58;&#x4E0B;&#x53BB;&#xFF0C;&#x56E0;&#x6B64;&#x6709;&#x4E86; TTL &#x7684;&#x6982;&#x5FF5;&#xFF0C;&#x8FC7;&#x671F;&#x7684;&#x72B6;&#x6001;&#x5C06;&#x4F1A;&#x901A;&#x8FC7;&#x4E00;&#x4E9B;&#x7B56;&#x7565;&#x8FDB;&#x884C;&#x5220;&#x9664;&#x3002;&#x96C6;&#x5408;&#x7C7B;&#x578B;&#x7684;&#x72B6;&#x6001;&#x7684;&#x6BCF;&#x4E2A;&#x5143;&#x7D20;&#x90FD;&#x53EF;&#x4EE5;&#x8BBE;&#x7F6E; TTL&#xFF0C;&#x8FD9;&#x610F;&#x5473;&#x7740; list &#x548C; mapping &#x7C7B;&#x578B;&#x7684;&#x72B6;&#x6001;&#x4E2D;&#x6BCF;&#x4E2A;&#x5143;&#x7D20;&#x7684;&#x6E05;&#x7406;&#x662F;&#x72EC;&#x7ACB;&#x7684;&#x3002;</p>
+<p>&#x4F7F;&#x7528; TTL &#x9700;&#x8981;&#x5B9A;&#x4E49; StateTtlConfig&#xFF0C;&#x4E0B;&#x9762;&#x662F;&#x793A;&#x4F8B;&#xFF1A;</p>
+<pre class="language-"><code class="lang-java"><span class="token keyword">import</span> <span class="token import"><span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>flink<span class="token punctuation">.</span>api<span class="token punctuation">.</span>common<span class="token punctuation">.</span>state<span class="token punctuation">.</span></span><span class="token class-name">StateTtlConfig</span></span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token import"><span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>flink<span class="token punctuation">.</span>api<span class="token punctuation">.</span>common<span class="token punctuation">.</span>state<span class="token punctuation">.</span></span><span class="token class-name">ValueStateDescriptor</span></span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token import"><span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>flink<span class="token punctuation">.</span>api<span class="token punctuation">.</span>common<span class="token punctuation">.</span>time<span class="token punctuation">.</span></span><span class="token class-name">Time</span></span><span class="token punctuation">;</span>
+
+<span class="token class-name">StateTtlConfig</span> ttlConfig <span class="token operator">=</span> <span class="token class-name">StateTtlConfig</span>
+    <span class="token punctuation">.</span><span class="token function">newBuilder</span><span class="token punctuation">(</span><span class="token class-name">Time</span><span class="token punctuation">.</span><span class="token function">seconds</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">setUpdateType</span><span class="token punctuation">(</span><span class="token class-name">StateTtlConfig<span class="token punctuation">.</span>UpdateType<span class="token punctuation">.</span>OnCreateAndWrite</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">setStateVisibility</span><span class="token punctuation">(</span><span class="token class-name">StateTtlConfig<span class="token punctuation">.</span>StateVisibility<span class="token punctuation">.</span>NeverReturnExpired</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token class-name">ValueStateDescriptor</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">&gt;</span></span> stateDescriptor <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ValueStateDescriptor</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token string">&quot;text state&quot;</span><span class="token punctuation">,</span> <span class="token class-name">String</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+stateDescriptor<span class="token punctuation">.</span><span class="token function">enableTimeToLive</span><span class="token punctuation">(</span>ttlConfig<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>StateTtlConfig &#x540E;&#x9762;&#x8DDF;&#x7740;&#x51E0;&#x4E2A;&#x5FC5;&#x9009;&#x9879;&#x548C;&#x53EF;&#x9009;&#x9879;&#xFF0C;newBuilder &#x662F;&#x5FC5;&#x9009;&#x7684;&#xFF0C;&#x5176;&#x53C2;&#x6570;&#x5B9A;&#x4E49;&#x4E86; TTL &#x7684;&#x65F6;&#x95F4;&#x3002;</p>
+<p>&#x53EF;&#x9009;&#x7684; setUpdateType &#x5B9A;&#x4E49;&#x4E86; TTL &#x7684;&#x89E6;&#x53D1;&#x7B56;&#x7565;&#xFF0C;&#x63D0;&#x4F9B;&#x4E86;&#x4E24;&#x4E2A;&#x9009;&#x62E9;&#xFF0C;&#x9ED8;&#x8BA4;&#x662F; OnCreateAndWrite</p>
+<ul>
+<li>StateTtlConfig.UpdateType.OnCreateAndWrite &#x5728;&#x521B;&#x5EFA;&#x548C;&#x5199;&#x5165;&#x65F6;&#x5C31;&#x4F1A;&#x89E6;&#x53D1;&#x3002;</li>
+<li>StateTtlConfig.UpdateType.OnReadAndWrite &#x5728;&#x521B;&#x5EFA;&#xFF0C;&#x5199;&#x5165;&#xFF0C;&#x8BFB;&#x53D6;&#x65F6;&#x90FD;&#x4F1A;&#x89E6;&#x53D1;&#x3002;</li>
+</ul>
+<p>setStateVisibility &#x7528;&#x6765;&#x8BBE;&#x7F6E;&#x5230;&#x8FBE; TTL &#x7684;&#x72B6;&#x6001;&#x4F46;&#x662F;&#x672A;&#x88AB;&#x6E05;&#x9664;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x8BFB;&#x53D6;&#x662F;&#x5426;&#x8981;&#x8FD4;&#x56DE;&#x503C;&#x3002;</p>
+<ul>
+<li>StateTtlConfig.StateVisibility.NeverReturnExpired &#x4E0D;&#x4F1A;&#x8FD4;&#x56DE;&#x8FC7;&#x671F;&#x72B6;&#x6001;</li>
+<li>StateTtlConfig.StateVisibility.ReturnExpiredIfNotCleanedUp &#x72B6;&#x6001;&#x867D;&#x7136;&#x8FC7;&#x671F;&#x4F46;&#x662F;&#x672A;&#x88AB;&#x6E05;&#x9664;&#xFF0C;&#x8BFB;&#x53D6;&#x4ECD;&#x7136;&#x4F1A;&#x8FD4;&#x56DE;&#x503C;&#x3002;</li>
+</ul>
+<p>Notes&#xFF1A;</p>
+<ul>
+<li>&#x4E3A;&#x4E86;&#x5B9E;&#x73B0; TTL &#xFF0C;&#x72B6;&#x6001;&#x540E;&#x7AEF;&#x9700;&#x8981;&#x5B58;&#x50A8;&#x6BCF;&#x4E2A;&#x503C;&#x4FEE;&#x6539;&#x7684;&#x65F6;&#x95F4;&#x6233;&#xFF0C;&#x8FD9;&#x6837;&#x4F1A;&#x589E;&#x52A0;&#x5B58;&#x50A8;&#x538B;&#x529B;&#x3002;Heap &#x72B6;&#x6001;&#x540E;&#x7AEF;&#x4F1A;&#x5B58;&#x50A8;&#x989D;&#x5916;&#x7684; java &#x5BF9;&#x8C61;&#xFF0C;&#x5305;&#x542B;&#x5BF9;&#x72B6;&#x6001;&#x7684;&#x5F15;&#x7528;&#x548C;&#x5185;&#x5B58;&#x4E2D;&#x7684;&#x539F;&#x59CB; long &#x503C;&#x3002;RocksDB &#x4F1A;&#x4E3A;&#x6BCF;&#x4E2A;&#x72B6;&#x6001;&#x5143;&#x7D20;&#x6DFB;&#x52A0; 8 &#x5B57;&#x8282;&#x7528;&#x4E8E;&#x5B58;&#x50A8;&#x65F6;&#x95F4;&#x3002;</li>
+<li>TTL &#x76EE;&#x524D;&#x4EC5;&#x4EC5;&#x57FA;&#x4E8E;&#x5904;&#x7406;&#x65F6;&#x95F4;&#x3002;</li>
+<li>&#x5982;&#x679C;&#x662F;&#x4ECE;&#x72B6;&#x6001;&#x4E2D;&#x6062;&#x590D;&#x4EFB;&#x52A1;&#x7684;&#x8BDD;&#xFF0C;&#x9700;&#x8981;&#x5173;&#x95ED;&#x72B6;&#x6001;&#x7684; TTL&#xFF0C;&#x5426;&#x5219;&#x4F1A;&#x5F15;&#x53D1;&#x4EFB;&#x52A1;&#x5931;&#x8D25;&#x548C;&#x4E00;&#x4E9B;&#x672A;&#x77E5;&#x9519;&#x8BEF;&#x3002;</li>
+<li>&#x53EA;&#x8981;&#x72B6;&#x6001;&#x503C;&#x7684;&#x5E8F;&#x5217;&#x5316;&#x652F;&#x6301; null&#xFF0C;&#x8BBE;&#x7F6E; TTL &#x7684; map &#x7C7B;&#x578B;&#x7684;&#x72B6;&#x6001;&#x4E5F;&#x53EF;&#x4EE5;&#x652F;&#x6301;&#x5904;&#x7406; null &#x503C;&#x3002;&#x5426;&#x5219;&#x4F1A;&#x629B;&#x51FA; NullableSerializer&#x3002;</li>
+<li>Python DataStream API &#x76EE;&#x524D;&#x4E0D;&#x652F;&#x6301; State TTL&#x3002;</li>
+</ul>
+<h4 id="&#x8FC7;&#x671F;&#x72B6;&#x6001;&#x7684;&#x6E05;&#x9664;&#x7B56;&#x7565;"><a name="&#x8FC7;&#x671F;&#x72B6;&#x6001;&#x7684;&#x6E05;&#x9664;&#x7B56;&#x7565;" class="anchor-navigation-ex-anchor" href="#&#x8FC7;&#x671F;&#x72B6;&#x6001;&#x7684;&#x6E05;&#x9664;&#x7B56;&#x7565;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x8FC7;&#x671F;&#x72B6;&#x6001;&#x7684;&#x6E05;&#x9664;&#x7B56;&#x7565;</h4>
+<p>&#x9ED8;&#x8BA4;&#x914D;&#x7F6E;&#x4E0B;&#xFF0C;&#x7A0B;&#x5E8F;&#x662F;&#x4E0D;&#x4F1A;&#x8BFB;&#x53D6;&#x5230;&#x8FC7;&#x671F;&#x7684;&#x72B6;&#x6001;&#x7684;&#xFF08;&#x4E0D;&#x7BA1;&#x6B64;&#x65F6;&#x72B6;&#x6001;&#x662F;&#x903B;&#x8F91;&#x5220;&#x9664;&#x8FD8;&#x662F;&#x7269;&#x7406;&#x5220;&#x9664;&#xFF09;&#xFF0C;&#x5982;&#x679C;&#x72B6;&#x6001;&#x540E;&#x7AEF;&#x652F;&#x6301;&#x7684;&#x8BDD;&#xFF0C;&#x4F1A;&#x542F;&#x52A8;&#x4E00;&#x4E2A;&#x540E;&#x53F0;&#x8FDB;&#x7A0B;&#x5B9A;&#x671F;&#x6536;&#x96C6;&#x8FC7;&#x671F;&#x72B6;&#x6001;&#x8FDB;&#x884C;&#x5220;&#x9664;&#x3002;&#x901A;&#x8FC7; StateTtlConfig &#x53EF;&#x4EE5;&#x5173;&#x95ED;&#x8BE5;&#x540E;&#x53F0;&#x8FDB;&#x7A0B;</p>
+<pre class="language-"><code class="lang-java"><span class="token keyword">import</span> <span class="token import"><span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>flink<span class="token punctuation">.</span>api<span class="token punctuation">.</span>common<span class="token punctuation">.</span>state<span class="token punctuation">.</span></span><span class="token class-name">StateTtlConfig</span></span><span class="token punctuation">;</span>
+<span class="token class-name">StateTtlConfig</span> ttlConfig <span class="token operator">=</span> <span class="token class-name">StateTtlConfig</span>
+    <span class="token punctuation">.</span><span class="token function">newBuilder</span><span class="token punctuation">(</span><span class="token class-name">Time</span><span class="token punctuation">.</span><span class="token function">seconds</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">disableCleanupInBackground</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>&#x4E0B;&#x9762;&#x4F1A;&#x4ECB;&#x7ECD;&#x4E00;&#x4E9B;&#x66F4;&#x7EC6;&#x7C92;&#x5EA6;&#x7684;&#x72B6;&#x6001;&#x6E05;&#x7406;&#x7B56;&#x7565;&#x3002;&#x4E00;&#x822C; Heap &#x72B6;&#x6001;&#x540E;&#x7AEF;&#x4F1A;&#x8FDB;&#x884C;&#x589E;&#x91CF;&#x66F4;&#x65B0;&#xFF0C;RocksDB &#x4F1A;&#x901A;&#x8FC7;&#x538B;&#x5B9E;&#x7B56;&#x7565;&#x8FDB;&#x884C;&#x6E05;&#x7406;&#x3002;</p>
+<p><strong>Cleanup in full snapshot</strong></p>
+<p>&#x5728;&#x751F;&#x6210;&#x72B6;&#x6001;&#x5FEB;&#x7167;&#x7684;&#x65F6;&#x5019;&#x89E6;&#x53D1;&#x72B6;&#x6001;&#x7684;&#x6E05;&#x7406;&#xFF0C;&#x8FD9;&#x6837;&#x505A;&#x53EF;&#x4EE5;&#x51CF;&#x5C11;&#x5FEB;&#x7167;&#x7684;&#x5927;&#x5C0F;&#x3002;&#x5728;&#x5F53;&#x524D;&#x5B9E;&#x73B0;&#x4E0B;&#xFF0C;&#x672C;&#x5730;&#x72B6;&#x6001;&#x4E0D;&#x4F1A;&#x88AB;&#x6E05;&#x7406;&#xFF0C;&#x4F46;&#x662F;&#x524D;&#x4E00;&#x4E2A;&#x5FEB;&#x7167;&#x4E2D;&#x8FC7;&#x671F;&#x72B6;&#x6001;&#x5DF2;&#x7ECF;&#x88AB;&#x6E05;&#x7406;&#x4E86;&#x3002;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; StateTtlConfig &#x914D;&#x7F6E;&#x3002;</p>
+<pre class="language-"><code class="lang-java"><span class="token keyword">import</span> <span class="token import"><span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>flink<span class="token punctuation">.</span>api<span class="token punctuation">.</span>common<span class="token punctuation">.</span>state<span class="token punctuation">.</span></span><span class="token class-name">StateTtlConfig</span></span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token import"><span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>flink<span class="token punctuation">.</span>api<span class="token punctuation">.</span>common<span class="token punctuation">.</span>time<span class="token punctuation">.</span></span><span class="token class-name">Time</span></span><span class="token punctuation">;</span>
+
+<span class="token class-name">StateTtlConfig</span> ttlConfig <span class="token operator">=</span> <span class="token class-name">StateTtlConfig</span>
+    <span class="token punctuation">.</span><span class="token function">newBuilder</span><span class="token punctuation">(</span><span class="token class-name">Time</span><span class="token punctuation">.</span><span class="token function">seconds</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">cleanupFullSnapshot</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>&#x8FD9;&#x79CD;&#x6E05;&#x7406;&#x7B56;&#x7565;&#x4E0D;&#x9002;&#x7528;&#x4E8E; RocksDB &#x4E0A;&#x7684;&#x589E;&#x91CF;&#x5FEB;&#x7167;&#x3002;</p>
+<p><strong>Incremental cleanup</strong></p>
+<p>&#x589E;&#x91CF;&#x89E6;&#x53D1;&#x72B6;&#x6001;&#x7684;&#x6E05;&#x7406;&#xFF0C;&#x53EF;&#x4EE5;&#x5728;&#x8BBF;&#x95EE;&#x72B6;&#x6001;&#x6216;&#x8005;&#x5904;&#x7406;&#x8BB0;&#x5F55;&#x65F6;&#x89E6;&#x53D1;&#x3002;&#x57FA;&#x672C;&#x5B9E;&#x73B0;&#x662F;&#x7EF4;&#x6301;&#x4E00;&#x4E2A;&#x5168;&#x5C40;&#x7684;&#x72B6;&#x6001;&#x5143;&#x7D20;&#x8FED;&#x4EE3;&#x5668;&#xFF0C;&#x5F53;&#x6E05;&#x7406;&#x88AB;&#x89E6;&#x53D1;&#x540E;&#xFF0C;&#x8C03;&#x7528;&#x8FED;&#x4EE3;&#x5668;&#xFF0C;&#x904D;&#x5386;&#x6240;&#x6709;&#x72B6;&#x6001;&#x5143;&#x7D20;&#x7136;&#x540E;&#x6E05;&#x7406;&#x6389;&#x8FC7;&#x671F;&#x72B6;&#x6001;&#x3002;&#x540C;&#x6837;&#x662F;&#x901A;&#x8FC7; StateTtlConfig &#x914D;&#x7F6E;&#x3002;</p>
+<pre class="language-"><code class="lang-java"><span class="token keyword">import</span> <span class="token import"><span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>flink<span class="token punctuation">.</span>api<span class="token punctuation">.</span>common<span class="token punctuation">.</span>state<span class="token punctuation">.</span></span><span class="token class-name">StateTtlConfig</span></span><span class="token punctuation">;</span>
+ <span class="token class-name">StateTtlConfig</span> ttlConfig <span class="token operator">=</span> <span class="token class-name">StateTtlConfig</span>
+    <span class="token punctuation">.</span><span class="token function">newBuilder</span><span class="token punctuation">(</span><span class="token class-name">Time</span><span class="token punctuation">.</span><span class="token function">seconds</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">cleanupIncrementally</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>&#x8FD9;&#x91CC;&#x6709;&#x4E24;&#x4E2A;&#x53C2;&#x6570;&#xFF0C;&#x7B2C;&#x4E00;&#x4E2A;&#x53C2;&#x6570;&#x4EE3;&#x8868;&#x6BCF;&#x6B21;&#x89E6;&#x53D1;&#x6E05;&#x7406;&#x65F6;&#x68C0;&#x67E5;&#x7684;&#x72B6;&#x6001;&#x6761;&#x6570;&#xFF0C;&#x5728;&#x8BBF;&#x95EE;&#x72B6;&#x6001;&#x7684;&#x65F6;&#x5019;&#x5C31;&#x4F1A;&#x89E6;&#x53D1;&#x68C0;&#x67E5;&#x3002;&#x7B2C;&#x4E8C;&#x4E2A;&#x53C2;&#x6570;&#x4EE3;&#x8868;&#x6BCF;&#x6B21;&#x5904;&#x7406;&#x6570;&#x636E;&#x65F6;&#x662F;&#x5426;&#x9700;&#x8981;&#x89E6;&#x53D1;&#x6E05;&#x7406;&#x7B56;&#x7565;&#x3002;Heap Backend &#x9ED8;&#x8BA4;&#x662F;&#x5728;&#x72B6;&#x6001;&#x8BBF;&#x95EE;&#x65F6;&#x89E6;&#x53D1;&#x68C0;&#x67E5;5&#x6761;&#x72B6;&#x6001;&#x662F;&#x5426;&#x8FC7;&#x671F;&#x3002;</p>
+<p>Notes&#xFF1A;</p>
+<ul>
+<li>&#x5982;&#x679C;&#x6CA1;&#x6709;&#x72B6;&#x6001;&#x8BBF;&#x95EE;&#x6216;&#x8005;&#x6570;&#x636E;&#x6D41;&#x7684;&#x5904;&#x7406;&#xFF0C;&#x8FC7;&#x671F;&#x7684;&#x72B6;&#x6001;&#x4F1A;&#x6C38;&#x8FDC;&#x4FDD;&#x5B58;&#x4E0B;&#x53BB;&#x3002;</li>
+<li>&#x589E;&#x91CF;&#x6E05;&#x7406;&#x4F1A;&#x589E;&#x5927;&#x5904;&#x7406;&#x65F6;&#x5EF6;&#x3002;</li>
+<li>&#x76EE;&#x524D;&#x4EC5;&#x5BF9; Heap Backend &#x8FDB;&#x884C;&#x589E;&#x91CF;&#x6E05;&#x7406;&#xFF0C;&#x4E0D;&#x652F;&#x6301; RocksDB&#x3002; </li>
+<li>&#x5982;&#x679C;&#x914D;&#x7F6E;&#x7684; Heap Backend &#x662F;&#x540C;&#x6B65;&#x5FEB;&#x7167;&#xFF0C;&#x5219;&#x5168;&#x5C40;&#x7684;&#x8FED;&#x4EE3;&#x5668;&#x4F1A;&#x4FDD;&#x7559;&#x6240;&#x6709; key &#x7684;&#x526F;&#x672C;&#x7528;&#x6765;&#x6E05;&#x7406;&#xFF0C;&#x56E0;&#x4E3A;&#x5176;&#x5B9E;&#x73B0;&#x4E0D;&#x652F;&#x6301;&#x5E76;&#x53D1;&#x4FEE;&#x6539;&#x3002;&#x5F02;&#x6B65;&#x5219;&#x6CA1;&#x6709;&#x6B64;&#x95EE;&#x9898;&#x3002;</li>
+<li>&#x5BF9;&#x4E8E;&#x5DF2;&#x7ECF;&#x8FD0;&#x884C;&#x7684; job&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; StateTtlConfig &#x5F00;&#x542F;&#x6E05;&#x7406;&#xFF0C;&#x4F8B;&#x5982;&#x4ECE; savepoint &#x6062;&#x590D;&#x4F5C;&#x4E1A;&#x65F6;&#x3002;</li>
+</ul>
+<p><strong>Cleanup during RocksDB compaction</strong></p>
+<p>&#x4F7F;&#x7528; RocksDB &#x72B6;&#x6001;&#x540E;&#x7AEF;&#x7684;&#x8BDD;&#xFF0C;&#x4F1A;&#x8C03;&#x7528; Flink compaction filter &#x7528;&#x4E8E;&#x540E;&#x53F0;&#x72B6;&#x6001;&#x6E05;&#x7406;&#x3002;compaction &#x610F;&#x4E3A;&#x538B;&#x5B9E;&#xFF0C;&#x5728;&#x5927;&#x6570;&#x636E;&#x5B58;&#x50A8;&#x4E2D;&#x7ECF;&#x5E38;&#x4F1A;&#x63A5;&#x89E6;&#x5230;&#xFF0C;&#x76EE;&#x7684;&#x662F;&#x5BF9;&#x5404;&#x79CD;&#x6444;&#x5165;&#x4EFB;&#x52A1;&#x7684;&#x6587;&#x4EF6;&#x788E;&#x7247;&#x8FDB;&#x884C;&#x5408;&#x5E76;&#x538B;&#x7F29;&#xFF0C;&#x51CF;&#x5C0F;&#x788E;&#x7247;&#x6570;&#x91CF;&#xFF0C;&#x63D0;&#x9AD8;&#x5B58;&#x50A8;&#x67E5;&#x8BE2;&#x7684;&#x6027;&#x80FD;&#x3002;&#x8FD9;&#x91CC;&#x7684;&#x538B;&#x5B9E;&#x4E5F;&#x662F;&#x4E00;&#x6837;&#x7684;&#xFF0C;&#x5728;&#x5BF9;&#x72B6;&#x6001;&#x505A;&#x5408;&#x5E76;&#x538B;&#x7F29;&#x7684;&#x8FC7;&#x7A0B;&#x4E2D;&#x987A;&#x4FBF;&#x5BF9;&#x72B6;&#x6001;&#x8FDB;&#x884C;&#x6E05;&#x7406;&#x3002; Flink compaction filter &#x4F1A;&#x68C0;&#x67E5;&#x72B6;&#x6001;&#x7684;&#x65F6;&#x95F4;&#x5E76;&#x6E05;&#x9664;&#x8FC7;&#x671F;&#x7B56;&#x7565;&#x3002;</p>
+<pre class="language-"><code class="lang-java"><span class="token keyword">import</span> <span class="token import"><span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>flink<span class="token punctuation">.</span>api<span class="token punctuation">.</span>common<span class="token punctuation">.</span>state<span class="token punctuation">.</span></span><span class="token class-name">StateTtlConfig</span></span><span class="token punctuation">;</span>
+
+<span class="token class-name">StateTtlConfig</span> ttlConfig <span class="token operator">=</span> <span class="token class-name">StateTtlConfig</span>
+    <span class="token punctuation">.</span><span class="token function">newBuilder</span><span class="token punctuation">(</span><span class="token class-name">Time</span><span class="token punctuation">.</span><span class="token function">seconds</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">cleanupInRocksdbCompactFilter</span><span class="token punctuation">(</span><span class="token number">1000</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>&#x8FD9;&#x79CD;&#x7B56;&#x7565;&#x4F1A;&#x5728;&#x6BCF;&#x6B21;&#x5904;&#x7406;&#x4E00;&#x5B9A;&#x6570;&#x91CF;&#x7684;&#x72B6;&#x6001;&#x5143;&#x7D20;&#x540E;&#x4ECE; Flink &#x67E5;&#x8BE2;&#x5F53;&#x524D;&#x65F6;&#x95F4;&#x6233;&#xFF0C;&#x7528;&#x4E8E;&#x68C0;&#x67E5;&#x8FC7;&#x671F;&#x65F6;&#x95F4;&#x3002;&#x68C0;&#x67E5;&#x6761;&#x6570;&#x7684;&#x914D;&#x7F6E;&#x5C31;&#x662F; cleanupInRocksdbCompactFilter &#x7684;&#x53C2;&#x6570;&#x3002;RocksDB &#x91C7;&#x7528;&#x8FD9;&#x79CD;&#x7B56;&#x7565;&#x7684;&#x9ED8;&#x8BA4;&#x914D;&#x7F6E;&#x662F;&#x6BCF;&#x5904;&#x7406; 1000 &#x6761;&#x6570;&#x636E;&#x5C31;&#x67E5;&#x8BE2;&#x66F4;&#x65B0;&#x65F6;&#x95F4;&#x6233;&#x3002;emmn&#xFF0C;&#x6211;&#x6B64;&#x5904;&#x63CF;&#x8FF0;&#x7684;&#x5176;&#x5B9E;&#x975E;&#x5E38;&#x4E0D;&#x6E05;&#x6670;&#x3002;&#x3002;</p>
+<p>Notes&#xFF1A;</p>
+<ul>
+<li>&#x663E;&#x800C;&#x6613;&#x89C1;&#xFF0C;&#x5728; compaction &#x671F;&#x95F4;&#x8FDB;&#x884C;&#x72B6;&#x6001;&#x7684;&#x6E05;&#x7406;&#x4F1A;&#x964D;&#x4F4E; compaction &#x7684;&#x6548;&#x7387;&#x3002;&#x7A0B;&#x5E8F;&#x5FC5;&#x987B;&#x83B7;&#x53D6;&#x4E0A;&#x6B21;&#x67E5;&#x8BE2;&#x7684;&#x65F6;&#x95F4;&#x6233;&#x5BF9;&#x5B58;&#x50A8;&#x7684;&#x6BCF;&#x4E2A; key &#x7684;&#x72B6;&#x6001;&#x5224;&#x65AD;&#x662F;&#x5426;&#x8FC7;&#x671F;&#x3002;&#x5BF9;&#x4E8E; list&#xFF0C;map &#x7C7B;&#x578B;&#x7684;&#x72B6;&#x6001;&#xFF0C;&#x8FD8;&#x8981;&#x5BF9;&#x72B6;&#x6001;&#x5B58;&#x50A8;&#x4E2D;&#x7684;&#x6BCF;&#x4E2A;&#x5143;&#x7D20;&#x8FDB;&#x884C;&#x68C0;&#x67E5;&#x3002;</li>
+</ul>
+<h3 id="operator-state"><a name="operator-state" class="anchor-navigation-ex-anchor" href="#operator-state"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.3. Operator State</h3>
+<p><em>Operator State</em> &#x53EF;&#x4EE5;&#x8BA4;&#x4E3A;&#x662F;&#x7ED1;&#x5B9A;&#x5E76;&#x884C; operator &#x4E2D;&#x7684;&#x4E00;&#x4E2A;&#x5B9E;&#x4F8B;&#x7684;&#x72B6;&#x6001;&#x3002;&#x6700;&#x660E;&#x663E;&#x7684;&#x4F8B;&#x5B50;&#x662F; Kafka&#xFF0C;&#x5728;&#x4ECE; Kafka &#x6E90;&#x8BFB;&#x53D6;&#x6570;&#x636E;&#x65F6;&#xFF0C;&#x4E00;&#x822C;&#x4F1A;&#x6839;&#x636E; paratition &#x7684;&#x6570;&#x91CF;&#x8BBE;&#x7F6E;&#x5E76;&#x884C;&#x5EA6;&#xFF0C;&#x8FD9;&#x610F;&#x5473;&#x7740;&#x8BFB;&#x53D6;&#x6570;&#x636E;&#x6E90;&#x7684; opertor &#x662F;&#x5E76;&#x884C;&#x591A;&#x4E2A;&#x5B9E;&#x4F8B;&#x7684;&#xFF0C;&#x8FD9;&#x91CC;&#x7684; Operator State &#x6307;&#x7684;&#x5C31;&#x662F;&#x6BCF;&#x4E2A;&#x5B9E;&#x4F8B;&#x8BFB;&#x53D6;&#x7684; partition &#x53CA;&#x5176; offset&#x3002;</p>
+<p>Operator State &#x63A5;&#x53E3;&#x652F;&#x6301;&#x5728;&#x5E76;&#x884C;&#x5EA6;&#x53D1;&#x751F;&#x6539;&#x53D8;&#x65F6;&#x91CD;&#x65B0;&#x5206;&#x914D;&#x72B6;&#x6001;&#x3002;&#x5206;&#x914D;&#x7B56;&#x7565;&#x6709;&#x51E0;&#x79CD;&#x4E0D;&#x540C;&#x7684;&#x65B9;&#x6848;&#xFF0C;&#x8FD9;&#x4E2A;&#x540E;&#x9762;&#x4F1A;&#x8BB2;&#x5230;&#x3002;</p>
+<p>&#x5728;&#x5178;&#x578B;&#x7684;&#x6709;&#x72B6;&#x6001;&#x6570;&#x636E;&#x6D41;&#x5904;&#x7406;&#x4E2D;&#xFF0C;&#x4E00;&#x822C;&#x4E0D;&#x9700;&#x8981; Operator State&#x3002;Operator State &#x4EC5;&#x4EC5;&#x662F;&#x4E00;&#x79CD;&#x7279;&#x6B8A;&#x7684;&#x72B6;&#x6001;&#x7C7B;&#x578B;&#xFF0C;&#x5728; source &#x6216;&#x8005; sink &#x4E2D;&#x5B9E;&#x73B0;&#xFF0C;&#x7528;&#x4E8E;&#x6CA1;&#x6709;&#x660E;&#x786E;&#x5206;&#x533A; key &#x7684;&#x573A;&#x666F;&#x3002;</p>
+<h3 id="broadcast-state"><a name="broadcast-state" class="anchor-navigation-ex-anchor" href="#broadcast-state"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.4. Broadcast State</h3>
+<p><em>Broadcast State</em> &#x662F;&#x4E00;&#x79CD;&#x7279;&#x6B8A;&#x7684; Operator State&#x3002;&#x4E3B;&#x8981;&#x7528;&#x4E8E;&#x4E00;&#x6761;&#x6570;&#x636E;&#x6D41;&#x4E2D;&#x7684;&#x6570;&#x636E;&#x9700;&#x8981;&#x5E7F;&#x64AD;&#x5230;&#x4E0B;&#x6E38;&#x6240;&#x6709; task &#x7684;&#x573A;&#x666F;&#xFF0C;&#x5373;&#x6BCF;&#x4E2A; task &#x4FDD;&#x7559;&#x7684;&#x72B6;&#x6001;&#x662F;&#x4E00;&#x81F4;&#x7684;&#x3002;&#x4E00;&#x4E2A;&#x4F8B;&#x5B50;&#x662F;&#x5173;&#x4E8E;&#x4E8B;&#x4EF6;&#x6A21;&#x5F0F;&#x7684;&#x5339;&#x914D;&#xFF0C;&#x541E;&#x5410;&#x91CF;&#x6BD4;&#x8F83;&#x5C0F;&#x7684;&#x4E8B;&#x4EF6;&#x89C4;&#x5219;&#x6D41;&#x4F5C;&#x4E3A;&#x72B6;&#x6001;&#x5E7F;&#x64AD;&#x5230;&#x4E8B;&#x4EF6;&#x6D41;&#xFF0C;&#x4E8B;&#x4EF6;&#x6D41;&#x4E2D;&#x5904;&#x7406;&#x6BCF;&#x6761;&#x4E8B;&#x4EF6;&#x7B5B;&#x9009;&#x51FA;&#x7B26;&#x5408;&#x89C4;&#x5219;&#x7684;&#x7528;&#x6237;&#x884C;&#x4E3A;&#x3002;</p>
+<p>Broadcast State &#x4E0E; Operator State &#x4E3B;&#x8981;&#x6709;&#x4EE5;&#x4E0B;&#x51E0;&#x70B9;&#x4E0D;&#x540C;</p>
+<ul>
+<li>it has a map format,</li>
+<li>it is only available to specific operators that have as inputs a broadcasted stream and a non-broadcasted one, and</li>
+<li>such an operator can have multiple broadcast states with different names.</li>
+</ul>
+<h3 id="using-operator-state"><a name="using-operator-state" class="anchor-navigation-ex-anchor" href="#using-operator-state"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.5. Using Operator State</h3>
+<p>&#x7EE7;&#x627F; CheckpointedFunction &#x6765;&#x4F7F;&#x7528; Operator State&#x3002;</p>
+<h4 id="checkpointedfunction"><a name="checkpointedfunction" class="anchor-navigation-ex-anchor" href="#checkpointedfunction"><i class="fa fa-link" aria-hidden="true"></i></a>CheckpointedFunction</h4>
+<p>CheckpointedFunction &#x63D0;&#x4F9B;&#x975E; keyed state &#x72B6;&#x6001;&#x7684;&#x8BBF;&#x95EE;&#xFF0C;&#x9700;&#x8981;&#x5B9E;&#x73B0;&#x4EE5;&#x4E0B;&#x4E24;&#x79CD;&#x65B9;&#x6CD5;</p>
+<pre class="language-"><code class="lang-java"><span class="token keyword">void</span> <span class="token function">snapshotState</span><span class="token punctuation">(</span><span class="token class-name">FunctionSnapshotContext</span> context<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span><span class="token punctuation">;</span>
+
+<span class="token keyword">void</span> <span class="token function">initializeState</span><span class="token punctuation">(</span><span class="token class-name">FunctionInitializationContext</span> context<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span><span class="token punctuation">;</span>
+</code></pre>
+<p>&#x5F53;&#x6267;&#x884C; checkpoint &#x65F6;&#xFF0C;snapshotState &#x5C31;&#x88AB;&#x8C03;&#x7528;&#x3002;&#x5BF9;&#x5E94;&#x7684;&#x662F;&#xFF0C;&#x5728;&#x6BCF;&#x6B21;&#x6267;&#x884C;&#x7528;&#x6237;&#x81EA;&#x5B9A;&#x4E49;&#x51FD;&#x6570;&#x6216;&#x8005;&#x4ECE;&#x4E0A;&#x4E2A;&#x68C0;&#x67E5;&#x70B9;&#x6062;&#x590D;&#x7528;&#x6237;&#x81EA;&#x5B9A;&#x4E49;&#x51FD;&#x6570;&#x6267;&#x884C;&#x65F6;&#xFF0C;&#x4F1A;&#x8C03;&#x7528; initializeState()&#x3002;&#x8FD9;&#x6837;&#x770B;&#x6765;&#xFF0C;initializeState &#x4E0D;&#x4EC5;&#x4EC5;&#x662F;&#x521D;&#x59CB;&#x5316;&#x72B6;&#x6001;&#x7684;&#x5730;&#x65B9;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x5305;&#x542B;&#x6062;&#x590D;&#x903B;&#x8F91;&#x3002;</p>
+<p>&#x5F53;&#x524D;&#xFF0C;&#x652F;&#x6301; list &#x7C7B;&#x578B;&#x7684; operator state&#x3002;&#x8FD9;&#x79CD;&#x72B6;&#x6001;&#x5E94;&#x8BE5;&#x662F;&#x4E00;&#x4E2A;&#x53EF;&#x5E8F;&#x5217;&#x5316;&#x5BF9;&#x8C61;&#x7684;&#x5217;&#x8868;&#xFF0C;&#x5F7C;&#x6B64;&#x72EC;&#x7ACB;&#xFF0C;&#x8FD9;&#x4E5F;&#x662F;&#x53EF;&#x4EE5;&#x91CD;&#x65B0;&#x5206;&#x914D;&#x72B6;&#x6001;&#x7684;&#x57FA;&#x7840;&#xFF0C;&#x6362;&#x53E5;&#x8BDD;&#x8BF4;&#xFF0C;&#x8FD9;&#x4E9B;&#x53EF;&#x5E8F;&#x5217;&#x5316;&#x5BF9;&#x8C61;&#x662F;&#x91CD;&#x65B0;&#x5206;&#x914D;&#x7684;&#x6700;&#x5C0F;&#x7C92;&#x5EA6;&#x3002;&#x57FA;&#x4E8E;&#x6B64;&#xFF0C;&#x5B9A;&#x4E49;&#x4E86;&#x4EE5;&#x4E0B;&#x4E24;&#x4E2D;&#x91CD;&#x5206;&#x914D;&#x7B56;&#x7565;&#xFF1A;</p>
+<ul>
+<li><p><strong>&#x5747;&#x5300;&#x5206;&#x914D;</strong>&#xFF1A;&#x6BCF;&#x4E2A; operator &#x62E5;&#x6709;&#x4E00;&#x4E2A;&#x72B6;&#x6001;&#x5143;&#x7D20;&#x5217;&#x8868;&#xFF0C;&#x6574;&#x4E2A;&#x72B6;&#x6001;&#x53EF;&#x4EE5;&#x770B;&#x505A;&#x662F;&#x6240;&#x6709; operator &#x5217;&#x8868;&#x7684;&#x7EC4;&#x5408;&#x3002;&#x5728;&#x91CD;&#x65B0;&#x5206;&#x914D;&#x72B6;&#x6001;&#x65F6;&#xFF0C;&#x8BE5;&#x5217;&#x8868;&#x88AB;&#x5E73;&#x5747;&#x5206;&#x4E3A;&#x4E0E;&#x5E76;&#x884C;&#x8FD0;&#x7B97;&#x7B26;&#x4E00;&#x6837;&#x591A;&#x7684;&#x5B50;&#x5217;&#x8868;&#x3002;&#x6BCF;&#x4E2A; operator &#x90FD;&#x5F97;&#x5230;&#x4E00;&#x4E2A;&#x5B50;&#x5217;&#x8868;&#xFF0C;&#x53EF;&#x80FD;&#x662F;&#x7A7A;&#xFF0C;&#x4E5F;&#x53EF;&#x80FD;&#x5305;&#x542B;&#x4E00;&#x4E2A;&#x6216;&#x8005;&#x591A;&#x4E2A;&#x5143;&#x7D20;&#x3002;&#x4F8B;&#x5982;&#xFF0C;&#x5982;&#x679C;&#x5E76;&#x884C;&#x5EA6;&#x4E3A; 1&#xFF0C;operator state &#x4E2D;&#x5305;&#x542B;&#x5143;&#x7D20; element1 &#x548C; element2&#xFF0C;&#x5F53;&#x5E76;&#x884C;&#x5EA6;&#x589E;&#x52A0;&#x5230; 2 &#x65F6;&#xFF0C;element1 &#x53EF;&#x80FD;&#x4F1A;&#x5728; operator &#x5B9E;&#x4F8B; 0 &#x4E2D;&#x7ED3;&#x675F;&#xFF0C;&#x800C; element2 &#x5C06;&#x8F6C;&#x5230; operator &#x5B9E;&#x4F8B; 1&#x3002;</p>
+</li>
+<li><p><strong>&#x5408;&#x5E76;&#x5206;&#x914D;</strong>&#xFF1A;&#x6BCF;&#x4E2A; operator &#x62E5;&#x6709;&#x4E00;&#x4E2A;&#x72B6;&#x6001;&#x5143;&#x7D20;&#x5217;&#x8868;&#xFF0C;&#x6574;&#x4E2A;&#x72B6;&#x6001;&#x53EF;&#x4EE5;&#x770B;&#x505A;&#x662F;&#x6240;&#x6709; operator &#x5217;&#x8868;&#x7684;&#x7EC4;&#x5408;&#x3002;&#x5728;&#x91CD;&#x65B0;&#x5206;&#x914D;&#x72B6;&#x6001;&#x65F6;&#xFF0C;&#x6BCF;&#x4E2A; operator &#x83B7;&#x53D6;&#x72B6;&#x6001;&#x7684;&#x6240;&#x6709;&#x5143;&#x7D20;&#x3002;&#x5F53;&#x72B6;&#x6001;&#x662F;&#x9AD8;&#x57FA;&#x6570;&#x65F6;&#xFF0C;&#x4E0D;&#x5EFA;&#x8BAE;&#x4F7F;&#x7528;&#xFF0C;&#x56E0;&#x4E3A; checkpoint &#x5143;&#x6570;&#x636E;&#x5C06;&#x5B58;&#x50A8;&#x6BCF;&#x4E2A;&#x5217;&#x8868;&#x6761;&#x76EE;&#x7684;&#x504F;&#x79FB;&#x91CF;&#xFF0C;&#x8FD9;&#x53EF;&#x80FD;&#x5BFC;&#x81F4; RPC &#x5E27;&#x5927;&#x5C0F;&#x6216;&#x5185;&#x5B58;&#x6EA2;&#x51FA;&#x3002;</p>
+</li>
+</ul>
+<p>&#x4E0B;&#x9762;&#x662F;&#x4E00;&#x4E2A;&#x5747;&#x5300;&#x5206;&#x914D;&#x7684;&#x4F8B;&#x5B50;&#xFF0C;&#x5148;&#x7F13;&#x5B58;&#x4E00;&#x6279;&#x6570;&#x636E;&#x5728; sink &#x51FA;&#x53BB;&#x3002;&#x5728;&#x521B;&#x5EFA; checkpoint &#x65F6;&#x4FDD;&#x5B58; bufferedElements &#x7684;&#x72B6;&#x6001;&#x3002;&#x5728;&#x4ECE; checkpoint&#x6062;&#x590D;&#x65F6;&#xFF0C;&#x91CD;&#x653E; bufferedElements&#x3002;</p>
+<pre class="language-"><code class="lang-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">BufferingSink</span>
+        <span class="token keyword">implements</span> <span class="token class-name">SinkFunction</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Tuple2</span><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Integer</span><span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">,</span>
+                   <span class="token class-name">CheckpointedFunction</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token keyword">int</span> threshold<span class="token punctuation">;</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">transient</span> <span class="token class-name">ListState</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Tuple2</span><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Integer</span><span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span></span> checkpointedState<span class="token punctuation">;</span>
+
+    <span class="token keyword">private</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Tuple2</span><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Integer</span><span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span></span> bufferedElements<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token class-name">BufferingSink</span><span class="token punctuation">(</span><span class="token keyword">int</span> threshold<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>threshold <span class="token operator">=</span> threshold<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>bufferedElements <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">invoke</span><span class="token punctuation">(</span><span class="token class-name">Tuple2</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Integer</span><span class="token punctuation">&gt;</span></span> value<span class="token punctuation">,</span> <span class="token class-name">Context</span> contex<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span> <span class="token punctuation">{</span>
+        bufferedElements<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>bufferedElements<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> threshold<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">Tuple2</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Integer</span><span class="token punctuation">&gt;</span></span> element<span class="token operator">:</span> bufferedElements<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token comment">// send it to the sink</span>
+            <span class="token punctuation">}</span>
+            bufferedElements<span class="token punctuation">.</span><span class="token function">clear</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">snapshotState</span><span class="token punctuation">(</span><span class="token class-name">FunctionSnapshotContext</span> context<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span> <span class="token punctuation">{</span>
+        checkpointedState<span class="token punctuation">.</span><span class="token function">clear</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">Tuple2</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Integer</span><span class="token punctuation">&gt;</span></span> element <span class="token operator">:</span> bufferedElements<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            checkpointedState<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>element<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">initializeState</span><span class="token punctuation">(</span><span class="token class-name">FunctionInitializationContext</span> context<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span> <span class="token punctuation">{</span>
+        <span class="token class-name">ListStateDescriptor</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Tuple2</span><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Integer</span><span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span></span> descriptor <span class="token operator">=</span>
+            <span class="token keyword">new</span> <span class="token class-name">ListStateDescriptor</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span>
+                <span class="token string">&quot;buffered-elements&quot;</span><span class="token punctuation">,</span>
+                <span class="token class-name">TypeInformation</span><span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">TypeHint</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Tuple2</span><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Integer</span><span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        checkpointedState <span class="token operator">=</span> context<span class="token punctuation">.</span><span class="token function">getOperatorStateStore</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getListState</span><span class="token punctuation">(</span>descriptor<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>context<span class="token punctuation">.</span><span class="token function">isRestored</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">Tuple2</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Integer</span><span class="token punctuation">&gt;</span></span> element <span class="token operator">:</span> checkpointedState<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                bufferedElements<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>element<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h4 id="stateful-source-functions"><a name="stateful-source-functions" class="anchor-navigation-ex-anchor" href="#stateful-source-functions"><i class="fa fa-link" aria-hidden="true"></i></a>Stateful Source Functions</h4>
+<p>source &#x76F8;&#x6BD4;&#x5176;&#x5B83; operator &#x66F4;&#x9700;&#x8981;&#x6CE8;&#x610F;&#xFF0C;&#x4E00;&#x822C;&#x9700;&#x8981;&#x9501;&#x673A;&#x5236;&#x505A;&#x5230;&#x539F;&#x5B50;&#x66F4;&#x65B0;&#x4FDD;&#x8BC1;&#x7CBE;&#x786E;&#x4E00;&#x6B21;&#x5904;&#x7406;&#x8BED;&#x4E49;&#x3002;</p>
+<pre class="language-"><code class="lang-java"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">CounterSource</span>
+        <span class="token keyword">extends</span> <span class="token class-name">RichParallelSourceFunction</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Long</span><span class="token punctuation">&gt;</span></span>
+        <span class="token keyword">implements</span> <span class="token class-name">CheckpointedFunction</span> <span class="token punctuation">{</span>
+
+    <span class="token comment">/**  current offset for exactly once semantics */</span>
+    <span class="token keyword">private</span> <span class="token class-name">Long</span> offset <span class="token operator">=</span> <span class="token number">0L</span><span class="token punctuation">;</span>
+
+    <span class="token comment">/** flag for job cancellation */</span>
+    <span class="token keyword">private</span> <span class="token keyword">volatile</span> <span class="token keyword">boolean</span> isRunning <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+
+    <span class="token comment">/** Our state object. */</span>
+    <span class="token keyword">private</span> <span class="token class-name">ListState</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Long</span><span class="token punctuation">&gt;</span></span> state<span class="token punctuation">;</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token class-name">SourceContext</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Long</span><span class="token punctuation">&gt;</span></span> ctx<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">final</span> <span class="token class-name">Object</span> lock <span class="token operator">=</span> ctx<span class="token punctuation">.</span><span class="token function">getCheckpointLock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">while</span> <span class="token punctuation">(</span>isRunning<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token comment">// output and state update are atomic</span>
+            <span class="token keyword">synchronized</span> <span class="token punctuation">(</span>lock<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                ctx<span class="token punctuation">.</span><span class="token function">collect</span><span class="token punctuation">(</span>offset<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                offset <span class="token operator">+=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">cancel</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        isRunning <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">initializeState</span><span class="token punctuation">(</span><span class="token class-name">FunctionInitializationContext</span> context<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span> <span class="token punctuation">{</span>
+        state <span class="token operator">=</span> context<span class="token punctuation">.</span><span class="token function">getOperatorStateStore</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getListState</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ListStateDescriptor</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span>
+                <span class="token string">&quot;state&quot;</span><span class="token punctuation">,</span>
+                <span class="token class-name">LongSerializer</span><span class="token punctuation">.</span><span class="token constant">INSTANCE</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// restore any state that we might already have to our fields, initialize state</span>
+        <span class="token comment">// is also called in case of restore.</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">Long</span> l <span class="token operator">:</span> state<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            offset <span class="token operator">=</span> l<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">snapshotState</span><span class="token punctuation">(</span><span class="token class-name">FunctionSnapshotContext</span> context<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span> <span class="token punctuation">{</span>
+        state<span class="token punctuation">.</span><span class="token function">clear</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        state<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>offset<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h3 id="&#x601D;&#x8003;"><a name="&#x601D;&#x8003;" class="anchor-navigation-ex-anchor" href="#&#x601D;&#x8003;"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.6. &#x601D;&#x8003;</h3>
+<p><strong>1.&#x81EA;&#x5B9A;&#x4E49;&#x72B6;&#x6001;&#x53EF;&#x4EE5;&#x7528;&#x6765;&#x505A;&#x4EC0;&#x4E48;&#xFF1F;</strong></p>
+<p>&#x5B9E;&#x73B0;&#x4E00;&#x4E9B;&#x5185;&#x7F6E;&#x805A;&#x5408;&#x51FD;&#x6570;&#x65E0;&#x6CD5;&#x505A;&#x5230;&#x7684;&#x903B;&#x8F91;&#x3002;&#x5B9E;&#x73B0;&#x7A0B;&#x5E8F;&#x6062;&#x590D;&#x3002;&#x53EF;&#x4EE5;&#x53C2;&#x8003;<a href="https://github.com/Flyraty/daily_flink/blob/master/src/main/java/com/timemachine/icu/state" target="_blank">&#x6D4B;&#x8BD5;&#x4EE3;&#x7801;</a></p>
+<footer class="page-footer-ex"> <span class="page-footer-ex-copyright"> By <a href="https://github.com/Flyraty" target="_blank">Flyraty</a>&#xFF0C;&#x4F7F;&#x7528;<a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">&#x77E5;&#x8BC6;&#x5171;&#x4EAB; &#x7F72;&#x540D;-&#x76F8;&#x540C;&#x65B9;&#x5F0F;&#x5171;&#x4EAB; 4.0&#x534F;&#x8BAE;</a>&#x53D1;&#x5E03; </span> &#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="page-footer-ex-footer-update"> <i>updated</i> 2023-01-10 14:39:27 </span> </footer>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="./" class="navigation navigation-prev " aria-label="Previous page: 状态容错与管理">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="broadcast_state.html" class="navigation navigation-next " aria-label="Next page: 状态广播">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"状态处理","level":"1.4.1","depth":2,"next":{"title":"状态广播","level":"1.4.2","depth":2,"path":"State & Fault Tolerance/broadcast_state.md","ref":"State & Fault Tolerance/broadcast_state.md","articles":[]},"previous":{"title":"状态容错与管理","level":"1.4","depth":1,"path":"State & Fault Tolerance/README.md","ref":"State & Fault Tolerance/README.md","articles":[{"title":"状态处理","level":"1.4.1","depth":2,"path":"State & Fault Tolerance/work_with_state.md","ref":"State & Fault Tolerance/work_with_state.md","articles":[]},{"title":"状态广播","level":"1.4.2","depth":2,"path":"State & Fault Tolerance/broadcast_state.md","ref":"State & Fault Tolerance/broadcast_state.md","articles":[]},{"title":"Checkpointing","level":"1.4.3","depth":2,"path":"State & Fault Tolerance/checkpointing.md","ref":"State & Fault Tolerance/checkpointing.md","articles":[]},{"title":"状态查询","level":"1.4.4","depth":2,"path":"State & Fault Tolerance/queryable_state.md","ref":"State & Fault Tolerance/queryable_state.md","articles":[]},{"title":"状态后端","level":"1.4.5","depth":2,"path":"State & Fault Tolerance/state_backends.md","ref":"State & Fault Tolerance/state_backends.md","articles":[]},{"title":"状态容错","level":"1.4.6","depth":2,"path":"State & Fault Tolerance/state_and_fault_tolerance.md","ref":"State & Fault Tolerance/state_and_fault_tolerance.md","articles":[]},{"title":"状态迁移与演化","level":"1.4.7","depth":2,"path":"State & Fault Tolerance/state_schema_evolution.md","ref":"State & Fault Tolerance/state_schema_evolution.md","articles":[]},{"title":"自定义状态序列化器","level":"1.4.8","depth":2,"path":"State & Fault Tolerance/custom_state_serialization.md","ref":"State & Fault Tolerance/custom_state_serialization.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["-expandable-chapters","github-buttons","editlink","copy-code-button","page-footer-ex","anchor-navigation-ex","expandable-chapters-small","prism","-highlight","lunr","-search","search-pro","splitter"],"ignores":["_book","node_modules"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-solarizedlight.css"],"lang":{"flow":"typescript"}},"editlink":{"label":"Edit This Page","multilingual":false,"base":"https://github.com/Flyraty/flink_learning_notes/tree/gitbook"},"page-footer-ex":{"copyright":"By [Flyraty](https://github.com/Flyraty)，使用[知识共享 署名-相同方式共享 4.0协议](https://creativecommons.org/licenses/by-sa/4.0/)发布","markdown":true,"update_format":"YYYY-MM-DD HH:mm:ss","update_label":"<i>updated</i>"},"splitter":{},"search-pro":{},"lunr":{"ignoreSpecialCharacters":false,"maxIndexSize":1000000},"fontsettings":{"theme":"white","family":"sans","size":2},"anchor-navigation-ex":{"associatedWithSummary":true,"float":{"floatIcon":"fa fa-navicon","level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"mode":"float","multipleH1":true,"pageTop":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"printLog":false,"showGoTop":true,"showLevel":true},"github-buttons":{"buttons":[{"user":"Flyraty","repo":"flink_learning_notes","type":"star","size":"small"}]},"expandable-chapters-small":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"flink_learning_notes","language":"zh-hans","gitbook":"*"},"file":{"path":"State & Fault Tolerance/work_with_state.md","mtime":"2023-01-10T14:39:27.411Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2023-01-10T14:40:20.271Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-github-buttons/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-editlink/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-copy-code-button/toggle.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

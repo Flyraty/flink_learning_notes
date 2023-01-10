@@ -1,0 +1,651 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Flink API · flink_learning_notes</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-page-footer-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchor-navigation-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-prism/prism-solarizedlight.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search-pro/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="../DataStream API/" />
+    
+    
+    <link rel="prev" href="flink_architecture.html" />
+    
+
+    <style>
+    @media only screen and (max-width: 640px) {
+        .book-header .hidden-mobile {
+            display: none;
+        }
+    }
+    </style>
+    <script>
+        window["gitbook-plugin-github-buttons"] = {"buttons":[{"user":"Flyraty","repo":"flink_learning_notes","type":"star","size":"small"}]};
+    </script>
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    开篇
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    基础概念
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="stateful_stream_processing.html">
+            
+                <a href="stateful_stream_processing.html">
+            
+                    
+                    Stateful Stream Processing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="timely_stream_processing.html">
+            
+                <a href="timely_stream_processing.html">
+            
+                    
+                    Timely Stream Processing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="flink_architecture.html">
+            
+                <a href="flink_architecture.html">
+            
+                    
+                    Flink Architecture
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2.4" data-path="flink_api.html">
+            
+                <a href="flink_api.html">
+            
+                    
+                    Flink API
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../DataStream API/">
+            
+                <a href="../DataStream API/">
+            
+                    
+                    DataStream API
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../DataStream API/overview.html">
+            
+                <a href="../DataStream API/overview.html">
+            
+                    
+                    概览
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../DataStream API/execution_mode.html">
+            
+                <a href="../DataStream API/execution_mode.html">
+            
+                    
+                    流/批的运行模式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../DataStream API/event_time.html">
+            
+                <a href="../DataStream API/event_time.html">
+            
+                    
+                    事件时间与 Watermark
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="../DataStream API/datasource.html">
+            
+                <a href="../DataStream API/datasource.html">
+            
+                    
+                    Data Sources
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="../DataStream API/operators.html">
+            
+                <a href="../DataStream API/operators.html">
+            
+                    
+                    Operators
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6" data-path="../DataStream API/udf.html">
+            
+                <a href="../DataStream API/udf.html">
+            
+                    
+                    UDF
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../State & Fault Tolerance/">
+            
+                <a href="../State & Fault Tolerance/">
+            
+                    
+                    状态容错与管理
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../State & Fault Tolerance/work_with_state.html">
+            
+                <a href="../State & Fault Tolerance/work_with_state.html">
+            
+                    
+                    状态处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../State & Fault Tolerance/broadcast_state.html">
+            
+                <a href="../State & Fault Tolerance/broadcast_state.html">
+            
+                    
+                    状态广播
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="../State & Fault Tolerance/checkpointing.html">
+            
+                <a href="../State & Fault Tolerance/checkpointing.html">
+            
+                    
+                    Checkpointing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="../State & Fault Tolerance/queryable_state.html">
+            
+                <a href="../State & Fault Tolerance/queryable_state.html">
+            
+                    
+                    状态查询
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="../State & Fault Tolerance/state_backends.html">
+            
+                <a href="../State & Fault Tolerance/state_backends.html">
+            
+                    
+                    状态后端
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6" data-path="../State & Fault Tolerance/state_and_fault_tolerance.html">
+            
+                <a href="../State & Fault Tolerance/state_and_fault_tolerance.html">
+            
+                    
+                    状态容错
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7" data-path="../State & Fault Tolerance/state_schema_evolution.html">
+            
+                <a href="../State & Fault Tolerance/state_schema_evolution.html">
+            
+                    
+                    状态迁移与演化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8" data-path="../State & Fault Tolerance/custom_state_serialization.html">
+            
+                <a href="../State & Fault Tolerance/custom_state_serialization.html">
+            
+                    
+                    自定义状态序列化器
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../DataSet API/">
+            
+                <a href="../DataSet API/">
+            
+                    
+                    DataSet API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../Table API/">
+            
+                <a href="../Table API/">
+            
+                    
+                    Table API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../Data Types & Serialization/">
+            
+                <a href="../Data Types & Serialization/">
+            
+                    
+                    Data Types & Serialization
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            本书使用 GitBook 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Flink API</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <div id="anchor-navigation-ex-navbar"><i class="fa fa-navicon"></i><ul><ul><ul><li><span class="title-icon "></span><a href="#&#x57FA;&#x7840;&#x6982;&#x5FF5;"><b>1.1.1. </b>&#x57FA;&#x7840;&#x6982;&#x5FF5;</a></li><li><span class="title-icon "></span><a href="#flinks-apis"><b>1.1.2. </b>Flink&#x2019;s APIs</a></li><li><span class="title-icon "></span><a href="#&#x601D;&#x8003;"><b>1.1.3. </b>&#x601D;&#x8003;</a></li></ul></ul></ul></div><a href="#" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><h3 id="&#x57FA;&#x7840;&#x6982;&#x5FF5;"><a name="&#x57FA;&#x7840;&#x6982;&#x5FF5;" class="anchor-navigation-ex-anchor" href="#&#x57FA;&#x7840;&#x6982;&#x5FF5;"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.1. &#x57FA;&#x7840;&#x6982;&#x5FF5;</h3>
+<p>Flink &#x662F;&#x4EC0;&#x4E48;&#xFF1F;Flink &#x662F;&#x4E00;&#x79CD;&#x652F;&#x6301;&#x6709;&#x72B6;&#x6001;&#x8BA1;&#x7B97;&#x7684;&#x6D41;&#x5F0F;&#x6570;&#x636E;&#x5904;&#x7406;&#x5F15;&#x64CE;&#xFF0C;&#x5E76;&#x4E14;&#x63D0;&#x4F9B;&#x4E86;&#x6279;&#x6570;&#x636E;&#x7684;&#x5904;&#x7406;&#x80FD;&#x529B;&#x3002;</p>
+<h3 id="flinks-apis"><a name="flinks-apis" class="anchor-navigation-ex-anchor" href="#flinks-apis"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.2. Flink&#x2019;s APIs</h3>
+<p>Flink &#x9488;&#x5BF9;&#x6D41;/&#x6279;&#x7A0B;&#x5E8F;&#x7684;&#x5904;&#x7406;&#x63D0;&#x4F9B;&#x4E86;&#x4E0D;&#x540C;&#x5C42;&#x6B21;&#x7684; API &#x62BD;&#x8C61;&#x3002;</p>
+<div align="center"><img src="https://ci.apache.org/projects/flink/flink-docs-release-1.13/fig/levels_of_abstraction.svg" width="50%" height="50%"></div>
+
+<ul>
+<li><p>&#x6700;&#x5E95;&#x5C42;&#x7684; api &#x62BD;&#x8C61;&#x662F; <strong>stateful and timely stream processing</strong>&#xFF0C;&#x901A;&#x8FC7; DataStream API &#x4E2D;&#x7684;&#x7684; process function &#x63A5;&#x53E3;&#x5411;&#x5916;&#x66B4;&#x9732;&#x3002;&#x5B83;&#x5141;&#x8BB8;&#x7528;&#x6237;&#x81EA;&#x7531;&#x5904;&#x7406;&#x6765;&#x81EA;&#x4E00;&#x4E2A;&#x6216;&#x591A;&#x4E2A;&#x6D41;&#x7684;&#x4E8B;&#x4EF6;&#xFF0C;&#x5E76;&#x4E14;&#x63D0;&#x4F9B;&#x4E00;&#x81F4;&#x6027;&#xFF0C;&#x9AD8;&#x5BB9;&#x9519;&#x7684;&#x72B6;&#x6001;&#x7BA1;&#x7406;&#x3002;&#x9664;&#x6B64;&#x4E4B;&#x5916;&#xFF0C;&#x7528;&#x6237;&#x53EF;&#x4EE5;&#x6CE8;&#x518C;&#x4E8B;&#x4EF6;&#x4E8B;&#x4EF6;&#x5E76;&#x4E14;&#x5904;&#x7406;&#x57FA;&#x4E8E;&#x65F6;&#x95F4;&#x7684;&#x4E8B;&#x4EF6;&#x56DE;&#x8C03;&#xFF0C;&#x4ECE;&#x800C;&#x5B9E;&#x73B0;&#x66F4;&#x590D;&#x6742;&#x7684;&#x6570;&#x636E;&#x8BA1;&#x7B97;&#x3002;</p>
+</li>
+<li><p>&#x5728;&#x5B9E;&#x8DF5;&#x4E2D;&#xFF0C;&#x8BB8;&#x591A;&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x5E76;&#x7528;&#x4E0D;&#x5230;&#x4E0A;&#x8FF0;&#x63CF;&#x8FF0;&#x7684;&#x5E95;&#x5C42; api&#xFF0C;&#x800C;&#x662F;&#x91C7;&#x7528;&#x66F4;&#x4E0A;&#x5C42;&#x7684; DataStream API &#x548C; DataSet API &#x5206;&#x522B;&#x5904;&#x7406;&#x6709;&#x754C;&#x548C;&#x65E0;&#x754C;&#x6570;&#x636E;&#x6D41;&#x3002;&#x8FD9;&#x4E9B; API &#x63D0;&#x4F9B;&#x4E86;&#x901A;&#x7528;&#x7684;&#x63A5;&#x53E3;&#x6765;&#x5904;&#x7406;&#x6570;&#x636E;&#xFF0C;&#x50CF;&#x7528;&#x6237;&#x6307;&#x5B9A;&#x7684;&#x8F6C;&#x6362;&#x3001;&#x8FDE;&#x63A5;&#x3001;&#x805A;&#x5408;&#x3001;&#x7A97;&#x53E3;&#x3001;&#x72B6;&#x6001;&#x7B49;&#x64CD;&#x4F5C;&#xFF0C;&#x548C; Spark &#x4E00;&#x6837;&#xFF0C;&#x5728;&#x8BE5;&#x5C42;&#xFF0C;&#x53EF;&#x4EE5;&#x6BD4;&#x8F83;&#x8F7B;&#x4FBF;&#x7684;&#x7F16;&#x5199;&#x4E00;&#x4E2A;&#x6570;&#x636E;&#x5904;&#x7406;&#x7684; pipeline&#x3002;</p>
+<pre class="language-"><code class="lang-java">datastream
+  <span class="token punctuation">.</span><span class="token function">flatMap</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">FlatMapFunction</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Tuple2</span><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Integer</span><span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">keyBy</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">reduce</span><span class="token punctuation">(</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span>
+</code></pre>
+<p>&#x5176;&#x4E2D;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;&#x6570;&#x636E;&#x7C7B;&#x578B;&#x7684;&#x5904;&#x7406;&#xFF0C;&#x5728;&#x540E;&#x9762;&#x7684; Data Types &#x4E2D;&#x4F1A;&#x8BB2;&#x5230;&#x3002;&#x7531;&#x4E8E; process function &#x5DF2;&#x7ECF;&#x548C; DataStream API &#x96C6;&#x6210;&#xFF0C;&#x56E0;&#x6B64;&#x53EF;&#x4EE5;&#x6BD4;&#x8F83;&#x65B9;&#x4FBF;&#x7684;&#x4F7F;&#x7528;&#x5E95;&#x5C42; api &#x5904;&#x7406;&#xFF0C;&#x6BD4;&#x5982;&#x72B6;&#x6001;&#x7BA1;&#x7406;&#x4E0E;&#x6CE8;&#x518C;&#x3002;&#x5BF9;&#x4E8E;&#x6279;&#x5904;&#x7406;&#xFF0C;Dataset API &#x4E5F;&#x63D0;&#x4F9B;&#x4E86;&#x66F4;&#x591A;&#x7684;&#x539F;&#x8BED;&#x64CD;&#x4F5C;&#xFF0C;&#x6BD4;&#x5982; loop/iterations&#x3002;</p>
+</li>
+<li><p>Table API &#x662F;&#x57FA;&#x4E8E;&#x8868;&#x683C;&#x7684;&#x58F0;&#x660E;&#x5F0F; DSL&#xFF0C;&#x7C7B;&#x4F3C;&#x4E8E; Spark &#x7684; DataSet API&#x3002;&#x5B83;&#x9075;&#x5FAA;&#x5173;&#x7CFB;&#x6A21;&#x578B;&#xFF0C;&#x6BCF;&#x5F20;&#x8868;&#x683C;&#x90FD;&#x6709;&#x81EA;&#x5DF1;&#x7684; schema&#xFF0C;&#x5E76;&#x4E14;&#x548C;&#x5173;&#x7CFB;&#x6570;&#x636E;&#x5E93;&#x4E00;&#x6837;&#xFF0C;&#x63D0;&#x4F9B;&#x4E86; select&#x3001;join&#x3001;group by &#x7B49;&#x57FA;&#x672C;&#x67E5;&#x8BE2;&#x3002;Table API &#x5E76;&#x4E0D;&#x5B9E;&#x73B0;&#x5177;&#x4F53;&#x4EE3;&#x7801;&#x7684;&#x903B;&#x8F91;&#xFF0C;&#x800C;&#x662F;&#x544A;&#x8BC9;&#x7A0B;&#x5E8F;&#x8BE5;&#x505A;&#x4EC0;&#x4E48;&#xFF0C;&#x5B9E;&#x9645;&#x4E0A;&#x5C31;&#x662F;&#x5C4F;&#x853D;&#x6389;&#x4E86; map&#xFF0C;reduce function &#x7684;&#x5B9E;&#x73B0;&#xFF0C;&#x53EA;&#x58F0;&#x660E;&#x67E5;&#x8BE2;&#xFF0C;&#x805A;&#x5408;&#x7B49;&#x64CD;&#x4F5C;&#x3002;&#x5C3D;&#x7BA1; Table API &#x63D0;&#x4F9B;&#x4E86; udf &#x7684;&#x80FD;&#x529B;&#xFF0C;&#x4F7F;&#x7528;&#x8D77;&#x6765;&#x4E5F;&#x76F8;&#x5BF9;&#x7B80;&#x6D01;&#xFF0C;&#x4F46;&#x662F;&#x62BD;&#x8C61;&#x548C;&#x8868;&#x73B0;&#x80FD;&#x529B;&#x4E0D;&#x5982;  DataStream API&#x3002;&#x9664;&#x6B64;&#x4E4B;&#x5916;&#xFF0C;Table API &#x5728;&#x771F;&#x6B63;&#x5206;&#x5E03;&#x5230;&#x673A;&#x5668;&#x4E0A;&#x53BB;&#x6267;&#x884C;&#x65F6;&#xFF0C;&#x4F1A;&#x7ECF;&#x8FC7;&#x89E3;&#x6790;&#xFF0C;&#x4F18;&#x5316;&#xFF0C;&#x5C06; RBO &#x89C4;&#x5219;&#x5E94;&#x7528;&#x5230;&#x8BED;&#x6CD5;&#x6811;&#x4E0A;&#xFF0C;&#x4ECE;&#x800C;&#x5F97;&#x5230;&#x76F8;&#x5BF9;&#x6700;&#x4F18;&#x7684;&#x6267;&#x884C;&#x8BA1;&#x5212;&#x3002;
+Table API &#x548C; DataStream API &#x4E4B;&#x95F4;&#x662F;&#x53EF;&#x4EE5;&#x4E92;&#x76F8;&#x8F6C;&#x5316;&#x7684;&#x3002;</p>
+</li>
+<li><p>&#x6700;&#x9AD8;&#x5C42; API &#x5C31;&#x662F; SQL &#x4E86;&#xFF0C;&#x5728;&#x8BED;&#x4E49;&#x548C;&#x8868;&#x8FBE;&#x5F0F;&#x89E3;&#x6790;&#x4E0A;&#x90FD;&#x540C; Table API &#x4E00;&#x6837;&#xFF0C;&#x4F46;&#x662F;&#x4E0D;&#x662F; DSL&#xFF0C;&#x800C;&#x662F;&#x5B8C;&#x5168;&#x7684; SQL &#x67E5;&#x8BE2;&#xFF0C;&#x5C31;&#x50CF;&#x4E0B;&#x9762;&#x8FD9;&#x6837;&#xFF1A;</p>
+<pre class="language-"><code class="lang-sql">  <span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> employee_information <span class="token punctuation">(</span>
+      emp_id <span class="token keyword">INT</span><span class="token punctuation">,</span>
+      name <span class="token keyword">VARCHAR</span><span class="token punctuation">,</span>
+      dept_id <span class="token keyword">INT</span>
+  <span class="token punctuation">)</span> <span class="token keyword">WITH</span> <span class="token punctuation">(</span> 
+      <span class="token string">&apos;connector&apos;</span> <span class="token operator">=</span> <span class="token string">&apos;filesystem&apos;</span><span class="token punctuation">,</span>
+      <span class="token string">&apos;path&apos;</span> <span class="token operator">=</span> <span class="token string">&apos;/path/to/something.csv&apos;</span><span class="token punctuation">,</span>
+      <span class="token string">&apos;format&apos;</span> <span class="token operator">=</span> <span class="token string">&apos;csv&apos;</span>
+  <span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">select</span> <span class="token operator">*</span> form employee_information <span class="token keyword">limit</span> <span class="token number">1</span>
+</code></pre>
+</li>
+</ul>
+<h3 id="&#x601D;&#x8003;"><a name="&#x601D;&#x8003;" class="anchor-navigation-ex-anchor" href="#&#x601D;&#x8003;"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.3. &#x601D;&#x8003;</h3>
+<p><strong>1.&#x4EE5; api &#x6765;&#x770B;&#xFF0C; Flink &#x548C; Spark &#x6709;&#x5565;&#x533A;&#x522B;&#xFF1F;</strong></p>
+<p>&#x5355;&#x770B; Flink &#x63D0;&#x4F9B;&#x7684; API &#x7684;&#x8BDD;&#xFF0C;&#x548C; Spark &#x662F;&#x5F02;&#x66F2;&#x540C;&#x5DE5;&#x3002;Flink &#x5BF9; Dataflow Model &#x7684;&#x5B9E;&#x73B0;&#x66F4;&#x597D;&#xFF0C;&#x72B6;&#x6001;&#x548C;&#x68C0;&#x67E5;&#x70B9;&#x7684;&#x7BA1;&#x7406;&#x96C6;&#x6210;&#x7684;&#x66F4;&#x597D;&#xFF0C;&#x4F46;&#x662F;&#x6D41;&#x6279; api &#x4E0D;&#x7EDF;&#x4E00;&#xFF0C;&#x4E00;&#x822C;&#x5728;&#x505A;&#x6570;&#x636E;&#x521D;&#x59CB;&#x5316;&#x7684;&#x65F6;&#x5019;&#x8981;&#x5F00;&#x53D1;&#x4E24;&#x5957;&#x7A0B;&#x5E8F;&#xFF0C;&#x5BF9;&#x4E8E;&#x73B0;&#x5728;&#x4ECD;&#x5728;&#x5927;&#x591A;&#x6570;&#x573A;&#x666F;&#x4E0B;&#x4F7F;&#x7528;&#x7684; lambda &#x67B6;&#x6784;&#x4E0D;&#x662F;&#x5F88;&#x53CB;&#x597D;&#x3002;Spark &#x8D35;&#x5728; api &#x7EDF;&#x4E00;&#xFF0C;2.x &#x4E4B;&#x540E;&#x7684; structed streaming &#x5BF9;&#x4E8E;&#x6D41;&#x5904;&#x7406;&#x7684;&#x652F;&#x6301;&#x66F4;&#x4E0A;&#x4E00;&#x5C42;&#xFF0C;&#x4F46;&#x662F;&#x72B6;&#x6001;&#x7684;&#x7BA1;&#x7406;&#x548C;&#x81EA;&#x52A8; checkpoint &#x7684;&#x652F;&#x6301;&#x4E0D;&#x592A;&#x597D;&#xFF0C;&#x5E76;&#x4E14;&#x76EE;&#x524D; Spark &#x7684;&#x5F00;&#x53D1;&#x91CD;&#x5FC3;&#x5728; Spark ML&#x3002;</p>
+<p><strong>2.Flink &#x548C; Spark &#x5206;&#x522B;&#x9002;&#x7528;&#x4E8E;&#x4EC0;&#x4E48;&#x573A;&#x666F;&#xFF1F;</strong></p>
+<p>&#x5C31;&#x751F;&#x4EA7;&#x4E0A;&#x6765;&#x770B;&#x7684;&#x8BDD;&#xFF0C;&#x5BF9;&#x4E8E;&#x65E0;&#x72B6;&#x6001;&#x7684;&#x6570;&#x636E;&#x6D41;&#x5904;&#x7406;&#xFF0C;&#x5CF0;&#x503C;&#x6253;&#x5230; 10000qps &#x7684;&#x60C5;&#x51B5;&#x4E0B;&#x3002;Flink &#x548C; Spark streaming &#x7684;&#x5904;&#x7406;&#x90FD;&#x662F; hold &#x4F4F;&#x7684;&#xFF0C;&#x65F6;&#x5EF6;&#x90FD;&#x5728;&#x53EF;&#x63A5;&#x53D7;&#x8303;&#x56F4;&#x5185;&#xFF0C;&#x5E76;&#x4E14;&#x7531;&#x4E8E;&#x94FE;&#x8DEF;&#x6BD4;&#x8F83;&#x957F;&#xFF0C;binlog &#x4EA7;&#x751F;&#x5230;&#x6536;&#x96C6;&#x5C31;&#x5927;&#x6982; 15s&#xFF0C;&#x7A0B;&#x5E8F;&#x5904;&#x7406;&#x5927;&#x6982; 5s&#xFF0C;&#x6574;&#x4E2A;&#x94FE;&#x8DEF;&#x57FA;&#x672C;&#x4E0A;&#x63A7;&#x5236;&#x5728; 30s &#x5185;&#x3002;&#x6240;&#x4EE5;&#x5BF9;&#x4E8E;&#x4E00;&#x4E9B; etl &#x800C;&#x975E;&#x805A;&#x5408;&#x6307;&#x6807;&#x4EFB;&#x52A1;&#x6765;&#x8BF4;&#xFF0C;&#x91C7;&#x7528;&#x8FD9;&#x4E24;&#x4E2A;&#x90FD;&#x662F;&#x6CA1;&#x95EE;&#x9898;&#x7684;&#x3002;
+&#x5BF9;&#x4E8E;&#x6709;&#x72B6;&#x6001;&#x7684;&#x6570;&#x636E;&#x6D41;&#x5904;&#x7406;&#xFF0C;Flink &#x663E;&#x7136;&#x96C6;&#x6210;&#x66F4;&#x597D;&#xFF0C;&#x5E76;&#x4E14;&#x5BB9;&#x9519;&#x673A;&#x5236;&#x66F4;&#x5B8C;&#x5584;&#x3002;
+&#x76EE;&#x524D;&#x56FD;&#x5185;&#x5728;&#x63A8; Flink&#xFF0C;&#x6240;&#x4EE5;&#x5404;&#x5BB6;&#x57FA;&#x672C;&#x4E0A;&#x90FD;&#x5728;&#x4ECE; Spark &#x5207;&#x6362;&#x5230; Flink&#xFF0C;&#x5E76;&#x4E14;&#x57FA;&#x4E8E; Flink &#x642D;&#x5EFA;&#x5185;&#x90E8;&#x5B9E;&#x65F6;&#x5F00;&#x53D1;&#x5E73;&#x53F0;&#x3002;</p>
+<p><strong>3.&#x7528;&#x7684;&#x6700;&#x591A;&#x7684; api &#x662F;&#x4EC0;&#x4E48;&#xFF1F;</strong></p>
+<p>&#x4E2A;&#x4EBA;&#x7406;&#x89E3;&#x662F; SQL&#xFF0C;SQL &#x4F5C;&#x4E3A;&#x4E00;&#x79CD;&#x65E9;&#x5C31;&#x666E;&#x53CA;&#x7684;&#x6807;&#x51C6;&#x5316;&#x8BED;&#x8A00;&#xFF0C;&#x4F7F;&#x7528;&#x8D77;&#x6765;&#x6210;&#x672C;&#x4F4E;&#xFF0C;SQL+UDF&#x4E00;&#x822C;&#x4E5F;&#x80FD;&#x8986;&#x76D6;&#x5230; %80 &#x7684;&#x4E1A;&#x52A1;&#x573A;&#x666F;&#xFF0C;&#x5927;&#x591A;&#x6570;&#x89E3;&#x6790;&#x8BA1;&#x7B97;&#x90FD;&#x662F;&#x65E0;&#x72B6;&#x6001;&#x7684;&#xFF0C;&#x4F7F;&#x7528; SQL API &#x5F00;&#x53D1;&#x66F4;&#x4FBF;&#x6377;&#xFF0C;&#x66F4;&#x9AD8;&#x6548;&#xFF0C;&#x5C24;&#x5176;&#x662F;&#x5185;&#x90E8;&#x57FA;&#x5EFA;&#x6BD4;&#x8F83;&#x597D;&#x7684;&#x516C;&#x53F8;&#xFF0C;&#x901A;&#x8FC7;&#x7EDF;&#x4E00;&#x7684;&#x5B9E;&#x65F6;&#x5F00;&#x53D1;&#x5E73;&#x53F0;&#x5F00;&#x53D1;&#x8FD9;&#x79CD; etl &#x7A0B;&#x5E8F;&#xFF0C;&#x719F;&#x6089;&#x4E4B;&#x540E;&#xFF0C;&#x51E0;&#x5206;&#x949F;&#x4E4B;&#x5185;&#x5C31;&#x53EF;&#x4EE5;&#x4E0A;&#x7EBF;&#x4E00;&#x4E2A;&#x5B9E;&#x65F6;&#x6D41;&#x4EFB;&#x52A1;&#xFF0C;&#x5C06; kafka &#x4E2D;&#x6570;&#x636E;&#x5199;&#x5165;&#x5230;&#x4E0B;&#x6E38;&#x3002;</p>
+<footer class="page-footer-ex"> <span class="page-footer-ex-copyright"> By <a href="https://github.com/Flyraty" target="_blank">Flyraty</a>&#xFF0C;&#x4F7F;&#x7528;<a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">&#x77E5;&#x8BC6;&#x5171;&#x4EAB; &#x7F72;&#x540D;-&#x76F8;&#x540C;&#x65B9;&#x5F0F;&#x5171;&#x4EAB; 4.0&#x534F;&#x8BAE;</a>&#x53D1;&#x5E03; </span> &#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="page-footer-ex-footer-update"> <i>updated</i> 2023-01-10 14:39:27 </span> </footer>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="flink_architecture.html" class="navigation navigation-prev " aria-label="Previous page: Flink Architecture">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="../DataStream API/" class="navigation navigation-next " aria-label="Next page: DataStream API">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Flink API","level":"1.2.4","depth":2,"next":{"title":"DataStream API","level":"1.3","depth":1,"path":"DataStream API/README.md","ref":"DataStream API/README.md","articles":[{"title":"概览","level":"1.3.1","depth":2,"path":"DataStream API/overview.md","ref":"DataStream API/overview.md","articles":[]},{"title":"流/批的运行模式","level":"1.3.2","depth":2,"path":"DataStream API/execution_mode.md","ref":"DataStream API/execution_mode.md","articles":[]},{"title":"事件时间与 Watermark","level":"1.3.3","depth":2,"path":"DataStream API/event_time.md","ref":"DataStream API/event_time.md","articles":[]},{"title":"Data Sources","level":"1.3.4","depth":2,"path":"DataStream API/datasource.md","ref":"DataStream API/datasource.md","articles":[]},{"title":"Operators","level":"1.3.5","depth":2,"path":"DataStream API/operators.md","ref":"DataStream API/operators.md","articles":[]},{"title":"UDF","level":"1.3.6","depth":2,"path":"DataStream API/udf.md","ref":"DataStream API/udf.md","articles":[]}]},"previous":{"title":"Flink Architecture","level":"1.2.3","depth":2,"path":"Overview/flink_architecture.md","ref":"Overview/flink_architecture.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-expandable-chapters","github-buttons","editlink","copy-code-button","page-footer-ex","anchor-navigation-ex","expandable-chapters-small","prism","-highlight","lunr","-search","search-pro","splitter"],"ignores":["_book","node_modules"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-solarizedlight.css"],"lang":{"flow":"typescript"}},"editlink":{"label":"Edit This Page","multilingual":false,"base":"https://github.com/Flyraty/flink_learning_notes/tree/gitbook"},"page-footer-ex":{"copyright":"By [Flyraty](https://github.com/Flyraty)，使用[知识共享 署名-相同方式共享 4.0协议](https://creativecommons.org/licenses/by-sa/4.0/)发布","markdown":true,"update_format":"YYYY-MM-DD HH:mm:ss","update_label":"<i>updated</i>"},"splitter":{},"search-pro":{},"lunr":{"ignoreSpecialCharacters":false,"maxIndexSize":1000000},"fontsettings":{"theme":"white","family":"sans","size":2},"anchor-navigation-ex":{"associatedWithSummary":true,"float":{"floatIcon":"fa fa-navicon","level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"mode":"float","multipleH1":true,"pageTop":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"printLog":false,"showGoTop":true,"showLevel":true},"github-buttons":{"buttons":[{"user":"Flyraty","repo":"flink_learning_notes","type":"star","size":"small"}]},"expandable-chapters-small":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"flink_learning_notes","language":"zh-hans","gitbook":"*"},"file":{"path":"Overview/flink_api.md","mtime":"2023-01-10T14:39:27.411Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2023-01-10T14:40:20.271Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-github-buttons/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-editlink/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-copy-code-button/toggle.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

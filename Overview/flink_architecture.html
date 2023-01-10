@@ -1,0 +1,695 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Flink Architecture · flink_learning_notes</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-page-footer-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchor-navigation-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-prism/prism-solarizedlight.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search-pro/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="flink_api.html" />
+    
+    
+    <link rel="prev" href="timely_stream_processing.html" />
+    
+
+    <style>
+    @media only screen and (max-width: 640px) {
+        .book-header .hidden-mobile {
+            display: none;
+        }
+    }
+    </style>
+    <script>
+        window["gitbook-plugin-github-buttons"] = {"buttons":[{"user":"Flyraty","repo":"flink_learning_notes","type":"star","size":"small"}]};
+    </script>
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    开篇
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    基础概念
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="stateful_stream_processing.html">
+            
+                <a href="stateful_stream_processing.html">
+            
+                    
+                    Stateful Stream Processing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="timely_stream_processing.html">
+            
+                <a href="timely_stream_processing.html">
+            
+                    
+                    Timely Stream Processing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2.3" data-path="flink_architecture.html">
+            
+                <a href="flink_architecture.html">
+            
+                    
+                    Flink Architecture
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="flink_api.html">
+            
+                <a href="flink_api.html">
+            
+                    
+                    Flink API
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../DataStream API/">
+            
+                <a href="../DataStream API/">
+            
+                    
+                    DataStream API
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../DataStream API/overview.html">
+            
+                <a href="../DataStream API/overview.html">
+            
+                    
+                    概览
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../DataStream API/execution_mode.html">
+            
+                <a href="../DataStream API/execution_mode.html">
+            
+                    
+                    流/批的运行模式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../DataStream API/event_time.html">
+            
+                <a href="../DataStream API/event_time.html">
+            
+                    
+                    事件时间与 Watermark
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="../DataStream API/datasource.html">
+            
+                <a href="../DataStream API/datasource.html">
+            
+                    
+                    Data Sources
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="../DataStream API/operators.html">
+            
+                <a href="../DataStream API/operators.html">
+            
+                    
+                    Operators
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6" data-path="../DataStream API/udf.html">
+            
+                <a href="../DataStream API/udf.html">
+            
+                    
+                    UDF
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../State & Fault Tolerance/">
+            
+                <a href="../State & Fault Tolerance/">
+            
+                    
+                    状态容错与管理
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../State & Fault Tolerance/work_with_state.html">
+            
+                <a href="../State & Fault Tolerance/work_with_state.html">
+            
+                    
+                    状态处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../State & Fault Tolerance/broadcast_state.html">
+            
+                <a href="../State & Fault Tolerance/broadcast_state.html">
+            
+                    
+                    状态广播
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="../State & Fault Tolerance/checkpointing.html">
+            
+                <a href="../State & Fault Tolerance/checkpointing.html">
+            
+                    
+                    Checkpointing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="../State & Fault Tolerance/queryable_state.html">
+            
+                <a href="../State & Fault Tolerance/queryable_state.html">
+            
+                    
+                    状态查询
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="../State & Fault Tolerance/state_backends.html">
+            
+                <a href="../State & Fault Tolerance/state_backends.html">
+            
+                    
+                    状态后端
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6" data-path="../State & Fault Tolerance/state_and_fault_tolerance.html">
+            
+                <a href="../State & Fault Tolerance/state_and_fault_tolerance.html">
+            
+                    
+                    状态容错
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7" data-path="../State & Fault Tolerance/state_schema_evolution.html">
+            
+                <a href="../State & Fault Tolerance/state_schema_evolution.html">
+            
+                    
+                    状态迁移与演化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8" data-path="../State & Fault Tolerance/custom_state_serialization.html">
+            
+                <a href="../State & Fault Tolerance/custom_state_serialization.html">
+            
+                    
+                    自定义状态序列化器
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../DataSet API/">
+            
+                <a href="../DataSet API/">
+            
+                    
+                    DataSet API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../Table API/">
+            
+                <a href="../Table API/">
+            
+                    
+                    Table API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../Data Types & Serialization/">
+            
+                <a href="../Data Types & Serialization/">
+            
+                    
+                    Data Types & Serialization
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            本书使用 GitBook 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Flink Architecture</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <div id="anchor-navigation-ex-navbar"><i class="fa fa-navicon"></i><ul><ul><ul><li><span class="title-icon "></span><a href="#flink-&#x57FA;&#x7840;&#x67B6;&#x6784;"><b>1.1.1. </b>Flink &#x57FA;&#x7840;&#x67B6;&#x6784;</a></li><li><span class="title-icon "></span><a href="#flink-&#x96C6;&#x7FA4;&#x5256;&#x6790;"><b>1.1.2. </b>Flink &#x96C6;&#x7FA4;&#x5256;&#x6790;</a></li><li><span class="title-icon "></span><a href="#jobmanager"><b>1.1.3. </b>JobManager</a></li><li><span class="title-icon "></span><a href="#taskmanagers"><b>1.1.4. </b>TaskManagers</a></li><li><span class="title-icon "></span><a href="#tasks-and-operator-chains"><b>1.1.5. </b>Tasks and Operator Chains</a></li><li><span class="title-icon "></span><a href="#task-slots-and-resources"><b>1.1.6. </b>Task Slots and Resources</a></li><li><span class="title-icon "></span><a href="#flink-&#x7A0B;&#x5E8F;&#x7684;&#x8FD0;&#x884C;"><b>1.1.7. </b>Flink &#x7A0B;&#x5E8F;&#x7684;&#x8FD0;&#x884C;</a></li><li><span class="title-icon "></span><a href="#&#x601D;&#x8003;"><b>1.1.8. </b>&#x601D;&#x8003;</a></li></ul></ul></ul></div><a href="#" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><h3 id="flink-&#x57FA;&#x7840;&#x67B6;&#x6784;"><a name="flink-&#x57FA;&#x7840;&#x67B6;&#x6784;" class="anchor-navigation-ex-anchor" href="#flink-&#x57FA;&#x7840;&#x67B6;&#x6784;"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.1. Flink &#x57FA;&#x7840;&#x67B6;&#x6784;</h3>
+<p>Flink &#x4F5C;&#x4E3A;&#x5206;&#x5E03;&#x5F0F;&#x7684;&#x6570;&#x636E;&#x5904;&#x7406;&#x5F15;&#x64CE;&#xFF0C;&#x9700;&#x8981;&#x9AD8;&#x6548;&#x7684;&#x8D44;&#x6E90;&#x7BA1;&#x7406;&#x5206;&#x914D;&#x65B9;&#x5F0F;&#x7528;&#x4EE5;&#x652F;&#x6491;&#x5185;&#x90E8;&#x6D41;&#x5F0F;&#x4F5C;&#x4E1A;&#x7684;&#x8FD0;&#x884C;&#x3002;&#x5B83;&#x96C6;&#x6210;&#x4E86;&#x5E38;&#x89C1;&#x7684;&#x8D44;&#x6E90;&#x7BA1;&#x7406;&#x7CFB;&#x7EDF;&#xFF0C;&#x6BD4;&#x5982; Yarn&#xFF0C;Mesos&#xFF0C;k8s&#xFF0C;&#x4E5F;&#x652F;&#x6301;&#x4EE5; standalone &#x7684;&#x65B9;&#x5F0F;&#x8FD0;&#x884C;&#x3002;&#x672C;&#x8282;&#x7528;&#x6765;&#x6982;&#x8FF0; Flink &#x7684;&#x67B6;&#x6784;&#xFF0C;&#x4ECB;&#x7ECD; Flink &#x662F;&#x5982;&#x4F55;&#x4E0E;&#x5BA2;&#x6237;&#x7AEF;&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x4EA4;&#x4E92;&#x7684;&#xFF0C;&#x9047;&#x5230;&#x9519;&#x8BEF;&#x5931;&#x8D25;&#x65F6;&#x662F;&#x5982;&#x4F55;&#x6062;&#x590D;&#x7A0B;&#x5E8F;&#x7684;&#x3002;</p>
+<h3 id="flink-&#x96C6;&#x7FA4;&#x5256;&#x6790;"><a name="flink-&#x96C6;&#x7FA4;&#x5256;&#x6790;" class="anchor-navigation-ex-anchor" href="#flink-&#x96C6;&#x7FA4;&#x5256;&#x6790;"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.2. Flink &#x96C6;&#x7FA4;&#x5256;&#x6790;</h3>
+<p>Flink &#x8FD0;&#x884C;&#x65F6;&#x4E3B;&#x8981;&#x5305;&#x62EC;&#x4E24;&#x79CD;&#x8FDB;&#x7A0B;&#xFF0C;JobManager &#x548C; TaskManager&#xFF0C;TaskManager &#x53EF;&#x4EE5;&#x542F;&#x52A8;&#x591A;&#x4E2A;&#x3002;</p>
+<div align="center"><img src="https://ci.apache.org/projects/flink/flink-docs-release-1.13/fig/processes.svg" width="70%" height="70%"></div>
+
+<p>&#x5BA2;&#x6237;&#x7AEF;&#x5E76;&#x4E0D;&#x5728;&#x7A0B;&#x5E8F;&#x8FD0;&#x884C;&#x65F6;&#x5B58;&#x5728;&#xFF0C;&#x6211;&#x4EEC;&#x53EA;&#x662F;&#x901A;&#x8FC7;&#x4ED6;&#x5411; JM &#x63D0;&#x4EA4;&#x4E00;&#x4EFD; job graph&#x3002;&#x5728;&#x8FD9;&#x4E4B;&#x540E;&#xFF0C;&#x5982;&#x679C;&#x662F; <em>detached mode</em> &#x7684;&#x8BDD;&#xFF0C;&#x5BA2;&#x6237;&#x7AEF;&#x4F1A;&#x9000;&#x51FA;&#xFF0C;<em>attached mode</em> &#x7684;&#x8BDD;&#xFF0C;&#x5BA2;&#x6237;&#x7AEF;&#x4F1A;&#x7EE7;&#x7EED;&#x548C; JM &#x4FDD;&#x6301;&#x8FDE;&#x63A5;&#x83B7;&#x53D6;&#x7A0B;&#x5E8F;&#x7684;&#x8FDB;&#x5EA6;&#x4FE1;&#x606F;&#x3002;&#x5BA2;&#x6237;&#x7AEF;&#x53EF;&#x4EE5;&#x4F5C;&#x4E3A;&#x7528;&#x6237;&#x7A0B;&#x5E8F;&#x7684;&#x4E00;&#x90E8;&#x5206;&#x7528;&#x6765;&#x89E6;&#x53D1;&#x4EFB;&#x52A1;&#x6267;&#x884C;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x662F; <code>./bin/flink run ...</code> &#x8FD9;&#x4E2A;&#x79CD;&#x65B9;&#x5F0F;&#x3002;</p>
+<p>JM &#x548C; TM &#x4EE5;&#x4E0D;&#x540C;&#x7684;&#x65B9;&#x5F0F;&#x542F;&#x52A8;&#xFF0C;&#x5982;&#x679C;&#x662F; standalone &#x6A21;&#x5F0F;&#xFF0C;&#x5219;&#x76F4;&#x63A5;&#x5728;&#x673A;&#x5668;&#x4E0A;&#x542F;&#x52A8;&#x3002;&#x5982;&#x679C;&#x662F;&#x57FA;&#x4E8E; Yarn&#xFF0C;&#x5219;&#x662F;&#x76F4;&#x63A5;&#x4EA4;&#x7531;&#x5BF9;&#x5E94;&#x7684;&#x8D44;&#x6E90;&#x7BA1;&#x7406;&#x5668;&#x8FDB;&#x884C;&#x542F;&#x52A8;&#x3002;TM &#x9700;&#x8981;&#x4E0E; JM &#x4FDD;&#x6301;&#x8FDE;&#x63A5;&#xFF0C;&#x901A;&#x77E5; JM &#x81EA;&#x5DF1;&#x53EF;&#x7528;&#xFF0C;&#x7136;&#x540E;&#x7531; JM &#x6CE8;&#x518C;&#x5206;&#x914D; task &#x5230;&#x53EF;&#x7528;&#x7684; TM &#x4E0A;&#x3002;</p>
+<h3 id="jobmanager"><a name="jobmanager" class="anchor-navigation-ex-anchor" href="#jobmanager"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.3. JobManager</h3>
+<p><em>JobManager</em> &#x8D1F;&#x8D23;&#x534F;&#x8C03;&#x7BA1;&#x7406; Flink &#x4EFB;&#x52A1;&#x7684;&#x6267;&#x884C;&#xFF0C;&#x6BD4;&#x5982;&#xFF1A;&#x4F55;&#x65F6;&#x5F00;&#x59CB;&#x8C03;&#x5EA6;&#x4EFB;&#x52A1;&#x6267;&#x884C;&#x3001;&#x5BF9;&#x5DF2;&#x7ECF;&#x5B8C;&#x6210;&#x6216;&#x8005;&#x5931;&#x8D25;&#x7684;&#x4EFB;&#x52A1;&#x4F5C;&#x51FA;&#x53CD;&#x5E94;&#x3001;&#x534F;&#x8C03; checkpoint &#x7684;&#x751F;&#x6210;&#x3001;&#x7BA1;&#x7406;&#x4EFB;&#x52A1;&#x7684; failover &#x7B49;&#x7B49;&#x3002;&#x5B83;&#x4E3B;&#x8981;&#x7531;&#x4EE5;&#x4E0B;&#x4E09;&#x4E2A;&#x7EC4;&#x4EF6;&#x7EC4;&#x6210;</p>
+<ul>
+<li><p><strong>ResourceManager</strong></p>
+<p>  <em>ResourceManager</em> &#x8D1F;&#x8D23; Flink &#x96C6;&#x7FA4;&#x8D44;&#x6E90;&#x7684;&#x5206;&#x914D; - &#x7BA1;&#x7406; Flink &#x6700;&#x5C0F;&#x7684;&#x8D44;&#x6E90;&#x8C03;&#x5EA6;&#x5355;&#x4F4D; <strong>task slots</strong>&#x3002;Flink &#x9488;&#x5BF9;&#x4E0D;&#x540C;&#x7684;&#x8D44;&#x6E90;&#x7BA1;&#x7406;&#x5668;&#x63D0;&#x4F9B;&#x4E86;&#x5BF9;&#x5E94;&#x7684; ResourceManager &#x7684;&#x5B9E;&#x73B0;&#x3002;&#x5728; standalone &#x6A21;&#x5F0F;&#x4E0B;&#xFF0C;Flink &#x4E0D;&#x80FD;&#x81EA;&#x52A8;&#x521B;&#x5EFA;&#x65B0;&#x7684; TaskManager&#x3002;</p>
+</li>
+<li><p><strong>Dispatcher</strong>  </p>
+<p>  <em>Dispatcher</em> &#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x4E2A; REST &#x63A5;&#x53E3;&#x7528;&#x6765;&#x63D0;&#x4EA4; Flink &#x4F5C;&#x4E1A;&#xFF0C;&#x6BCF;&#x6B21;&#x63D0;&#x4EA4;&#x90FD;&#x4F1A;&#x751F;&#x6210;&#x4E00;&#x4E2A; JobMaster&#x3002;&#x53E6;&#x5916;&#xFF0C;&#x5176;&#x8FD8;&#x8FD0;&#x884C;&#x7740; Flink Web UI&#x3002;</p>
+</li>
+<li><p><strong>JobMaster</strong></p>
+<p>  <em>JobMaster</em> &#x8D1F;&#x8D23;&#x7BA1;&#x7406;&#x5355;&#x4E2A; <a href="https://ci.apache.org/projects/flink/flink-docs-release-1.13/docs/concepts/glossary/#logical-graph" target="_blank">Job Graph</a> &#x7684;&#x8FD0;&#x884C;&#x3002; Flink &#x96C6;&#x7FA4;&#x4E2D;&#x53EF;&#x4EE5;&#x540C;&#x65F6;&#x8FD0;&#x884C;&#x591A;&#x4E2A; job&#xFF0C;&#x4F46;&#x662F;&#x6BCF;&#x4E2A; job &#x90FD;&#x6709;&#x81EA;&#x5DF1;&#x5355;&#x72EC;&#x7684; JobMaster&#x3002;</p>
+</li>
+</ul>
+<p>&#x901A;&#x5E38;&#x60C5;&#x51B5;&#x4E0B;&#x53EA;&#x9700;&#x8981;&#x542F;&#x52A8;&#x4E00;&#x4E2A; JobManager &#x5C31; ok&#xFF0C;&#x5982;&#x679C;&#x8981;&#x505A;&#x9AD8;&#x53EF;&#x7528;&#x7684;&#x8BDD;&#xFF0C;&#x53EF;&#x4EE5;&#x67E5;&#x770B; <a href="https://ci.apache.org/projects/flink/flink-docs-release-1.13/docs/deployment/ha/overview/" target="_blank">High Availability (HA)</a></p>
+<h3 id="taskmanagers"><a name="taskmanagers" class="anchor-navigation-ex-anchor" href="#taskmanagers"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.4. TaskManagers</h3>
+<p><em>TaskManager</em> &#x7528;&#x6765;&#x5B9E;&#x9645;&#x8FD0;&#x884C; task&#xFF0C;&#x5E76;&#x7F13;&#x5B58;&#x548C;&#x4EA4;&#x6362;&#x6570;&#x636E;&#xFF08;&#x6BD4;&#x5982; shuffle &#x8FC7;&#x7A0B;&#x4E2D;&#x7684;&#x843D;&#x76D8;&#xFF09;&#x3002;&#x7A0B;&#x5E8F;&#x8FD0;&#x884C;&#x5FC5;&#x987B;&#x5B58;&#x5728;&#x4E00;&#x4E2A; TaskManager&#xFF0C;TaskManager &#x4E2D;&#x8D44;&#x6E90;&#x8C03;&#x5EA6;&#x7684;&#x6700;&#x5C0F;&#x5355;&#x4F4D;&#x662F; slot&#xFF0C;&#x5B83;&#x51B3;&#x5B9A;&#x4E86;&#x8BE5; TaskManager &#x4E0A;&#x6700;&#x591A;&#x53EF;&#x4EE5;&#x5E76;&#x884C;&#x591A;&#x5C11; task&#x3002;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x591A;&#x4E2A; operator &#x53EF;&#x4EE5;&#x8FD0;&#x884C;&#x5728;&#x4E00;&#x4E2A; subtask &#x4E0A;&#x3002;</p>
+<h3 id="tasks-and-operator-chains"><a name="tasks-and-operator-chains" class="anchor-navigation-ex-anchor" href="#tasks-and-operator-chains"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.5. Tasks and Operator Chains</h3>
+<p>Flink &#x652F;&#x6301;&#x94FE;&#x63A5;&#x591A;&#x4E2A; operator &#x5230;&#x4E00;&#x4E2A; subtask&#xFF08;&#x4E5F;&#x53EF;&#x4EE5;&#x8BF4;&#x662F;&#x4E00;&#x4E2A; slot&#xFF09;&#x4E2D;&#x8FD0;&#x884C;&#x3002;&#x6BCF;&#x4E2A; task &#x5355;&#x72EC;&#x4E00;&#x4E2A;&#x7EBF;&#x7A0B;&#x6267;&#x884C;&#xFF0C;&#x591A;&#x4E2A; operator &#x94FE;&#x63A5;&#x5230;&#x4E00;&#x8D77;&#x53EF;&#x4EE5;&#x63D0;&#x9AD8;&#x7A0B;&#x5E8F;&#x5904;&#x7406;&#x7684;&#x6027;&#x80FD;&#xFF0C;&#x51CF;&#x5C11;&#x5404;&#x4E2A;&#x7EBF;&#x7A0B;&#x4E4B;&#x95F4;&#x7684;&#x6570;&#x636E;&#x4EA4;&#x6362;&#x53CA;&#x5404;&#x79CD; buffer &#x5F00;&#x9500;&#x3002;&#x53EF;&#x4EE5;&#x9009;&#x62E9;&#x662F;&#x5426;&#x5F00;&#x542F; operator chain&#x3002;
+&#x4E0B;&#x56FE;&#x5C55;&#x793A;&#x4E86; operator chains&#xFF0C;source &#x548C; map &#x94FE;&#x63A5;&#x5230;&#x4E86;&#x4E00;&#x8D77;&#xFF0C;&#x6700;&#x7EC8;&#x7684;&#x6267;&#x884C;&#x662F;&#x6709; 5 &#x4E2A; subtask&#x3002;</p>
+<div align="center"><img src="https://ci.apache.org/projects/flink/flink-docs-release-1.13/fig/tasks_chains.svg" width="70%" height="70%"></div>
+
+<h3 id="task-slots-and-resources"><a name="task-slots-and-resources" class="anchor-navigation-ex-anchor" href="#task-slots-and-resources"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.6. Task Slots and Resources</h3>
+<p>&#x6BCF;&#x4E2A; TaskManager &#x90FD;&#x662F;&#x4E00;&#x4E2A; JVM &#x8FDB;&#x7A0B;&#xFF0C;&#x5185;&#x90E8;&#x4EE5;&#x591A;&#x7EBF;&#x7A0B;&#x7684;&#x65B9;&#x5F0F;&#x6267;&#x884C;&#x4E00;&#x4E2A;&#x6216;&#x8005;&#x591A;&#x4E2A; subtask&#x3002;&#x8BE5;&#x5982;&#x4F55;&#x63A7;&#x5236; TaskManager &#x4E0A;&#x6267;&#x884C;&#x7684;&#x4EFB;&#x52A1;&#x6570;&#x5462;&#xFF1F;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; task slot &#x6765;&#x8BBE;&#x7F6E;&#xFF0C;&#x5176;&#x6700;&#x5C0F;&#x4E3A; 1&#x3002;</p>
+<p>&#x6BCF;&#x4E2A; <em>task slot</em> &#x90FD;&#x4EE3;&#x8868; TaskManager &#x8D44;&#x6E90;&#x7684;&#x4E00;&#x4E2A;&#x5B50;&#x96C6;&#x3002;&#x6BD4;&#x5982;&#xFF0C;&#x4E00;&#x4E2A; TM &#x6709;&#x4E09;&#x4E2A; slot&#xFF0C;&#x5219;&#x6BCF;&#x4E2A; slot &#x4F1A;&#x5360;&#x7528; TM &#x603B;&#x8D44;&#x6E90;&#x7684; 1/3&#x3002;&#x901A;&#x8FC7; slot &#x5206;&#x914D;&#x8D44;&#x6E90;&#x610F;&#x5473;&#x7740;&#x4E0D;&#x540C;&#x4F5C;&#x4E1A;&#x4E4B;&#x95F4; subtask &#x7684;&#x8FD0;&#x884C;&#x65F6;&#x4E92;&#x4E0D;&#x5F71;&#x54CD;&#xFF0C;&#x62E5;&#x6709;&#x72EC;&#x7ACB;&#x7684;&#x9A7B;&#x7559;&#x5185;&#x5B58;&#x7B49;&#x8D44;&#x6E90;&#x3002;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x8FD9;&#x91CC;&#x5E76;&#x4E0D;&#x662F; CPU &#x9694;&#x79BB;&#x7684;&#xFF0C;slot &#x53EA;&#x662F;&#x5360;&#x6709;&#x5F53;&#x524D; TM &#x8FDB;&#x7A0B;&#x7684;&#x5185;&#x5B58;&#x8D44;&#x6E90;&#x3002;</p>
+<p>&#x901A;&#x8FC7;&#x6307;&#x5B9A;&#x4E00;&#x5B9A;&#x6570;&#x91CF;&#x7684; task slot&#xFF0C;&#x7528;&#x6237;&#x53EF;&#x4EE5;&#x81EA;&#x5DF1;&#x51B3;&#x5B9A; subtask &#x7684;&#x8FD0;&#x884C;&#x9694;&#x79BB;&#x3002;&#x6BCF;&#x4E2A; TM &#x6709;&#x4E00;&#x4E2A; slot &#x4EE3;&#x8868;&#x6240;&#x6709;&#x7684; subtask &#x90FD;&#x5728;&#x4E0D;&#x540C;&#x7684; JVM &#x8FDB;&#x7A0B;&#x4E4B;&#x4E2D;&#x8FD0;&#x884C;&#x3002;&#x6BCF;&#x4E2A; TM &#x62E5;&#x6709;&#x591A;&#x4E2A; slot &#x4EE3;&#x8868;&#x5176;&#x4E2D;&#x7684; subtask &#x5728;&#x4E00;&#x4E2A; JVM &#x8FDB;&#x7A0B;&#x4E2D;&#x3002;&#x540C;&#x4E00;&#x8FDB;&#x7A0B;&#x4E2D;&#x7684; task &#x5171;&#x4EAB; TCP &#x8FDE;&#x63A5;&#x548C;&#x5FC3;&#x8DF3;&#x4FE1;&#x606F;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x5171;&#x4EAB;&#x4E00;&#x4E9B;&#x6570;&#x636E;&#x96C6;&#xFF0C;&#x4ECE;&#x800C;&#x51CF;&#x5C11;&#x6BCF;&#x4E2A;&#x4EFB;&#x52A1;&#x7684;&#x5F00;&#x9500;&#x3002;</p>
+<div align="center"><img src="https://ci.apache.org/projects/flink/flink-docs-release-1.13/fig/tasks_slots.svg" width="70%" height="70%"></div>
+
+<p>&#x9ED8;&#x8BA4;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;Flink &#x5141;&#x8BB8;&#x4E0D;&#x540C; task &#x4E0B;&#x7684; subtask &#x5171;&#x4EAB;&#x4E00;&#x4E2A; slot&#xFF0C;&#x53EA;&#x8981;&#x4ED6;&#x4EEC;&#x5C5E;&#x4E8E;&#x540C;&#x4E00;&#x4E2A; Job&#x3002;&#x8FD9;&#x6837;&#x505A;&#x7684;&#x7ED3;&#x679C;&#x53EF;&#x80FD;&#x4F1A;&#x9020;&#x6210;&#x4E00;&#x4E2A; slot &#x5904;&#x7406;&#x4E86;&#x6574;&#x4E2A; Job &#x7684; task&#x3002;&#x8BBE;&#x8BA1;&#x6210;&#x8FD9;&#x6837;&#x4E3B;&#x8981;&#x6709;&#x4E24;&#x70B9;&#x597D;&#x5904;  </p>
+<ul>
+<li>Flink &#x503C;&#x9700;&#x8981;&#x63D0;&#x4F9B;&#x8DDF;&#x6700;&#x5927;&#x5E76;&#x884C;&#x5EA6;&#x4E00;&#x6837;&#x7684; slot &#x5373;&#x53EF;&#xFF0C;&#x800C;&#x4E0D;&#x9700;&#x8981;&#x8BA1;&#x7B97;&#x6BCF;&#x4E2A; task &#x7684;&#x5E76;&#x884C;&#x5EA6;&#x3002;</li>
+<li>&#x521A;&#x597D;&#x7684;&#x8D44;&#x6E90;&#x5229;&#x7528;&#x7387;&#xFF0C;&#x5982;&#x679C;&#x6CA1;&#x6709;&#x5171;&#x4EAB; slot&#xFF0C;&#x8D44;&#x6E90;&#x4F7F;&#x7528;&#x6BD4;&#x8F83;&#x5C11;&#x7684; source/map task &#x5C31;&#x4F1A;&#x72EC;&#x5360;&#x6574;&#x4E2A; slot&#xFF0C;&#x76F4;&#x81F3;&#x5176;&#x8FD0;&#x884C;&#x5B8C;&#x6210;&#xFF0C;&#x5176;&#x4E2D;&#x5269;&#x4F59;&#x7684;&#x8D44;&#x6E90;&#x90FD;&#x65E0;&#x6CD5;&#x88AB;&#x4F7F;&#x7528;&#x3002;</li>
+</ul>
+<h3 id="flink-&#x7A0B;&#x5E8F;&#x7684;&#x8FD0;&#x884C;"><a name="flink-&#x7A0B;&#x5E8F;&#x7684;&#x8FD0;&#x884C;" class="anchor-navigation-ex-anchor" href="#flink-&#x7A0B;&#x5E8F;&#x7684;&#x8FD0;&#x884C;"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.7. Flink &#x7A0B;&#x5E8F;&#x7684;&#x8FD0;&#x884C;</h3>
+<p>Flink &#x7A0B;&#x5E8F;&#x901A;&#x8FC7; main &#x65B9;&#x6CD5;&#x5165;&#x53E3;&#x751F;&#x6210;&#x4E00;&#x4E2A;&#x6216;&#x8005;&#x591A;&#x4E2A;&#x4F5C;&#x4E1A;&#x63D0;&#x4EA4;&#x5230;&#x96C6;&#x7FA4;&#x3002;&#x8FD9;&#x4E9B; job &#x53EF;&#x4EE5;&#x5728;&#x672C;&#x5730; JVM &#x8FDB;&#x7A0B;&#xFF08;LocalEnvironment&#xFF09;&#x6216;&#x8005;&#x62E5;&#x6709;&#x591A;&#x4E2A;&#x673A;&#x5668;&#x7684;&#x8FDC;&#x7A0B;&#x96C6;&#x7FA4;&#x4E0A;&#x8FD0;&#x884C;&#xFF08;RemoteEnvironment&#xFF09;&#x3002;&#x5BF9;&#x4E8E;&#x6BCF;&#x4E00;&#x4E2A;&#x7A0B;&#x5E8F;&#xFF0C;ExecutionEnvironment &#x63D0;&#x4F9B;&#x4E86;&#x63A7;&#x5236;&#x4F5C;&#x4E1A;&#x6267;&#x884C;&#x7684;&#x65B9;&#x6CD5;&#xFF08;&#x6BD4;&#x5982;&#x8BBE;&#x7F6E;&#x5E76;&#x884C;&#x5EA6;&#xFF0C;&#x5F00;&#x542F; checkpoint &#x7B49;&#xFF09;&#x3002;
+Flink &#x7A0B;&#x5E8F;&#x53EF;&#x4EE5;&#x7528; session mode&#xFF0C;per job &#x7684;&#x65B9;&#x5F0F;&#x8FD0;&#x884C;&#xFF0C;&#x4E0B;&#x9762;&#x4ECB;&#x7ECD;&#x8FD9;&#x4E9B;&#x8FD0;&#x884C;&#x65B9;&#x5F0F;&#x7684;&#x751F;&#x547D;&#x5468;&#x671F;&#x53CA;&#x8D44;&#x6E90;&#x7BA1;&#x7406;</p>
+<h4 id="flink-session-cluster"><a name="flink-session-cluster" class="anchor-navigation-ex-anchor" href="#flink-session-cluster"><i class="fa fa-link" aria-hidden="true"></i></a>Flink Session Cluster</h4>
+<ul>
+<li><p><strong>&#x96C6;&#x7FA4;&#x751F;&#x547D;&#x5468;&#x671F;</strong>&#xFF1A;&#x5728; session &#x6A21;&#x5F0F;&#x4E0B;&#xFF0C;Flink &#x5BA2;&#x6237;&#x7AEF;&#x901A;&#x8FC7;&#x8FDE;&#x63A5;&#x4E00;&#x4E2A;&#x9884;&#x5148;&#x542F;&#x52A8;&#xFF0C;&#x957F;&#x671F;&#x8FD0;&#x884C;&#x7684;&#x96C6;&#x7FA4;&#x6765;&#x63D0;&#x4EA4;&#x4F5C;&#x4E1A;&#x3002;&#x5373;&#x4F7F;&#x63D0;&#x4EA4;&#x7684;&#x4F5C;&#x4E1A;&#x5DF2;&#x7ECF;&#x8FD0;&#x884C;&#x5B8C;&#x6210;&#xFF0C;&#x96C6;&#x7FA4;&#xFF08;&#x5305;&#x62EC; JM&#xFF09;&#x4ECD;&#x7136;&#x4F1A;&#x8FD0;&#x884C;&#xFF0C;&#x76F4;&#x5230;&#x6574;&#x4E2A; session &#x88AB;&#x624B;&#x52A8;&#x505C;&#x6B62;&#x3002;Flink Session Cluster &#x7684;&#x751F;&#x547D;&#x5468;&#x671F;&#x4E0E;&#x4E0A;&#x9762;&#x8FD0;&#x884C;&#x7684;&#x4F5C;&#x4E1A;&#x65E0;&#x5173;&#x3002;</p>
+</li>
+<li><p><strong>&#x8D44;&#x6E90;&#x9694;&#x79BB;</strong>&#xFF1A;&#x5728;&#x4F5C;&#x4E1A;&#x63D0;&#x4EA4;&#x540E;&#xFF0C;RM &#x8D1F;&#x8D23;&#x5206;&#x914D; task slots&#xFF0C;&#x5728;&#x4F5C;&#x4E1A;&#x8FD0;&#x884C;&#x5B8C;&#x6210;&#x540E;&#x5C31;&#x4F1A;&#x91CA;&#x653E;&#x54CD;&#x5E94;&#x8D44;&#x6E90;&#x3002;&#x56E0;&#x4E3A;&#x6240;&#x6709;&#x4F5C;&#x4E1A;&#x5171;&#x4EAB;&#x6574;&#x4E2A;&#x96C6;&#x7FA4;&#xFF0C;&#x6240;&#x4EE5;&#x5B58;&#x5728;&#x8D44;&#x6E90;&#x7ADE;&#x4E89; - &#x6BD4;&#x5982;&#x63D0;&#x4EA4;&#x4F5C;&#x4E1A;&#x7684;&#x7F51;&#x7EDC;&#x5E26;&#x5BBD;&#x3002;&#x8FD9;&#x79CD;&#x5171;&#x4EAB;&#x7684;&#x4E00;&#x4E2A;&#x9650;&#x5236;&#x662F;&#x4E00;&#x65E6; TM &#x5D29;&#x6E83;&#xFF0C;&#x5728;&#x5176;&#x4E0A;&#x9762;&#x8FD0;&#x884C;&#x7684; subtask &#x90FD;&#x4F1A;&#x5931;&#x8D25;&#x3002;&#x540C;&#x6837;&#x7684;&#xFF0C;&#x4E00;&#x65E6; JM &#x6302;&#x6389;&#xFF0C;&#x6574;&#x4E2A;&#x96C6;&#x7FA4;&#x7684;&#x4F5C;&#x4E1A;&#x90FD;&#x4F1A;&#x5931;&#x8D25;&#x3002;</p>
+</li>
+<li><p><strong>&#x5176;&#x4ED6;&#x6CE8;&#x610F;&#x4E8B;&#x9879;</strong>&#xFF1A;session &#x6A21;&#x5F0F;&#x4E0B;&#xFF0C;&#x51CF;&#x5C0F;&#x4E86;&#x4F5C;&#x4E1A;&#x7684;&#x542F;&#x505C;&#x5F00;&#x9500;&#xFF0C;&#x4E3B;&#x8981;&#x662F; TM &#x7684;&#x542F;&#x52A8;&#x548C;&#x8D44;&#x6E90;&#x7684;&#x7533;&#x8BF7;&#xFF0C;&#x8FD9;&#x5BF9;&#x4E8E;&#x542F;&#x52A8;&#x65F6;&#x95F4;&#x5927;&#x4E8E;&#x8FD0;&#x884C;&#x65F6;&#x95F4;&#x7684;&#x4F5C;&#x4E1A;&#x662F;&#x53CB;&#x597D;&#x7684;&#xFF0C;&#x573A;&#x666F;&#x5927;&#x6982;&#x5728;&#x5C0F;&#x4EFB;&#x52A1;&#x6BD4;&#x8F83;&#x591A;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#x4F7F;&#x7528;&#x6BD4;&#x8F83;&#x597D;&#x3002; </p>
+</li>
+</ul>
+<h4 id="flink-job-cluster"><a name="flink-job-cluster" class="anchor-navigation-ex-anchor" href="#flink-job-cluster"><i class="fa fa-link" aria-hidden="true"></i></a>Flink Job Cluster</h4>
+<ul>
+<li><p><strong>&#x96C6;&#x7FA4;&#x751F;&#x547D;&#x5468;&#x671F;</strong>&#xFF1A;&#x5728; per-job &#x6A21;&#x5F0F;&#x4E0B;&#xFF0C;&#x4F1A;&#x4E3A;&#x6BCF;&#x4E2A;&#x63D0;&#x4EA4;&#x7684;&#x4EFB;&#x52A1;&#x5355;&#x72EC;&#x542F;&#x52A8;&#x4E00;&#x4E2A;&#x96C6;&#x7FA4;&#x4F9B;&#x4F5C;&#x4E1A;&#x5355;&#x72EC;&#x4F7F;&#x7528;&#x3002;&#x5BA2;&#x6237;&#x7AEF;&#x9996;&#x5148;&#x4ECE;&#x96C6;&#x7FA4;&#x7BA1;&#x7406;&#x5668;&#x7533;&#x8BF7;&#x8D44;&#x6E90;&#x542F;&#x52A8; JM&#xFF0C;&#x7136;&#x540E;&#x5411; Dispatcher &#x63D0;&#x4EA4;&#x4F5C;&#x4E1A;&#xFF0C;&#x7136;&#x540E;&#x6839;&#x636E;&#x4F5C;&#x4E1A;&#x7684;&#x8D44;&#x6E90;&#x4FE1;&#x606F;&#xFF0C;&#x542F;&#x52A8; TM &#x8FDB;&#x7A0B;&#x3002;&#x4E00;&#x65E6;&#x8BE5;&#x4F5C;&#x4E1A;&#x5B8C;&#x6210;&#xFF0C;&#x6574;&#x4E2A;&#x96C6;&#x7FA4;&#x4E5F;&#x4F1A;&#x88AB;&#x9500;&#x6BC1;&#x3002;</p>
+</li>
+<li><p><strong>&#x8D44;&#x6E90;&#x9694;&#x79BB;</strong>&#xFF1A;JM &#x4EA7;&#x751F;&#x9519;&#x8BEF;&#x53EA;&#x4F1A;&#x5F71;&#x54CD;&#x5F53;&#x524D;&#x7684;&#x4F5C;&#x4E1A;&#x3002;</p>
+</li>
+<li><p><strong>&#x5176;&#x4ED6;&#x6CE8;&#x610F;&#x4E8B;&#x9879;</strong>&#xFF1A;&#x56E0;&#x4E3A; RM &#x9700;&#x8981;&#x7533;&#x8BF7;&#x5916;&#x90E8;&#x8D44;&#x6E90;&#x5E76;&#x7B49;&#x5F85;&#x7BA1;&#x7406;&#x7EC4;&#x4EF6;&#x542F;&#x52A8; TM&#xFF0C;per-job &#x6A21;&#x5F0F;&#x9002;&#x5408;&#x8FD0;&#x884C;&#x65F6;&#x95F4;&#x8F83;&#x957F;&#xFF0C;&#x8981;&#x6C42;&#x9AD8;&#x53EF;&#x7528;&#x6027;&#x7684;&#x5927;&#x578B;&#x4F5C;&#x4E1A;&#x3002;&#x751F;&#x4EA7;&#x73AF;&#x5883;&#x4E2D;&#x901A;&#x5E38;&#x662F;&#x8FD9;&#x79CD;&#x6A21;&#x5F0F;</p>
+</li>
+</ul>
+<blockquote>
+<p>K8s &#x4E0D;&#x652F;&#x6301; per-job &#x6A21;&#x5F0F;&#x3002;</p>
+</blockquote>
+<h4 id="flink-application-cluster"><a name="flink-application-cluster" class="anchor-navigation-ex-anchor" href="#flink-application-cluster"><i class="fa fa-link" aria-hidden="true"></i></a>Flink Application Cluster</h4>
+<ul>
+<li><p><strong>&#x96C6;&#x7FA4;&#x751F;&#x547D;&#x5468;&#x671F;</strong>&#xFF1A;&#x8BE5;&#x6A21;&#x5F0F;&#x7528;&#x6765;&#x4E13;&#x95E8;&#x8FD0;&#x884C; Flink &#x4F5C;&#x4E1A;&#xFF0C;&#x63D0;&#x4EA4;&#x4F5C;&#x4E1A;&#x4E5F;&#x5728;&#x96C6;&#x7FA4;&#x4E0A;&#x63D0;&#x4EA4;&#x800C;&#x4E0D;&#x662F;&#x5BA2;&#x6237;&#x7AEF;&#x3002;&#x4F5C;&#x4E1A;&#x63D0;&#x4EA4;&#x662F;&#x4E00;&#x6B65;&#x8FC7;&#x7A0B;&#xFF0C;&#x4E0D;&#x9700;&#x8981;&#x5148;&#x542F;&#x52A8; JM &#x5728;&#x63D0;&#x4EA4;&#x3002;&#x53D6;&#x800C;&#x4EE3;&#x4E4B;&#x7684;&#x662F;&#x5DF2; jar &#x5305;&#x7684;&#x5F62;&#x5F0F;&#xFF0C;<em>ApplicationClusterEntryPoint</em> &#x8D1F;&#x8D23;&#x6267;&#x884C; main &#x65B9;&#x6CD5;&#x5C06;&#x4F5C;&#x4E1A;&#x5148;&#x8F6C;&#x6362;&#x6210; job graph&#x3002;Flink Application Cluster &#x7684;&#x751F;&#x547D;&#x5468;&#x671F;&#x4E0E; Flink &#x7A0B;&#x5E8F;&#x672C;&#x8EAB;&#x76F8;&#x5173;&#x3002;</p>
+</li>
+<li><p><strong>&#x8D44;&#x6E90;&#x9694;&#x79BB;</strong>&#xFF1A;&#x5728; Flink Application Cluster &#x4E2D;&#xFF0C;RM &#x548C; Dispatcher &#x4F5C;&#x7528;&#x4E8E;&#x5355;&#x4E2A; Flink &#x7A0B;&#x5E8F;&#xFF0C;&#x63D0;&#x4F9B;&#x4E86;&#x6BD4; session mode &#x4E0B;&#x66F4;&#x597D;&#x7684;&#x8D44;&#x6E90;&#x9694;&#x79BB;&#xFF0C;&#x6BD4; per-job &#x6A21;&#x5F0F;&#x4E0B;&#x66F4;&#x5C11;&#x7684;&#x542F;&#x52A8;&#x65F6;&#x95F4;&#x3002;</p>
+</li>
+</ul>
+<blockquote>
+<p>per-job &#x6A21;&#x5F0F;&#x53EF;&#x4EE5;&#x770B;&#x505A;&#x8FD0;&#x884C;&#x5728;&#x5BA2;&#x6237;&#x7AEF;&#x4E0A;&#x7684; Flink Application Cluster &#x3002;</p>
+</blockquote>
+<h3 id="&#x601D;&#x8003;"><a name="&#x601D;&#x8003;" class="anchor-navigation-ex-anchor" href="#&#x601D;&#x8003;"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.8. &#x601D;&#x8003;</h3>
+<p><strong>1.&#x4ECE; job &#x63D0;&#x4EA4;&#x6765;&#x770B; Yarn&#xFF0C;Flink&#xFF0C;Spark&#xFF1F;</strong></p>
+<p>yarn &#x53EA;&#x662F;&#x96C6;&#x7FA4;&#x7BA1;&#x7406;&#x5668;&#xFF0C;&#x8FD9;&#x91CC;&#x66F4;&#x8D34;&#x5207;&#x7684;&#x662F; MR&#x3002;&#x770B;&#x770B;&#x5927;&#x90E8;&#x5206;&#x8BA1;&#x7B97;&#x6846;&#x67B6;&#x7684;&#x4F5C;&#x4E1A;&#x63D0;&#x4EA4;&#x8FC7;&#x7A0B;&#xFF0C;&#x90FD;&#x662F;&#x76F8;&#x901A;&#x7684;&#xFF0C;&#x57FA;&#x672C;&#x601D;&#x60F3;&#x662F;&#x4E00;&#x81F4;&#x7684;&#x3002;</p>
+<ol>
+<li>&#x5BA2;&#x6237;&#x7AEF;&#x50CF;&#x5916;&#x90E8;&#x8D44;&#x6E90;&#x7BA1;&#x7406;&#x5668;&#x7533;&#x8BF7;&#x8D44;&#x6E90;&#xFF0C;&#x542F;&#x52A8; master&#x3002;</li>
+<li>master &#x505A;&#x597D;&#x8C03;&#x5EA6;&#xFF0C;&#x5207;&#x5206;&#x4EFB;&#x52A1;&#x3002;</li>
+<li>&#x5728;&#x542F;&#x52A8; worker&#xFF0C;&#x5C06;&#x5207;&#x5206;&#x597D;&#x7684; task &#x53D1;&#x5230;&#x5404;&#x4E2A; worker &#x4E0A;&#x8FDB;&#x884C;&#x3002;</li>
+<li>woker &#x4E0E; master &#x4E4B;&#x95F4;&#x7EF4;&#x6301;&#x5FC3;&#x8DF3;&#x901A;&#x4FE1;&#xFF0C;&#x4E00;&#x65E6; worker &#x6302;&#x6389;&#x6216;&#x8005;&#x4E0A;&#x9762;&#x7684; task &#x5931;&#x8D25;&#xFF0C;master &#x5C31;&#x4F1A;&#x63A5;&#x5230;&#x901A;&#x77E5;&#x91CD;&#x65B0;&#x7533;&#x8BF7;&#x8D44;&#x6E90;&#x8C03;&#x5EA6;&#x8D77;&#x5931;&#x8D25;&#x4EFB;&#x52A1;</li>
+<li>&#x6700;&#x540E;&#x5230;&#x4EFB;&#x52A1;&#x5B8C;&#x6210;&#xFF0C;&#x91CA;&#x653E;&#x8D44;&#x6E90;&#x3002;</li>
+</ol>
+<p><strong>2.Flink &#x5E38;&#x89C1;&#x8D44;&#x6E90;&#x914D;&#x7F6E;&#x53C2;&#x6570;&#xFF1F;</strong></p>
+<p>&#x53EF;&#x4EE5;&#x67E5;&#x770B;<a href="https://ci.apache.org/projects/flink/flink-docs-master/zh/docs/deployment/config/#memory-configuration" target="_blank">&#x5B98;&#x65B9;&#x53C2;&#x6570;&#x914D;&#x7F6E;&#x6587;&#x6863;</a></p>
+<p><strong>3.&#x548B;&#x4E00;&#x770B;&#xFF0C;Flink Application Cluster &#x662F;&#x4F5C;&#x4E1A;&#x63D0;&#x4EA4;&#x8FD0;&#x884C;&#x6700;&#x4F73;&#x7684;&#x65B9;&#x5F0F;&#xFF0C;&#x662F;&#x8FD9;&#x6837;&#x5417;&#xFF1F;</strong></p>
+<p>&#x751F;&#x4EA7;&#x73AF;&#x5883;&#x4E0A;&#x7684;&#x5B9E;&#x65F6;&#x8BA1;&#x7B97;&#x5E73;&#x53F0;&#x597D;&#x50CF;&#x5C31;&#x662F;&#x8FD9;&#x79CD;&#x6A21;&#x5F0F;&#x3002;</p>
+<footer class="page-footer-ex"> <span class="page-footer-ex-copyright"> By <a href="https://github.com/Flyraty" target="_blank">Flyraty</a>&#xFF0C;&#x4F7F;&#x7528;<a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">&#x77E5;&#x8BC6;&#x5171;&#x4EAB; &#x7F72;&#x540D;-&#x76F8;&#x540C;&#x65B9;&#x5F0F;&#x5171;&#x4EAB; 4.0&#x534F;&#x8BAE;</a>&#x53D1;&#x5E03; </span> &#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="page-footer-ex-footer-update"> <i>updated</i> 2023-01-10 14:39:27 </span> </footer>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="timely_stream_processing.html" class="navigation navigation-prev " aria-label="Previous page: Timely Stream Processing">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="flink_api.html" class="navigation navigation-next " aria-label="Next page: Flink API">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Flink Architecture","level":"1.2.3","depth":2,"next":{"title":"Flink API","level":"1.2.4","depth":2,"path":"Overview/flink_api.md","ref":"Overview/flink_api.md","articles":[]},"previous":{"title":"Timely Stream Processing","level":"1.2.2","depth":2,"path":"Overview/timely_stream_processing.md","ref":"Overview/timely_stream_processing.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-expandable-chapters","github-buttons","editlink","copy-code-button","page-footer-ex","anchor-navigation-ex","expandable-chapters-small","prism","-highlight","lunr","-search","search-pro","splitter"],"ignores":["_book","node_modules"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-solarizedlight.css"],"lang":{"flow":"typescript"}},"editlink":{"label":"Edit This Page","multilingual":false,"base":"https://github.com/Flyraty/flink_learning_notes/tree/gitbook"},"page-footer-ex":{"copyright":"By [Flyraty](https://github.com/Flyraty)，使用[知识共享 署名-相同方式共享 4.0协议](https://creativecommons.org/licenses/by-sa/4.0/)发布","markdown":true,"update_format":"YYYY-MM-DD HH:mm:ss","update_label":"<i>updated</i>"},"splitter":{},"search-pro":{},"lunr":{"ignoreSpecialCharacters":false,"maxIndexSize":1000000},"fontsettings":{"theme":"white","family":"sans","size":2},"anchor-navigation-ex":{"associatedWithSummary":true,"float":{"floatIcon":"fa fa-navicon","level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"mode":"float","multipleH1":true,"pageTop":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"printLog":false,"showGoTop":true,"showLevel":true},"github-buttons":{"buttons":[{"user":"Flyraty","repo":"flink_learning_notes","type":"star","size":"small"}]},"expandable-chapters-small":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"flink_learning_notes","language":"zh-hans","gitbook":"*"},"file":{"path":"Overview/flink_architecture.md","mtime":"2023-01-10T14:39:27.411Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2023-01-10T14:40:20.271Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-github-buttons/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-editlink/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-copy-code-button/toggle.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

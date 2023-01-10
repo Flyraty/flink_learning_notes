@@ -1,0 +1,762 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Checkpointing · flink_learning_notes</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-page-footer-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchor-navigation-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-prism/prism-solarizedlight.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search-pro/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="queryable_state.html" />
+    
+    
+    <link rel="prev" href="broadcast_state.html" />
+    
+
+    <style>
+    @media only screen and (max-width: 640px) {
+        .book-header .hidden-mobile {
+            display: none;
+        }
+    }
+    </style>
+    <script>
+        window["gitbook-plugin-github-buttons"] = {"buttons":[{"user":"Flyraty","repo":"flink_learning_notes","type":"star","size":"small"}]};
+    </script>
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    开篇
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../Overview/">
+            
+                <a href="../Overview/">
+            
+                    
+                    基础概念
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../Overview/stateful_stream_processing.html">
+            
+                <a href="../Overview/stateful_stream_processing.html">
+            
+                    
+                    Stateful Stream Processing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../Overview/timely_stream_processing.html">
+            
+                <a href="../Overview/timely_stream_processing.html">
+            
+                    
+                    Timely Stream Processing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../Overview/flink_architecture.html">
+            
+                <a href="../Overview/flink_architecture.html">
+            
+                    
+                    Flink Architecture
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="../Overview/flink_api.html">
+            
+                <a href="../Overview/flink_api.html">
+            
+                    
+                    Flink API
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../DataStream API/">
+            
+                <a href="../DataStream API/">
+            
+                    
+                    DataStream API
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../DataStream API/overview.html">
+            
+                <a href="../DataStream API/overview.html">
+            
+                    
+                    概览
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../DataStream API/execution_mode.html">
+            
+                <a href="../DataStream API/execution_mode.html">
+            
+                    
+                    流/批的运行模式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../DataStream API/event_time.html">
+            
+                <a href="../DataStream API/event_time.html">
+            
+                    
+                    事件时间与 Watermark
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="../DataStream API/datasource.html">
+            
+                <a href="../DataStream API/datasource.html">
+            
+                    
+                    Data Sources
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="../DataStream API/operators.html">
+            
+                <a href="../DataStream API/operators.html">
+            
+                    
+                    Operators
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6" data-path="../DataStream API/udf.html">
+            
+                <a href="../DataStream API/udf.html">
+            
+                    
+                    UDF
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    状态容错与管理
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="work_with_state.html">
+            
+                <a href="work_with_state.html">
+            
+                    
+                    状态处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="broadcast_state.html">
+            
+                <a href="broadcast_state.html">
+            
+                    
+                    状态广播
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.4.3" data-path="checkpointing.html">
+            
+                <a href="checkpointing.html">
+            
+                    
+                    Checkpointing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="queryable_state.html">
+            
+                <a href="queryable_state.html">
+            
+                    
+                    状态查询
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="state_backends.html">
+            
+                <a href="state_backends.html">
+            
+                    
+                    状态后端
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6" data-path="state_and_fault_tolerance.html">
+            
+                <a href="state_and_fault_tolerance.html">
+            
+                    
+                    状态容错
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7" data-path="state_schema_evolution.html">
+            
+                <a href="state_schema_evolution.html">
+            
+                    
+                    状态迁移与演化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8" data-path="custom_state_serialization.html">
+            
+                <a href="custom_state_serialization.html">
+            
+                    
+                    自定义状态序列化器
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../DataSet API/">
+            
+                <a href="../DataSet API/">
+            
+                    
+                    DataSet API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../Table API/">
+            
+                <a href="../Table API/">
+            
+                    
+                    Table API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../Data Types & Serialization/">
+            
+                <a href="../Data Types & Serialization/">
+            
+                    
+                    Data Types & Serialization
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            本书使用 GitBook 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Checkpointing</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <div id="anchor-navigation-ex-navbar"><i class="fa fa-navicon"></i><ul><ul><ul><li><span class="title-icon "></span><a href="#checkpointing"><b>1.1.1. </b>Checkpointing</a></li><li><span class="title-icon "></span><a href="#checkpointing-&#x7684;&#x5F00;&#x542F;&#x548C;&#x914D;&#x7F6E;"><b>1.1.2. </b>Checkpointing &#x7684;&#x5F00;&#x542F;&#x548C;&#x914D;&#x7F6E;</a></li><li><span class="title-icon "></span><a href="#checkpointing-&#x53EF;&#x9009;&#x7684;&#x914D;&#x7F6E;&#x9879;"><b>1.1.3. </b>Checkpointing &#x53EF;&#x9009;&#x7684;&#x914D;&#x7F6E;&#x9879;</a></li><li><span class="title-icon "></span><a href="#checkpoint-&#x5B58;&#x50A8;&#x7684;&#x9009;&#x62E9;"><b>1.1.4. </b>Checkpoint &#x5B58;&#x50A8;&#x7684;&#x9009;&#x62E9;</a></li><li><span class="title-icon "></span><a href="#&#x8FED;&#x4EE3;&#x6D41;&#x4E2D;&#x7684;-state-checkpoint"><b>1.1.5. </b>&#x8FED;&#x4EE3;&#x6D41;&#x4E2D;&#x7684; State Checkpoint</a></li><li><span class="title-icon "></span><a href="#&#x5BF9;-dag-&#x4E2D;&#x5DF2;&#x5B8C;&#x6210;&#x7684;&#x8282;&#x70B9;&#x8FDB;&#x884C;-checkpoint&#xFF08;beta&#xFF09;"><b>1.1.6. </b>&#x5BF9; DAG &#x4E2D;&#x5DF2;&#x5B8C;&#x6210;&#x7684;&#x8282;&#x70B9;&#x8FDB;&#x884C; Checkpoint&#xFF08;BETA&#xFF09;</a></li><li><span class="title-icon "></span><a href="#&#x601D;&#x8003;"><b>1.1.7. </b>&#x601D;&#x8003;</a></li></ul></ul></ul></div><a href="#" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><h3 id="checkpointing"><a name="checkpointing" class="anchor-navigation-ex-anchor" href="#checkpointing"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.1. Checkpointing</h3>
+<p>Flink &#x4E2D;&#x7684;&#x6BCF;&#x4E2A;&#x51FD;&#x6570;&#x6216;&#x8005; operator &#x90FD;&#x53EF;&#x4EE5;&#x662F;&#x6709;&#x72B6;&#x6001;&#x7684;&#xFF0C;&#x6709;&#x72B6;&#x6001;&#x7684;&#x51FD;&#x6570;&#x53EF;&#x4EE5;&#x6682;&#x65F6;&#x7406;&#x89E3;&#x4E3A;&#x5728;&#x6570;&#x636E;&#x6D41;&#x63A5;&#x6536;&#x8BA1;&#x7B97;&#x8FC7;&#x7A0B;&#x4E2D;&#x5B58;&#x50A8;&#x6570;&#x636E;&#xFF0C;&#x6BD4;&#x5982;&#x8BA1;&#x7B97;&#x4E94;&#x5206;&#x949F;&#x4E4B;&#x5185;&#x89C2;&#x770B;&#x76F4;&#x64AD;&#x7684;&#x4EBA;&#x6B21;&#xFF0C;&#x6211;&#x4EEC;&#x5C31;&#x8981;&#x7F13;&#x5B58;&#x8BE5;&#x4E94;&#x5206;&#x949F;&#x4E4B;&#x5185;&#x8FDB;&#x5165;&#x7684;&#x7528;&#x6237;id&#x3002;&#x5728;&#x7C7B;&#x4F3C;&#x8FD9;&#x6837;&#x7684;&#x573A;&#x666F;&#x4E2D;&#xFF0C;&#x72B6;&#x6001;&#x5DF2;&#x7136;&#x6210;&#x4E3A;&#x4E86;&#x7A0B;&#x5E8F;&#x529F;&#x80FD;&#x7EC4;&#x6210;&#x7684;&#x91CD;&#x8981;&#x90E8;&#x5206;&#x3002;</p>
+<p>&#x4E3A;&#x4E86;&#x4FDD;&#x8BC1;&#x72B6;&#x6001;&#x5BB9;&#x9519;&#xFF0C;Flink &#x9700;&#x8981;&#x7F13;&#x5B58;&#x72B6;&#x6001;&#xFF0C;&#x5373; Checkpoint&#x3002;Checkpoint &#x4F7F;&#x5F97; Flink &#x5728;&#x4EFB;&#x52A1;&#x5931;&#x8D25;&#x65F6;&#xFF0C;&#x53EF;&#x4EE5;&#x6062;&#x590D;&#x5230;&#x5931;&#x8D25;&#x65F6;&#x7684;&#x72B6;&#x6001;&#x548C;&#x6570;&#x636E;&#x6D41;&#x7684;&#x4F4D;&#x7F6E;&#xFF0C;&#x4EE5;&#x5B9E;&#x73B0;&#x76F8;&#x540C;&#x7684;&#x5904;&#x7406;&#x8BED;&#x4E49;&#x3002;</p>
+<p>Flink Checkpoint &#x673A;&#x5236;&#x9700;&#x8981;&#x548C;&#x5B58;&#x50A8;&#x505A;&#x4EA4;&#x4E92;&#xFF08;&#x6570;&#x636E;&#x6E90;&#x5B58;&#x50A8;&#x548C;&#x72B6;&#x6001;&#x5B58;&#x50A8;&#xFF0C;&#x4E0D;&#x7BA1;&#x662F;&#x5185;&#x5B58;&#x8FD8;&#x662F;&#x5916;&#x90E8;&#x6570;&#x636E;&#x5E93;&#xFF09;&#xFF0C;&#x56E0;&#x6B64;&#x6709;&#x51E0;&#x4E2A;&#x5FC5;&#x9700;&#x70B9;&#xFF1A;</p>
+<ul>
+<li>&#x4E00;&#x4E2A;&#x53EF;&#x4EE5;&#x652F;&#x6301;&#x91CD;&#x653E;&#x6570;&#x636E;&#x7684;&#x6301;&#x4E45;&#x5316;&#x9AD8;&#x53EF;&#x7528;&#x7684;&#x6570;&#x636E;&#x6E90;&#xFF0C;&#x6BD4;&#x5982;&#x5F88;&#x591A;&#x6D88;&#x606F;&#x961F;&#x5217;&#xFF08;Kafka&#xFF0C;RabbitMQ &#x7B49;&#xFF09;&#x6216;&#x8005;&#x5916;&#x90E8;&#x6587;&#x4EF6;&#x5B58;&#x50A8;&#x7CFB;&#x7EDF;&#xFF08;HDFS&#xFF0C;S3&#x7B49;&#xFF09;</li>
+<li>&#x4E00;&#x4E2A;&#x53EF;&#x4EE5;&#x6301;&#x4E45;&#x5316;&#x72B6;&#x6001;&#x7684;&#x5B58;&#x50A8;&#xFF0C;&#x5177;&#x6709;&#x4EE3;&#x8868;&#x6027;&#x7684;&#x662F;&#x5206;&#x5E03;&#x5F0F;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#xFF08;&#x6BD4;&#x5982; HDFS, S3, GFS, NFS, Ceph, &#x2026;&#xFF09;</li>
+</ul>
+<h3 id="checkpointing-&#x7684;&#x5F00;&#x542F;&#x548C;&#x914D;&#x7F6E;"><a name="checkpointing-&#x7684;&#x5F00;&#x542F;&#x548C;&#x914D;&#x7F6E;" class="anchor-navigation-ex-anchor" href="#checkpointing-&#x7684;&#x5F00;&#x542F;&#x548C;&#x914D;&#x7F6E;"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.2. Checkpointing &#x7684;&#x5F00;&#x542F;&#x548C;&#x914D;&#x7F6E;</h3>
+<p>Checkpoint &#x9ED8;&#x8BA4;&#x662F;&#x4E0D;&#x5F00;&#x542F;&#x7684;&#xFF0C;&#x9700;&#x8981;&#x8C03;&#x7528; StreamExecutionEnvironment &#x4E0A;&#x7684; enableCheckpointing(n) &#x65B9;&#x6CD5;&#x6765;&#x542F;&#x7528;&#xFF0C;&#x5176;&#x4E2D; n &#x4EE3;&#x8868;&#x7684;&#x4E24;&#x6B21; Checkpoint &#x4E4B;&#x95F4;&#x7684; ms &#x95F4;&#x9694;&#x3002;</p>
+<p>&#x5176;&#x4ED6; checkpointing &#x76F8;&#x5173;&#x7684;&#x53C2;&#x6570;&#x5982;&#x4E0B;&#xFF1A;</p>
+<ul>
+<li><p><em>checkpoint storage&#xFF08;checkpoint &#x7684;&#x5B58;&#x50A8;&#x4F4D;&#x7F6E;&#xFF09;</em>&#xFF1A;&#x7528;&#x6765;&#x8BBE;&#x7F6E; checkpoint &#x5FEB;&#x7167;&#x7684;&#x5B58;&#x50A8;&#x4F4D;&#x7F6E;&#x3002;&#x9ED8;&#x8BA4;&#x60C5;&#x51B5;&#x4E0B;&#x4F7F;&#x7528; JobManager &#x7684;&#x5806;&#x5185;&#x5B58;&#x3002;&#x5728;&#x751F;&#x4EA7;&#x73AF;&#x5883;&#x4E2D;&#x4E00;&#x822C;&#x5EFA;&#x8BAE;&#x4F7F;&#x7528;&#x5206;&#x5E03;&#x5F0F;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x3002;&#x53EF;&#x4EE5;&#x67E5;&#x770B; <a href="https://nightlies.apache.org/flink/flink-docs-release-1.14/docs/ops/state/checkpoints/#checkpoint-storage" target="_blank">checkpoint storage</a> &#x83B7;&#x53D6;&#x66F4;&#x591A;&#x4F5C;&#x4E1A;&#x6216;&#x8005;&#x96C6;&#x7FA4;&#x65B9;&#x9762;&#x7684;&#x914D;&#x7F6E;&#x3002;</p>
+</li>
+<li><p>exactly-once vs at-least-once&#xFF08;&#x7CBE;&#x786E;&#x4E00;&#x6B21;&#x5904;&#x7406; vs &#x81F3;&#x5C11;&#x4E00;&#x6B21;&#x5904;&#x7406;&#xFF09;: &#x53EF;&#x4EE5;&#x901A;&#x8FC7; enableCheckpointing &#x65B9;&#x6CD5;&#x6765;&#x8BBE;&#x7F6E;&#x5904;&#x7406;&#x8BED;&#x4E49;&#xFF0C;exactly-once &#x5728;&#x5927;&#x591A;&#x6570;&#x60C5;&#x51B5;&#x4E0B;&#x6027;&#x80FD;&#x662F;&#x826F;&#x597D;&#x7684;&#x3002;&#x4F46;&#x662F;&#x5982;&#x679C;&#x9700;&#x8981;&#x6781;&#x4F4E;&#x5EF6;&#x65F6;&#x7684;&#x573A;&#x666F;&#x4E0B;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x8003;&#x8651;&#x4F7F;&#x7528; at-least-once&#x3002;&#x6027;&#x80FD;&#x548C;&#x51C6;&#x786E;&#x6027;&#x4ECE;&#x6765;&#x90FD;&#x662F;&#x9700;&#x8981;&#x5E73;&#x8861;&#x7684;&#x95EE;&#x9898;&#xFF0C;&#x9700;&#x8981;&#x7ED3;&#x5408;&#x81EA;&#x5DF1;&#x7684;&#x4E1A;&#x52A1;&#x573A;&#x666F;&#xFF0C;&#x6BD4;&#x5982;&#x53EA;&#x662F;&#x7B80;&#x5355;&#x7684; ETL &#x5904;&#x7406;&#xFF0C;sink &#x4FA7;&#x53EF;&#x4EE5;&#x505A;&#x5230;&#x5E42;&#x7B49;&#x4FDD;&#x8BC1;&#xFF0C;&#x800C;&#x4E14;&#x9700;&#x8981; ms &#x7EA7;&#x522B;&#x7684;&#x5EF6;&#x8FDF;&#x4FDD;&#x969C;&#xFF0C;&#x90A3;&#x4E48;&#x5C31;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; at-least-once&#x3002;</p>
+</li>
+<li><p>checkpoint timeout&#xFF08;checkpoint &#x7684;&#x8D85;&#x65F6;&#x65F6;&#x95F4;&#xFF09;&#xFF1A;&#x5728;&#x8FBE;&#x5230;&#x67D0;&#x4E2A;&#x65F6;&#x95F4;&#x9608;&#x503C;&#x540E;&#xFF0C;checkponit &#x4ECD;&#x7136;&#x6CA1;&#x6709;&#x505A;&#x5B8C;&#xFF0C;&#x90A3;&#x4E48;&#x5C31;&#x7EC8;&#x6B62;&#x672C;&#x6B21; checkpoint&#x3002;&#x5355;&#x4F4D;&#x662F; ms&#x3002;</p>
+</li>
+<li><p>minimum time between checkpoints&#xFF08;&#x4E24;&#x6B21; checkpoint &#x95F4;&#x9694;&#x7684;&#x6700;&#x5C0F;&#x65F6;&#x95F4;&#xFF09;&#xFF1A;&#x4E3A;&#x4E86;&#x4FDD;&#x8BC1; checkpoint &#x5DF2;&#x7ECF;&#x8FD0;&#x884C;&#x4E86;&#x4E00;&#x6BB5;&#x65F6;&#x95F4;&#xFF0C;&#x6216;&#x8005;&#x8BF4;&#x662F;&#x5B8C;&#x6210;&#xFF0C;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x8BBE;&#x7F6E;&#x4E24;&#x6B21; checkpoint &#x4E4B;&#x95F4;&#x7684;&#x6700;&#x5C0F;&#x95F4;&#x9694;&#x3002;&#x5047;&#x5982;&#x8BBE;&#x7F6E;&#x6210; 5000ms&#xFF0C;&#x5219;&#x4E0B;&#x6B21; checkpoint &#x5FC5;&#x987B;&#x5728;&#x4E0A;&#x6B21; checkpoint &#x5B8C;&#x6210; 5s &#x540E;&#x624D;&#x4F1A;&#x89E6;&#x53D1;&#xFF0C;&#x6B64;&#x65F6;&#x4E0E; checkpoint &#x95F4;&#x9694;&#x548C;&#x8FD0;&#x884C;&#x65F6;&#x957F;&#x65E0;&#x5173;&#x3002;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x8BE5;&#x53C2;&#x6570;&#x5FC5;&#x987B;&#x5C0F;&#x4E8E; checkpoint interval&#x3002;</p>
+</li>
+<li><p>tolerable checkpoint failure number&#xFF08;&#x53EF;&#x5BB9;&#x5FCD;&#x7684; checkpoint &#x5931;&#x8D25;&#x6570;&#xFF09;&#xFF1A;&#x5176;&#x5B9E;&#x5C31;&#x662F;&#x6574;&#x4E2A;&#x4F5C;&#x4E1A;&#x5728;&#x591A;&#x5C11;&#x6B21; checkpoint &#x5931;&#x8D25;&#x540E;&#x53EF;&#x4EE5;&#x88AB;&#x6807;&#x8BB0;&#x4E3A;&#x5931;&#x8D25;&#x3002;&#x9ED8;&#x8BA4;&#x503C;&#x662F; 0&#xFF0C;&#x5373;&#x4E00;&#x65E6;&#x6709; checkpoint &#x5931;&#x8D25;&#xFF0C;&#x5219;&#x6574;&#x4E2A;&#x4F5C;&#x4E1A;&#x5C31;&#x4F1A;&#x6302;&#x6389;&#x3002;</p>
+</li>
+<li><p>number of concurrent checkpoints&#xFF08;&#x53EF;&#x5E76;&#x884C;&#x7684; checkpoint &#x6570;&#x91CF;&#xFF09;&#xFF1A;&#x9ED8;&#x8BA4;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x5728;&#x4E0A;&#x4E00;&#x4E2A; checkpoint &#x672A;&#x5B8C;&#x6210;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x4E0D;&#x4F1A;&#x89E6;&#x53D1;&#x4E0B;&#x4E00;&#x4E2A; checkpoint&#xFF0C;&#x8FD9;&#x6837;&#x505A;&#x7684;&#x539F;&#x56E0;&#x4E3B;&#x8981;&#x662F;&#x4FDD;&#x8BC1;&#x6D41;&#x6570;&#x636E;&#x5904;&#x7406;&#x7684;&#x901F;&#x5EA6;&#xFF0C;&#x4E0D;&#x4F1A;&#x88AB;&#x8FC7;&#x591A;&#x5E76;&#x53D1;&#x7684; checkpoint &#x6240;&#x5F71;&#x54CD;&#x3002;</p>
+</li>
+<li><p>externalized checkpoints&#xFF08;&#x7269;&#x5316; checkpoints&#xFF09;&#xFF1A;&#x53EF;&#x4EE5;&#x8BBE;&#x7F6E; checkpoint &#x5199;&#x5165;&#x81F3;&#x5916;&#x90E8;&#x5B58;&#x50A8;&#x7CFB;&#x7EDF;&#xFF0C;&#x8FD9;&#x6837;&#x5728;&#x4EFB;&#x52A1;&#x5931;&#x8D25;&#x7684;&#x65F6;&#x5019;&#x5C31;&#x4E0D;&#x4F1A;&#x88AB;&#x6E05;&#x7406;&#x6389;&#xFF0C;&#x53EF;&#x4EE5;&#x7528;&#x6765;&#x6062;&#x590D;&#x6570;&#x636E;&#x3002;</p>
+</li>
+<li><p>unaligned checkpoints&#xFF08;&#x975E;&#x5BF9;&#x9F50;&#x7684; checkpoints&#xFF09;&#xFF1A;Flink &#x901A;&#x8FC7; input buffers &#x7F13;&#x5B58;&#x6570;&#x636E;&#x548C; barrier &#x7684;&#x5BF9;&#x9F50;&#x6765;&#x4FDD;&#x8BC1;&#x5904;&#x7406;&#x8FC7;&#x7A0B;&#x4E2D;&#x7684; exactly-once&#xFF0C;&#x4F46;&#x662F;&#x5728;&#x4EA7;&#x751F;&#x80CC;&#x538B;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#x4F1A;&#x6781;&#x5927;&#x62C9;&#x957F;&#x5904;&#x7406;&#x65F6;&#x95F4;&#x3002;&#x975E;&#x5BF9;&#x9F50;&#x7684; checkpoint &#x53EF;&#x4EE5;&#x7528;&#x6765;&#x89E3;&#x51B3;&#x6B64;&#x95EE;&#x9898;&#xFF0C;&#x964D;&#x4F4E;&#x5904;&#x7406;&#x65F6;&#x5EF6;&#xFF0C;&#x4F46;&#x662F;&#x53EF;&#x80FD;&#x4F1A;&#x7834;&#x574F;&#x7CBE;&#x786E;&#x4E00;&#x6B21;&#x5904;&#x7406;&#x8BED;&#x4E49;&#x3002;&#x53EA;&#x9002;&#x7528;&#x4E8E; checkpoint &#x5E76;&#x53D1;&#x4E3A; 1 &#x7684;&#x60C5;&#x51B5;&#x3002;</p>
+</li>
+<li><p>checkpoints with finished tasks&#xFF08;&#x5BF9;&#x5DF2;&#x7ECF;&#x5B8C;&#x6210;&#x7684; task &#x505A; checkpoint&#xFF09;: &#x76EE;&#x524D;&#x8FD9;&#x662F;&#x4E00;&#x4E2A;&#x5B9E;&#x9A8C;&#x6027;&#x7684;&#x529F;&#x80FD;&#xFF0C;&#x5F53; DAG &#x67D0;&#x4E00;&#x90E8;&#x5206;&#x5DF2;&#x7ECF;&#x5B8C;&#x6210;&#x5E76;&#x4E14;&#x5904;&#x7406;&#x5B8C;&#x4E86;&#x6240;&#x6709;&#x6570;&#x636E;&#xFF08;&#x6BD4;&#x5982;&#x6D41;&#x6279; join &#x7684;&#x573A;&#x666F;&#xFF09;&#xFF0C;&#x540E;&#x7EED;&#x7684; checkpoint &#x4F9D;&#x7136;&#x4F1A;&#x8BB0;&#x5F55;&#x5DF2;&#x5B8C;&#x6210;&#x7684; task &#x7684;&#x72B6;&#x6001;&#x3002;</p>
+</li>
+</ul>
+<pre class="language-"><code class="lang-java"><span class="token class-name">StreamExecutionEnvironment</span> env <span class="token operator">=</span> <span class="token class-name">StreamExecutionEnvironment</span><span class="token punctuation">.</span><span class="token function">getExecutionEnvironment</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// start a checkpoint every 1000 ms</span>
+env<span class="token punctuation">.</span><span class="token function">enableCheckpointing</span><span class="token punctuation">(</span><span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// advanced options:</span>
+
+<span class="token comment">// set mode to exactly-once (this is the default)</span>
+env<span class="token punctuation">.</span><span class="token function">getCheckpointConfig</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">setCheckpointingMode</span><span class="token punctuation">(</span><span class="token class-name">CheckpointingMode</span><span class="token punctuation">.</span><span class="token constant">EXACTLY_ONCE</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// make sure 500 ms of progress happen between checkpoints</span>
+env<span class="token punctuation">.</span><span class="token function">getCheckpointConfig</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">setMinPauseBetweenCheckpoints</span><span class="token punctuation">(</span><span class="token number">500</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// checkpoints have to complete within one minute, or are discarded</span>
+env<span class="token punctuation">.</span><span class="token function">getCheckpointConfig</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">setCheckpointTimeout</span><span class="token punctuation">(</span><span class="token number">60000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// only two consecutive checkpoint failures are tolerated</span>
+env<span class="token punctuation">.</span><span class="token function">getCheckpointConfig</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">setTolerableCheckpointFailureNumber</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// allow only one checkpoint to be in progress at the same time</span>
+env<span class="token punctuation">.</span><span class="token function">getCheckpointConfig</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">setMaxConcurrentCheckpoints</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// enable externalized checkpoints which are retained</span>
+<span class="token comment">// after job cancellation</span>
+env<span class="token punctuation">.</span><span class="token function">getCheckpointConfig</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">enableExternalizedCheckpoints</span><span class="token punctuation">(</span>
+    <span class="token class-name">ExternalizedCheckpointCleanup</span><span class="token punctuation">.</span><span class="token constant">RETAIN_ON_CANCELLATION</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// enables the unaligned checkpoints</span>
+env<span class="token punctuation">.</span><span class="token function">getCheckpointConfig</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">enableUnalignedCheckpoints</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// sets the checkpoint storage where checkpoint snapshots will be written</span>
+env<span class="token punctuation">.</span><span class="token function">getCheckpointConfig</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">setCheckpointStorage</span><span class="token punctuation">(</span><span class="token string">&quot;hdfs:///my/checkpoint/dir&quot;</span><span class="token punctuation">)</span>
+
+<span class="token comment">// enable checkpointing with finished tasks</span>
+<span class="token class-name">Configuration</span> config <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Configuration</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+config<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token class-name">ExecutionCheckpointingOptions</span><span class="token punctuation">.</span><span class="token constant">ENABLE_CHECKPOINTS_AFTER_TASKS_FINISH</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+env<span class="token punctuation">.</span><span class="token function">configure</span><span class="token punctuation">(</span>config<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h3 id="checkpointing-&#x53EF;&#x9009;&#x7684;&#x914D;&#x7F6E;&#x9879;"><a name="checkpointing-&#x53EF;&#x9009;&#x7684;&#x914D;&#x7F6E;&#x9879;" class="anchor-navigation-ex-anchor" href="#checkpointing-&#x53EF;&#x9009;&#x7684;&#x914D;&#x7F6E;&#x9879;"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.3. Checkpointing &#x53EF;&#x9009;&#x7684;&#x914D;&#x7F6E;&#x9879;</h3>
+<p>&#x53EF;&#x4EE5;&#x901A;&#x8FC7; conf/flink-conf.yaml &#x8BBE;&#x7F6E;&#x66F4;&#x591A;&#x53C2;&#x6570;&#x6216;&#x8005;&#x67E5;&#x770B;&#x5BF9;&#x5E94;&#x7684;&#x9ED8;&#x8BA4;&#x503C;&#x3002;</p>
+<table>
+<thead>
+<tr>
+<th>&#x53C2;&#x6570;</th>
+<th>&#x9ED8;&#x8BA4;&#x503C;</th>
+<th>&#x7C7B;&#x578B;</th>
+<th>&#x63CF;&#x8FF0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>state.backend.incremental</td>
+<td>false</td>
+<td>Boolean</td>
+<td>&#x662F;&#x5426;&#x542F;&#x7528;&#x589E;&#x91CF;&#x5FEB;&#x7167;&#x3002;&#x5BF9;&#x4E8E;&#x589E;&#x91CF;&#x5FEB;&#x7167;&#x6765;&#x8BF4;&#xFF0C;&#x53EA;&#x9700;&#x8981;&#x5B58;&#x50A8;&#x548C;&#x4E0A;&#x6B21;&#x5B8C;&#x6210;&#x7684; checkpoint &#x76F8;&#x6BD4;&#x53D8;&#x5316;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x8BE5;&#x6B21;&#x5168;&#x90E8;&#x5FEB;&#x7167;&#xFF0C;&#x8FD9;&#x5BF9;&#x4E8E;&#x72B6;&#x6001;&#x6570;&#x636E;&#x975E;&#x5E38;&#x5E9E;&#x5927;&#x7684;&#x573A;&#x666F;&#x662F;&#x975E;&#x5E38;&#x6709;&#x7528;&#x7684;&#x3002;&#x4E00;&#x65E6;&#x542F;&#x7528;&#x8BE5;&#x529F;&#x80FD;&#xFF0C;flink web ui &#x4E0A;&#x5C55;&#x793A;&#x7684; checkpoint &#x5927;&#x5C0F;&#x53EA;&#x4F1A;&#x662F;&#x8BE5;&#x6B21;&#x53D8;&#x5316;&#x7684;&#x5927;&#x5C0F;&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x6574;&#x4E2A;&#x5B8C;&#x6574; checkpoint &#x7684;&#x5927;&#x5C0F;&#x3002;&#x5E76;&#x4E0D;&#x662F;&#x6240;&#x6709;&#x7684;&#x72B6;&#x6001;&#x540E;&#x7AEF;&#x90FD;&#x4F1A;&#x652F;&#x6301; &#x589E;&#x91CF; checkpoint&#xFF0C;&#x76EE;&#x524D;&#x53EA;&#x6709; rocksDB &#x652F;&#x6301;&#xFF08;&#x5F97;&#x76CA;&#x4E8E; LSM &#xFF09;&#x3002;</td>
+</tr>
+<tr>
+<td>state.backend.local-recovery</td>
+<td>false</td>
+<td>Boolean</td>
+<td>&#x72B6;&#x6001;&#x7684;&#x672C;&#x5730;&#x6062;&#x590D;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x53EB;&#x4F5C;&#x4EFB;&#x52A1;&#x7684;&#x672C;&#x5730;&#x6062;&#x590D;&#x3002;&#x672C;&#x8D28;&#x4E0A;&#x662F;&#x5C3D;&#x53EF;&#x80FD;&#x7684;&#x4FDD;&#x8BC1;&#x5931;&#x8D25;&#x7684; task &#x88AB;&#x91CD;&#x65B0;&#x8C03;&#x5EA6;&#x56DE;&#x539F;&#x6765;&#x7684; slot&#xFF08;taskManager &#x7C92;&#x5EA6;&#xFF09;&#xFF0C;&#x8FDB;&#x800C;&#x4ECE;&#x672C;&#x5730;&#x6587;&#x4EF6;&#x72B6;&#x6001;&#x6062;&#x590D;&#xFF0C;&#x4E0D;&#x9700;&#x8981;&#x5728;&#x8DE8;&#x7F51;&#x7EDC;&#x5206;&#x914D;&#x4F20;&#x8F93;&#x3002;&#x9ED8;&#x8BA4;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x672C;&#x5730;&#x6062;&#x590D;&#x88AB;&#x7981;&#x7528;&#x3002;&#x5F53;&#x524D;&#x672C;&#x5730;&#x6062;&#x590D;&#x53EA;&#x652F;&#x6301; KV &#x7C7B;&#x578B;&#x7684;&#x72B6;&#x6001;&#x540E;&#x7AEF;&#xFF0C;&#x57FA;&#x4E8E;&#x5185;&#x5B58;&#x7684;&#x72B6;&#x6001;&#x5B58;&#x50A8;&#x4E0D;&#x652F;&#x6301;&#x672C;&#x5730;&#x6062;&#x590D;&#x3002;</td>
+</tr>
+<tr>
+<td>state.checkpoint-storage</td>
+<td>(none)</td>
+<td>string</td>
+<td></td>
+</tr>
+<tr>
+<td>state.checkpoints.dir</td>
+<td>(none)</td>
+<td>string</td>
+<td>&#x7528;&#x4E8E;&#x5B58;&#x50A8;&#x72B6;&#x6001;&#x6570;&#x636E;&#x53CA;&#x5176;&#x5143;&#x6570;&#x636E;&#x7684;&#x6587;&#x4EF6;&#x76EE;&#x5F55;&#xFF0C;&#x8BE5;&#x76EE;&#x5F55;&#x5FC5;&#x987B;&#x5141;&#x8BB8;&#x6240;&#x6709;&#x8282;&#x70B9;&#x53EF;&#x4EE5;&#x8BBF;&#x95EE;&#x5230;&#xFF08;&#x5373;&#x6240;&#x6709;&#x7684; TaskManager &#x548C; JobManager&#xFF09;</td>
+</tr>
+<tr>
+<td>state.checkpoints.num-retained</td>
+<td>1</td>
+<td>integer</td>
+<td>&#x5141;&#x8BB8;&#x540C;&#x65F6;&#x4FDD;&#x7559;&#x7684;&#x5DF2;&#x5B8C;&#x6210;&#x7684; checkpoint &#x7684;&#x6700;&#x5927;&#x4E2A;&#x6570;</td>
+</tr>
+<tr>
+<td>state.savepoints.dir</td>
+<td>(none)</td>
+<td>string</td>
+<td>savepoints &#x7684;&#x9ED8;&#x8BA4;&#x5B58;&#x50A8;&#x76EE;&#x5F55;</td>
+</tr>
+<tr>
+<td>state.storage.fs.memory-threshold</td>
+<td>20kb</td>
+<td>MemorySize</td>
+<td>&#x72B6;&#x6001;&#x6570;&#x636E;&#x6587;&#x4EF6;&#x7684;&#x6700;&#x5C0F;&#x5927;&#x5C0F;&#xFF0C;&#x5C0F;&#x4E8E;&#x8FD9;&#x4E2A;&#x5927;&#x5C0F;&#x7684;&#x72B6;&#x6001;&#x6587;&#x4EF6;&#x5C06;&#x88AB;&#x5408;&#x5E76;&#x5B58;&#x50A8;&#x5728; checkpoint &#x5143;&#x6570;&#x636E;&#x6587;&#x4EF6;&#x4E2D;&#x3002;&#x8BE5;&#x914D;&#x7F6E;&#x9879;&#x6700;&#x5927;&#x53EF;&#x8BBE;&#x7F6E;&#x4E3A; 1M&#x3002;</td>
+</tr>
+<tr>
+<td>state.storage.fs.write-buffer-size</td>
+<td>4096</td>
+<td>Integer</td>
+<td>checkpoint &#x6570;&#x636E;&#x5199;&#x5165;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x65F6;&#x7684;&#x5199;&#x5165;&#x7F13;&#x51B2;&#x533A;&#x5927;&#x5C0F;&#x3002;</td>
+</tr>
+<tr>
+<td>taskmanager.state.local.root-dirs</td>
+<td>(none)</td>
+<td>String</td>
+<td>&#x7528;&#x4E8E;&#x672C;&#x5730;&#x6062;&#x590D;&#x7684;&#x72B6;&#x6001;&#x6570;&#x636E;&#x5B58;&#x50A8;&#x7684;&#x6839;&#x76EE;&#x5F55;&#xFF0C;&#x53EA;&#x652F;&#x6301; keyedStateBackend&#x3002;MemoryStateBackend &#x4E0D;&#x652F;&#x6301;&#x72B6;&#x6001;&#x672C;&#x5730;&#x6062;&#x590D;&#xFF0C;&#x53EF;&#x4EE5;&#x5FFD;&#x7565;&#x6B64;&#x9009;&#x9879;</td>
+</tr>
+</tbody>
+</table>
+<h3 id="checkpoint-&#x5B58;&#x50A8;&#x7684;&#x9009;&#x62E9;"><a name="checkpoint-&#x5B58;&#x50A8;&#x7684;&#x9009;&#x62E9;" class="anchor-navigation-ex-anchor" href="#checkpoint-&#x5B58;&#x50A8;&#x7684;&#x9009;&#x62E9;"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.4. Checkpoint &#x5B58;&#x50A8;&#x7684;&#x9009;&#x62E9;</h3>
+<p>&#x9ED8;&#x8BA4;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;checkpoint &#x5B58;&#x50A8;&#x5728; JobManager &#x7684;&#x5185;&#x5B58;&#x5F53;&#x4E2D;&#x3002;&#x53E6;&#x5916;&#x5BF9;&#x4E8E;&#x5927;&#x72B6;&#x6001;&#x7684;&#x5B58;&#x50A8;&#xFF0C;flink &#x4E5F;&#x63D0;&#x4F9B;&#x4E86;&#x4E0D;&#x540C;&#x7684;&#x72B6;&#x6001;&#x540E;&#x7AEF;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; StreamExecutionEnvironment.getCheckpointConfig().setCheckpointStorage(&#x2026;) &#x6765;&#x8FDB;&#x884C;&#x914D;&#x7F6E;&#x3002;&#x5EFA;&#x8BAE;&#x5728;&#x751F;&#x4EA7;&#x73AF;&#x5883;&#x4E2D;&#x4F7F;&#x7528;&#x5206;&#x5E03;&#x5F0F;&#x6587;&#x4EF6;&#x5B58;&#x50A8;&#x7CFB;&#x7EDF;&#x4F5C;&#x4E3A;&#x72B6;&#x6001;&#x540E;&#x7AEF;&#x3002;</p>
+<h3 id="&#x8FED;&#x4EE3;&#x6D41;&#x4E2D;&#x7684;-state-checkpoint"><a name="&#x8FED;&#x4EE3;&#x6D41;&#x4E2D;&#x7684;-state-checkpoint" class="anchor-navigation-ex-anchor" href="#&#x8FED;&#x4EE3;&#x6D41;&#x4E2D;&#x7684;-state-checkpoint"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.5. &#x8FED;&#x4EE3;&#x6D41;&#x4E2D;&#x7684; State Checkpoint</h3>
+<p>Flink &#x76EE;&#x524D;&#x53EA;&#x652F;&#x6301;&#x975E;&#x8FED;&#x4EE3;&#x6570;&#x636E;&#x6D41;&#x7684;&#x72B6;&#x6001;&#x5904;&#x7406;&#x3002;&#x5728;&#x8FED;&#x4EE3;&#x6D41;&#x4E2D;&#x542F;&#x7528; checkpoint &#x4F1A;&#x629B;&#x51FA;&#x5F02;&#x5E38;&#x3002;&#x5982;&#x679C;&#x5FC5;&#x987B;&#x4F7F;&#x7528;&#x7684;&#x8BDD;&#xFF0C;&#x53EF;&#x4EE5;&#x5F3A;&#x5236;&#x5F00;&#x542F;&#xFF0C;&#x901A;&#x8FC7; env.enableCheckpointing(interval, CheckpointingMode.EXACTLY_ONCE, force = true) &#x8FDB;&#x884C;&#x914D;&#x7F6E;&#x3002;</p>
+<h3 id="&#x5BF9;-dag-&#x4E2D;&#x5DF2;&#x5B8C;&#x6210;&#x7684;&#x8282;&#x70B9;&#x8FDB;&#x884C;-checkpoint&#xFF08;beta&#xFF09;"><a name="&#x5BF9;-dag-&#x4E2D;&#x5DF2;&#x5B8C;&#x6210;&#x7684;&#x8282;&#x70B9;&#x8FDB;&#x884C;-checkpoint&#xFF08;beta&#xFF09;" class="anchor-navigation-ex-anchor" href="#&#x5BF9;-dag-&#x4E2D;&#x5DF2;&#x5B8C;&#x6210;&#x7684;&#x8282;&#x70B9;&#x8FDB;&#x884C;-checkpoint&#xFF08;beta&#xFF09;"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.6. &#x5BF9; DAG &#x4E2D;&#x5DF2;&#x5B8C;&#x6210;&#x7684;&#x8282;&#x70B9;&#x8FDB;&#x884C; Checkpoint&#xFF08;BETA&#xFF09;</h3>
+<p>Flink &#x81EA; 1.14 &#x5F00;&#x59CB;&#xFF0C;&#x5141;&#x8BB8;&#x5BF9; DAG &#x4E2D;&#x5DF2;&#x5B8C;&#x6210;&#x7684;&#x8282;&#x70B9;&#xFF08;&#x4E5F;&#x53EF;&#x4EE5;&#x8BF4;&#x662F; task&#xFF09;&#x8FDB;&#x884C; checkpoint &#xFF0C;&#x4E00;&#x822C;&#x6D89;&#x53CA;&#x5230;&#x6709;&#x754C;&#x6570;&#x636E;&#x6E90;&#x3002;&#x9700;&#x8981;&#x901A;&#x8FC7;&#x5982;&#x4E0B;&#x4EE3;&#x7801;&#x5F00;&#x542F;&#x6B64;&#x529F;&#x80FD;</p>
+<pre class="language-"><code class="lang-java"><span class="token class-name">Configuration</span> config <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Configuration</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+config<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token class-name">ExecutionCheckpointingOptions</span><span class="token punctuation">.</span><span class="token constant">ENABLE_CHECKPOINTS_AFTER_TASKS_FINISH</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">StreamExecutionEnvironment</span> env <span class="token operator">=</span> <span class="token class-name">StreamExecutionEnvironment</span><span class="token punctuation">.</span><span class="token function">getExecutionEnvironment</span><span class="token punctuation">(</span>config<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>&#x4E3A;&#x4E86;&#x652F;&#x6301;&#x90E8;&#x5206;&#x4EFB;&#x52A1;&#x7ED3;&#x675F;&#x540E;&#x7684; Checkpoint &#x64CD;&#x4F5C;&#xFF0C;&#x6211;&#x4EEC;&#x8C03;&#x6574;&#x4E86; &#x4EFB;&#x52A1;&#x7684;&#x751F;&#x547D;&#x5468;&#x671F; &#x5E76;&#x4E14;&#x5F15;&#x5165;&#x4E86; StreamOperator#finish &#x65B9;&#x6CD5;&#x3002; &#x5728;&#x8FD9;&#x4E00;&#x65B9;&#x6CD5;&#x4E2D;&#xFF0C;&#x7528;&#x6237;&#x9700;&#x8981;&#x5199;&#x51FA;&#x6240;&#x6709;&#x7F13;&#x51B2;&#x533A;&#x4E2D;&#x7684;&#x6570;&#x636E;&#x3002;&#x5728; finish &#x65B9;&#x6CD5;&#x8C03;&#x7528;&#x540E;&#x7684; checkpoint &#x4E2D;&#xFF0C;&#x8FD9;&#x4E00;&#x4EFB;&#x52A1;&#x4E00;&#x5B9A;&#x4E0D;&#x80FD;&#x518D;&#x6709;&#x7F13;&#x51B2;&#x533A;&#x4E2D;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x56E0;&#x4E3A;&#x5728; finish() &#x540E;&#x6CA1;&#x6709;&#x529E;&#x6CD5;&#x6765;&#x8F93;&#x51FA;&#x8FD9;&#x4E9B;&#x6570;&#x636E;&#x3002; &#x5728;&#x5927;&#x90E8;&#x5206;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;finish() &#x540E;&#x8FD9;&#x4E00;&#x4EFB;&#x52A1;&#x7684;&#x72B6;&#x6001;&#x4E3A;&#x7A7A;&#xFF0C;&#x552F;&#x4E00;&#x7684;&#x4F8B;&#x5916;&#x662F;&#x5982;&#x679C;&#x5176;&#x4E2D;&#x67D0;&#x4E9B;&#x7B97;&#x5B50;&#x4E2D;&#x5305;&#x542B;&#x5916;&#x90E8;&#x7CFB;&#x7EDF;&#x4E8B;&#x52A1;&#x7684;&#x53E5;&#x67C4;&#xFF08;&#x4F8B;&#x5982;&#x4E3A;&#x4E86;&#x5B9E;&#x73B0;&#x6070;&#x597D;&#x4E00;&#x6B21;&#x8BED;&#x4E49;&#xFF09;&#xFF0C; &#x5728;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x5728; finish() &#x540E;&#x8FDB;&#x884C;&#x7684; checkpoint &#x64CD;&#x4F5C;&#x5E94;&#x8BE5;&#x4FDD;&#x7559;&#x8FD9;&#x4E9B;&#x53E5;&#x67C4;&#xFF0C;&#x5E76;&#x4E14;&#x5728;&#x7ED3;&#x675F; checkpoint&#xFF08;&#x5373;&#x4EFB;&#x52A1;&#x9000;&#x51FA;&#x524D;&#x6240;&#x7B49;&#x5F85;&#x7684; checkpoint&#xFF09;&#x65F6;&#x63D0;&#x4EA4;&#x3002; &#x4E00;&#x4E2A;&#x53EF;&#x4EE5;&#x53C2;&#x8003;&#x7684;&#x4F8B;&#x5B50;&#x662F;&#x6EE1;&#x8DB3;&#x6070;&#x597D;&#x4E00;&#x6B21;&#x8BED;&#x4E49;&#x7684; sink &#x63A5;&#x53E3;&#x4E0E; TwoPhaseCommitSinkFunction&#x3002;</p>
+<h4 id="&#x5BF9;-operator-state-&#x7684;&#x5F71;&#x54CD;"><a name="&#x5BF9;-operator-state-&#x7684;&#x5F71;&#x54CD;" class="anchor-navigation-ex-anchor" href="#&#x5BF9;-operator-state-&#x7684;&#x5F71;&#x54CD;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x5BF9; operator state &#x7684;&#x5F71;&#x54CD;</h4>
+<p>&#x5728;&#x90E8;&#x5206; Task &#x7ED3;&#x675F;&#x540E;&#x7684; checkpoint &#x4E2D;&#xFF0C;Flink &#x5BF9; UnionListState &#x8FDB;&#x884C;&#x4E86;&#x7279;&#x6B8A;&#x7684;&#x5904;&#x7406;&#x3002; UnionListState &#x4E00;&#x822C;&#x7528;&#x4E8E;&#x5B9E;&#x73B0;&#x5BF9;&#x5916;&#x90E8;&#x7CFB;&#x7EDF;&#x8BFB;&#x53D6;&#x4F4D;&#x7F6E;&#x7684;&#x4E00;&#x4E2A;&#x5168;&#x5C40;&#x89C6;&#x56FE;&#xFF08;&#x4F8B;&#x5982;&#xFF0C;&#x7528;&#x4E8E;&#x8BB0;&#x5F55;&#x6240;&#x6709; Kafka &#x5206;&#x533A;&#x7684;&#x8BFB;&#x53D6;&#x504F;&#x79FB;&#xFF09;&#x3002; &#x5982;&#x679C;&#x6211;&#x4EEC;&#x5728;&#x7B97;&#x5B50;&#x7684;&#x67D0;&#x4E2A;&#x5E76;&#x53D1;&#x8C03;&#x7528; close() &#x65B9;&#x6CD5;&#x540E;&#x4E22;&#x5F03;&#x5B83;&#x7684;&#x72B6;&#x6001;&#xFF0C;&#x6211;&#x4EEC;&#x5C31;&#x4F1A;&#x4E22;&#x5931;&#x5B83;&#x6240;&#x5206;&#x914D;&#x7684;&#x5206;&#x533A;&#x7684;&#x504F;&#x79FB;&#x91CF;&#x4FE1;&#x606F;&#x3002; &#x4E3A;&#x4E86;&#x89E3;&#x51B3;&#x8FD9;&#x4E00;&#x95EE;&#x9898;&#xFF0C;&#x5BF9;&#x4E8E;&#x4F7F;&#x7528; UnionListState &#x7684;&#x7B97;&#x5B50;&#x6211;&#x4EEC;&#x53EA;&#x5141;&#x8BB8;&#x5728;&#x5B83;&#x7684;&#x5E76;&#x53D1;&#x90FD;&#x5728;&#x8FD0;&#x884C;&#x6216;&#x90FD;&#x5DF2;&#x7ED3;&#x675F;&#x7684;&#x65F6;&#x5019;&#x624D;&#x80FD;&#x8FDB;&#x884C; checkpoint &#x64CD;&#x4F5C;&#x3002;</p>
+<p>ListState &#x4E00;&#x822C;&#x4E0D;&#x4F1A;&#x7528;&#x4E8E;&#x7C7B;&#x4F3C;&#x7684;&#x573A;&#x666F;&#xFF0C;&#x4F46;&#x662F;&#x7528;&#x6237;&#x4ECD;&#x7136;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x5728;&#x8C03;&#x7528; close() &#x65B9;&#x6CD5;&#x540E;&#x8FDB;&#x884C;&#x7684; checkpoint &#x4F1A;&#x4E22;&#x5F03;&#x7B97;&#x5B50;&#x7684;&#x72B6;&#x6001;&#x5E76;&#x4E14; &#x8FD9;&#x4E9B;&#x72B6;&#x6001;&#x5728;&#x7B97;&#x5B50;&#x91CD;&#x542F;&#x540E;&#x4E0D;&#x53EF;&#x7528;&#x3002;</p>
+<p>&#x4EFB;&#x4F55;&#x652F;&#x6301;&#x5E76;&#x53D1;&#x4FEE;&#x6539;&#x64CD;&#x4F5C;&#x7684;&#x7B97;&#x5B50;&#x4E5F;&#x53EF;&#x4EE5;&#x652F;&#x6301;&#x90E8;&#x5206;&#x5E76;&#x53D1;&#x5B9E;&#x4F8B;&#x7ED3;&#x675F;&#x540E;&#x7684;&#x6062;&#x590D;&#x64CD;&#x4F5C;&#x3002;&#x4ECE;&#x8FD9;&#x79CD;&#x7C7B;&#x578B;&#x7684;&#x5FEB;&#x7167;&#x4E2D;&#x6062;&#x590D;&#x7B49;&#x4EF7;&#x4E8E;&#x5C06;&#x7B97;&#x5B50;&#x7684;&#x5E76;&#x53D1;&#x6539;&#x4E3A;&#x6B63;&#x5728;&#x8FD0;&#x884C;&#x7684;&#x5E76;&#x53D1;&#x5B9E;&#x4F8B;&#x6570;&#x3002;</p>
+<h3 id="&#x601D;&#x8003;"><a name="&#x601D;&#x8003;" class="anchor-navigation-ex-anchor" href="#&#x601D;&#x8003;"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.7. &#x601D;&#x8003;</h3>
+<p><strong>1. Flink &#x72B6;&#x6001;&#x5B58;&#x50A8;&#x7684;&#x6574;&#x4E2A;&#x8FC7;&#x7A0B;&#x662F;&#x4EC0;&#x4E48;&#x6837;&#x5B50;&#x7684;&#xFF0C;&#x5728; stateful_stream_processing &#x4E2D;&#x6709;&#x6D89;&#x53CA;&#x5230;&#xFF0C;&#x4F46;&#x662F;&#x7F3A;&#x5931;&#x4E86;&#x5F88;&#x591A;&#x7EC6;&#x8282;&#xFF0C;&#x9700;&#x8981;&#x4E86;&#x89E3;&#x4E0B;&#x3002;</strong></p>
+<p><strong>2. &#x5BF9;&#x5DF2;&#x7ECF;&#x5B8C;&#x6210;&#x7684; task &#x505A; checkpoint &#x6709;&#x4EC0;&#x4E48;&#x7528;&#xFF1F;</strong></p>
+<footer class="page-footer-ex"> <span class="page-footer-ex-copyright"> By <a href="https://github.com/Flyraty" target="_blank">Flyraty</a>&#xFF0C;&#x4F7F;&#x7528;<a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">&#x77E5;&#x8BC6;&#x5171;&#x4EAB; &#x7F72;&#x540D;-&#x76F8;&#x540C;&#x65B9;&#x5F0F;&#x5171;&#x4EAB; 4.0&#x534F;&#x8BAE;</a>&#x53D1;&#x5E03; </span> &#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="page-footer-ex-footer-update"> <i>updated</i> 2023-01-10 14:39:27 </span> </footer>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="broadcast_state.html" class="navigation navigation-prev " aria-label="Previous page: 状态广播">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="queryable_state.html" class="navigation navigation-next " aria-label="Next page: 状态查询">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Checkpointing","level":"1.4.3","depth":2,"next":{"title":"状态查询","level":"1.4.4","depth":2,"path":"State & Fault Tolerance/queryable_state.md","ref":"State & Fault Tolerance/queryable_state.md","articles":[]},"previous":{"title":"状态广播","level":"1.4.2","depth":2,"path":"State & Fault Tolerance/broadcast_state.md","ref":"State & Fault Tolerance/broadcast_state.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-expandable-chapters","github-buttons","editlink","copy-code-button","page-footer-ex","anchor-navigation-ex","expandable-chapters-small","prism","-highlight","lunr","-search","search-pro","splitter"],"ignores":["_book","node_modules"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-solarizedlight.css"],"lang":{"flow":"typescript"}},"editlink":{"label":"Edit This Page","multilingual":false,"base":"https://github.com/Flyraty/flink_learning_notes/tree/gitbook"},"page-footer-ex":{"copyright":"By [Flyraty](https://github.com/Flyraty)，使用[知识共享 署名-相同方式共享 4.0协议](https://creativecommons.org/licenses/by-sa/4.0/)发布","markdown":true,"update_format":"YYYY-MM-DD HH:mm:ss","update_label":"<i>updated</i>"},"splitter":{},"search-pro":{},"lunr":{"ignoreSpecialCharacters":false,"maxIndexSize":1000000},"fontsettings":{"theme":"white","family":"sans","size":2},"anchor-navigation-ex":{"associatedWithSummary":true,"float":{"floatIcon":"fa fa-navicon","level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"mode":"float","multipleH1":true,"pageTop":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"printLog":false,"showGoTop":true,"showLevel":true},"github-buttons":{"buttons":[{"user":"Flyraty","repo":"flink_learning_notes","type":"star","size":"small"}]},"expandable-chapters-small":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"flink_learning_notes","language":"zh-hans","gitbook":"*"},"file":{"path":"State & Fault Tolerance/checkpointing.md","mtime":"2023-01-10T14:39:27.411Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2023-01-10T14:40:20.271Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-github-buttons/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-editlink/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-copy-code-button/toggle.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

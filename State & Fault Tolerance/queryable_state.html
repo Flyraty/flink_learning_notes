@@ -1,0 +1,776 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>状态查询 · flink_learning_notes</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-page-footer-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchor-navigation-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-prism/prism-solarizedlight.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search-pro/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="state_backends.html" />
+    
+    
+    <link rel="prev" href="checkpointing.html" />
+    
+
+    <style>
+    @media only screen and (max-width: 640px) {
+        .book-header .hidden-mobile {
+            display: none;
+        }
+    }
+    </style>
+    <script>
+        window["gitbook-plugin-github-buttons"] = {"buttons":[{"user":"Flyraty","repo":"flink_learning_notes","type":"star","size":"small"}]};
+    </script>
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    开篇
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../Overview/">
+            
+                <a href="../Overview/">
+            
+                    
+                    基础概念
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../Overview/stateful_stream_processing.html">
+            
+                <a href="../Overview/stateful_stream_processing.html">
+            
+                    
+                    Stateful Stream Processing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../Overview/timely_stream_processing.html">
+            
+                <a href="../Overview/timely_stream_processing.html">
+            
+                    
+                    Timely Stream Processing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../Overview/flink_architecture.html">
+            
+                <a href="../Overview/flink_architecture.html">
+            
+                    
+                    Flink Architecture
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="../Overview/flink_api.html">
+            
+                <a href="../Overview/flink_api.html">
+            
+                    
+                    Flink API
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../DataStream API/">
+            
+                <a href="../DataStream API/">
+            
+                    
+                    DataStream API
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../DataStream API/overview.html">
+            
+                <a href="../DataStream API/overview.html">
+            
+                    
+                    概览
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../DataStream API/execution_mode.html">
+            
+                <a href="../DataStream API/execution_mode.html">
+            
+                    
+                    流/批的运行模式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../DataStream API/event_time.html">
+            
+                <a href="../DataStream API/event_time.html">
+            
+                    
+                    事件时间与 Watermark
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="../DataStream API/datasource.html">
+            
+                <a href="../DataStream API/datasource.html">
+            
+                    
+                    Data Sources
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="../DataStream API/operators.html">
+            
+                <a href="../DataStream API/operators.html">
+            
+                    
+                    Operators
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6" data-path="../DataStream API/udf.html">
+            
+                <a href="../DataStream API/udf.html">
+            
+                    
+                    UDF
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    状态容错与管理
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="work_with_state.html">
+            
+                <a href="work_with_state.html">
+            
+                    
+                    状态处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="broadcast_state.html">
+            
+                <a href="broadcast_state.html">
+            
+                    
+                    状态广播
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="checkpointing.html">
+            
+                <a href="checkpointing.html">
+            
+                    
+                    Checkpointing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.4.4" data-path="queryable_state.html">
+            
+                <a href="queryable_state.html">
+            
+                    
+                    状态查询
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="state_backends.html">
+            
+                <a href="state_backends.html">
+            
+                    
+                    状态后端
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6" data-path="state_and_fault_tolerance.html">
+            
+                <a href="state_and_fault_tolerance.html">
+            
+                    
+                    状态容错
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7" data-path="state_schema_evolution.html">
+            
+                <a href="state_schema_evolution.html">
+            
+                    
+                    状态迁移与演化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8" data-path="custom_state_serialization.html">
+            
+                <a href="custom_state_serialization.html">
+            
+                    
+                    自定义状态序列化器
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../DataSet API/">
+            
+                <a href="../DataSet API/">
+            
+                    
+                    DataSet API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../Table API/">
+            
+                <a href="../Table API/">
+            
+                    
+                    Table API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../Data Types & Serialization/">
+            
+                <a href="../Data Types & Serialization/">
+            
+                    
+                    Data Types & Serialization
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            本书使用 GitBook 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >状态查询</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <div id="anchor-navigation-ex-navbar"><i class="fa fa-navicon"></i><ul><ul><ul><li><span class="title-icon "></span><a href="#queryable-state"><b>1.1.1. </b>Queryable State</a></li><li><span class="title-icon "></span><a href="#&#x67B6;&#x6784;&#x8BBE;&#x8BA1;"><b>1.1.2. </b>&#x67B6;&#x6784;&#x8BBE;&#x8BA1;</a></li><li><span class="title-icon "></span><a href="#&#x542F;&#x52A8;-queryable-state"><b>1.1.3. </b>&#x542F;&#x52A8; Queryable State</a></li><li><span class="title-icon "></span><a href="#&#x5982;&#x4F55;&#x4F7F;&#x72B6;&#x6001;&#x53EF;&#x67E5;&#x8BE2;"><b>1.1.4. </b>&#x5982;&#x4F55;&#x4F7F;&#x72B6;&#x6001;&#x53EF;&#x67E5;&#x8BE2;</a></li><li><span class="title-icon "></span><a href="#&#x67E5;&#x8BE2;&#x72B6;&#x6001;"><b>1.1.5. </b>&#x67E5;&#x8BE2;&#x72B6;&#x6001;</a></li><li><span class="title-icon "></span><a href="#&#x793A;&#x4F8B;"><b>1.1.6. </b>&#x793A;&#x4F8B;</a></li><li><span class="title-icon "></span><a href="#&#x914D;&#x7F6E;"><b>1.1.7. </b>&#x914D;&#x7F6E;</a></li><li><span class="title-icon "></span><a href="#&#x5C40;&#x9650;"><b>1.1.8. </b>&#x5C40;&#x9650;</a></li><li><span class="title-icon "></span><a href="#&#x601D;&#x8003;"><b>1.1.9. </b>&#x601D;&#x8003;</a></li></ul></ul></ul></div><a href="#" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><h3 id="queryable-state"><a name="queryable-state" class="anchor-navigation-ex-anchor" href="#queryable-state"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.1. Queryable State</h3>
+<blockquote>
+<p>&#x67E5;&#x8BE2;&#x72B6;&#x6001;&#x6570;&#x636E;&#x7684; API &#x6B63;&#x5904;&#x4E8E;&#x4E0D;&#x65AD;&#x53D1;&#x5C55;&#x66F4;&#x65B0;&#x4E2D;&#xFF0C;&#x5BF9;&#x4E8E;&#x66B4;&#x9732;&#x7684;&#x63A5;&#x53E3;&#x4E0D;&#x63D0;&#x4F9B;&#x7A33;&#x5B9A;&#x6027;&#x4FDD;&#x969C;&#x3002;&#x5728;&#x540E;&#x7EED;&#x7248;&#x672C;&#x4E2D;&#xFF0C;&#x8FD9;&#x4E9B; API &#x53EF;&#x80FD;&#x4F1A;&#x6709;&#x8F83;&#x5927;&#x7684;&#x6539;&#x53D8;</p>
+</blockquote>
+<p>&#x7B80;&#x800C;&#x8A00;&#x4E4B;&#xFF0C;&#x8BE5;&#x529F;&#x80FD;&#x66B4;&#x9732;&#x4E86; Flink &#x5BF9; key state &#x7684;&#x7BA1;&#x7406;&#x529F;&#x80FD;&#xFF0C;&#x7528;&#x6237;&#x53EF;&#x4EE5;&#x5728;&#x5916;&#x90E8;&#x67E5;&#x8BE2; Flink &#x7A0B;&#x5E8F;&#x8FD0;&#x884C;&#x8FC7;&#x7A0B;&#x4E2D;&#x4EA7;&#x751F;&#x7684;&#x72B6;&#x6001;&#x3002;&#x5BF9;&#x4E8E;&#x67D0;&#x4E9B;&#x573A;&#x666F;&#xFF0C;&#x72B6;&#x6001;&#x53EF;&#x67E5;&#x8BE2;&#x6D88;&#x9664;&#x4E86;&#x4E0E;&#x5916;&#x90E8;&#x5B58;&#x50A8;&#x7CFB;&#x7EDF;&#x95F4;&#x7684;&#x4EA4;&#x4E92;&#xFF0C;&#x8FD9;&#x5728;&#x67D0;&#x4E9B;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x5F80;&#x5F80;&#x662F;&#x7A0B;&#x5E8F;&#x6027;&#x80FD;&#x7684;&#x74F6;&#x9888;&#x3002;&#x9664;&#x6B64;&#x4E4B;&#x5916;&#xFF0C;&#x8BE5;&#x529F;&#x80FD;&#x5BF9;&#x4E8E;&#x7A0B;&#x5E8F;&#x8C03;&#x8BD5;&#x4E5F;&#x662F;&#x975E;&#x5E38;&#x6709;&#x7528;&#x7684;&#x3002;</p>
+<blockquote>
+<p>&#x5F53;&#x67E5;&#x8BE2;&#x72B6;&#x6001;&#x5BF9;&#x8C61;&#x65F6;&#xFF0C;&#x8BE5;&#x5BF9;&#x8C61;&#x662F;&#x5E76;&#x53D1;&#x8BBF;&#x95EE;&#x7684;&#xFF0C;&#x65E0;&#x987B;&#x540C;&#x6B65;&#x548C;&#x590D;&#x5236;&#x3002;&#x8FD9;&#x662F;&#x4E00;&#x4E2A;&#x8BBE;&#x8BA1;&#x65B9;&#x9762;&#x7684;&#x8003;&#x8651;&#xFF0C;&#x53EF;&#x4EE5;&#x907F;&#x514D;&#x589E;&#x5927;&#x6574;&#x4E2A;&#x4F5C;&#x4E1A;&#x7684;&#x5EF6;&#x8FDF;&#x3002;&#x7531;&#x4E8E;&#x4F7F;&#x7528; JVM heap &#x7684;&#x72B6;&#x6001;&#x540E;&#x7AEF;&#xFF0C;&#x4F8B;&#x5982; HashMapStateBackend&#xFF0C;&#x4E0D;&#x77E5;&#x9053;&#x526F;&#x672C;&#x64CD;&#x4F5C;&#x3002;&#x5F53;&#x68C0;&#x7D22;&#x503C;&#x800C;&#x4E0D;&#x662F;&#x76F4;&#x63A5;&#x5F15;&#x7528;&#x5B58;&#x50A8;&#x7684;&#x503C;&#x65F6;&#xFF0C;&#x8BFB;-&#x4FEE;&#x6539;-&#x5199;&#x6A21;&#x5F0F;&#x662F;&#x4E0D;&#x5B89;&#x5168;&#x7684;&#xFF0C;&#x5E76;&#x4E14;&#x53EF;&#x80FD;&#x5BFC;&#x81F4;&#x53EF;&#x67E5;&#x8BE2;&#x72B6;&#x6001;&#x670D;&#x52A1;&#x5668;&#x7531;&#x4E8E;&#x5E76;&#x53D1;&#x4FEE;&#x6539;&#x800C;&#x5931;&#x8D25;&#x3002;EmbeddedRocksDBStateBackend &#x53EF;&#x4EE5;&#x907F;&#x514D;&#x8FD9;&#x4E9B;&#x95EE;&#x9898;&#x3002;</p>
+</blockquote>
+<h3 id="&#x67B6;&#x6784;&#x8BBE;&#x8BA1;"><a name="&#x67B6;&#x6784;&#x8BBE;&#x8BA1;" class="anchor-navigation-ex-anchor" href="#&#x67B6;&#x6784;&#x8BBE;&#x8BA1;"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.2. &#x67B6;&#x6784;&#x8BBE;&#x8BA1;</h3>
+<p>&#x5728;&#x5F00;&#x59CB;&#x5C55;&#x793A;&#x5982;&#x4F55;&#x67E5;&#x8BE2;&#x72B6;&#x6001;&#x65F6;&#xFF0C;&#x7B80;&#x8981;&#x63CF;&#x8FF0;&#x7EC4;&#x6210;&#x5B83;&#x7684;&#x5B9E;&#x4F53;&#x5F88;&#x6709;&#x7528;&#x3002;&#x53EF;&#x67E5;&#x8BE2;&#x72B6;&#x6001;&#x7684;&#x529F;&#x80FD;&#x4E3B;&#x8981;&#x7531;&#x4EE5;&#x4E0B;&#x4E09;&#x4E2A;&#x90E8;&#x5206;&#x7EC4;&#x6210;</p>
+<ul>
+<li>QueryableStateClient&#xFF0C;&#xFF08;&#x53EF;&#x80FD;&#xFF09;&#x5728; Flink &#x96C6;&#x7FA4;&#x5916;&#x90E8;&#x8FD0;&#x884C;&#x5E76;&#x63D0;&#x4EA4;&#x7528;&#x6237;&#x72B6;&#x6001;&#x67E5;&#x8BE2;&#x3002;</li>
+<li>QueryableStateClientProxy&#xFF0C;&#x5728;&#x6BCF;&#x4E00;&#x4E2A; taskManager &#x4E0A;&#x8FD0;&#x884C;&#xFF0C;&#x8D1F;&#x8D23;&#x63A5;&#x6536;&#x5BA2;&#x6237;&#x7AEF;&#x63D0;&#x4EA4;&#x7684;&#x67E5;&#x8BE2;&#xFF0C;&#x83B7;&#x53D6;&#x5BF9;&#x5E94; taskManager &#x4E0A;&#x7684;&#x72B6;&#x6001;&#x5E76;&#x8FD4;&#x56DE;&#x7ED9;&#x5BA2;&#x6237;&#x7AEF;&#x3002;</li>
+<li>QueryableStateServer&#xFF0C;&#x5728;&#x6BCF;&#x4E00;&#x4E2A; taskManager &#x4E0A;&#x8FD0;&#x884C;&#xFF0C;&#x5BF9;&#x4E0A;&#x9762;&#x5B58;&#x50A8;&#x7684;&#x72B6;&#x6001;&#x8FDB;&#x884C;&#x7BA1;&#x7406;&#x670D;&#x52A1;&#x3002;</li>
+</ul>
+<p>&#x5BA2;&#x6237;&#x7AEF;&#x53EF;&#x4EE5;&#x8FDE;&#x63A5;&#x5230;&#x4EFB;&#x610F;&#x5176;&#x4E2D;&#x4E00;&#x4E2A;&#x4EE3;&#x7406;&#xFF0C;&#x5E76;&#x53D1;&#x9001;&#x8BF7;&#x6C42;&#x67E5;&#x8BE2;&#x67D0;&#x4E9B; key &#xFF08;&#x6BD4;&#x5982; k&#xFF09;&#x5173;&#x8054;&#x7684;&#x72B6;&#x6001;&#x3002;&#x6B63;&#x5982; working_with_state &#x7AE0;&#x8282;&#x6240;&#x8BF4;&#x7684;&#x4E00;&#x6837;&#xFF0C;key state &#x662F;&#x901A;&#x8FC7; key group &#x8FDB;&#x884C;&#x7EC4;&#x7EC7;&#x5E76;&#x5206;&#x914D;&#x5728;&#x5404;&#x4E2A; taskManager &#x4E0A;&#x7684;&#x3002;&#x4E3A;&#x4E86;&#x83B7;&#x53D6; k &#x6240;&#x5728;&#x7684; key group&#xFF0C;&#x4EE3;&#x7406;&#x4F1A;&#x8BBF;&#x95EE; jobManager&#xFF0C;&#x57FA;&#x4E8E; jobManager &#x7684;&#x54CD;&#x5E94;&#x3002;&#x4EE3;&#x7406;&#x4F1A;&#x67E5;&#x8BE2;&#x5BF9;&#x5E94; taskManager &#x4E0A;&#x7684; QueryableStateServer &#x83B7;&#x53D6; k &#x7684;&#x72B6;&#x6001;&#xFF0C;&#x6700;&#x540E;&#x8FD4;&#x56DE;&#x54CD;&#x5E94;&#x7ED9;&#x5BA2;&#x6237;&#x7AEF;&#x3002;</p>
+<h3 id="&#x542F;&#x52A8;-queryable-state"><a name="&#x542F;&#x52A8;-queryable-state" class="anchor-navigation-ex-anchor" href="#&#x542F;&#x52A8;-queryable-state"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.3. &#x542F;&#x52A8; Queryable State</h3>
+<p>&#x5728; Flink &#x96C6;&#x7FA4;&#x4E2D;&#x542F;&#x52A8; Queryable State &#x529F;&#x80FD;&#xFF0C;&#x9700;&#x8981;&#x5982;&#x4E0B;&#x6B65;&#x9AA4;&#xFF1A;</p>
+<ol>
+<li>&#x590D;&#x5236; Flink opt/ &#x76EE;&#x5F55;&#x4E0B;&#x7684; flink-queryable-state-runtime_2.11-1.14.3.jar &#x5230; lib/&#x3002;</li>
+<li>&#x8BBE;&#x7F6E; queryable-state.enable &#x5C5E;&#x6027;&#x4E3A; true&#x3002;</li>
+</ol>
+<p>&#x5982;&#x679C; Flink &#x96C6;&#x7FA4; taskManager &#x65E5;&#x5FD7;&#x4E2D;&#x5B58;&#x5728; &quot;Started the Queryable State Proxy Server @ ...&quot; &#x65E5;&#x5FD7;&#xFF0C;&#x5219;&#x8BF4;&#x660E;&#x542F;&#x52A8;&#x6210;&#x529F;&#x3002;</p>
+<h3 id="&#x5982;&#x4F55;&#x4F7F;&#x72B6;&#x6001;&#x53EF;&#x67E5;&#x8BE2;"><a name="&#x5982;&#x4F55;&#x4F7F;&#x72B6;&#x6001;&#x53EF;&#x67E5;&#x8BE2;" class="anchor-navigation-ex-anchor" href="#&#x5982;&#x4F55;&#x4F7F;&#x72B6;&#x6001;&#x53EF;&#x67E5;&#x8BE2;"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.4. &#x5982;&#x4F55;&#x4F7F;&#x72B6;&#x6001;&#x53EF;&#x67E5;&#x8BE2;</h3>
+<p>Flink &#x96C6;&#x7FA4;&#x4E2D;&#x5DF2;&#x7ECF;&#x542F;&#x52A8;&#x4E86;&#x8BE5;&#x529F;&#x80FD;&#xFF0C;&#x90A3;&#x4E48;&#x8BE5;&#x5982;&#x4F55;&#x4F7F;&#x7528;&#x5462;&#xFF1F;&#x4E3A;&#x4E86;&#x4F7F;&#x72B6;&#x6001;&#x5BF9;&#x5916;&#x53EF;&#x89C1;&#xFF0C;&#x9700;&#x8981;&#x901A;&#x8FC7;&#x4EE5;&#x4E0B;&#x65B9;&#x5F0F;&#x6765;&#x58F0;&#x660E;&#xFF1A;</p>
+<ul>
+<li>QueryableStateStream&#xFF0C;&#x63A5;&#x6536;&#x4E0A;&#x6E38;&#x4F20;&#x8FDB;&#x6765;&#x7684;&#x72B6;&#x6001;&#x503C;&#xFF0C;&#x751F;&#x6210;&#x53EF;&#x67E5;&#x8BE2;&#x72B6;&#x6001;&#x6D41;&#xFF0C;&#x4F9B;&#x540E;&#x7EED;&#x67E5;&#x8BE2;&#x3002;</li>
+<li>stateDescriptor.setQueryable(String queryableStateName)&#xFF0C;&#x8FD9;&#x4F7F;&#x5F97;&#x72B6;&#x6001;&#x63CF;&#x8FF0;&#x7B26;&#x8868;&#x793A;&#x7684; Keyed State &#x53EF;&#x67E5;&#x8BE2;&#x3002;</li>
+</ul>
+<p>&#x4E0B;&#x9762;&#x7684;&#x7AE0;&#x8282;&#x90FD;&#x662F;&#x4ECB;&#x7ECD;&#x5982;&#x4F55;&#x4F7F;&#x7528;&#x8FD9;&#x4E24;&#x79CD;&#x65B9;&#x6CD5;&#x3002;</p>
+<h4 id="queryable-state-stream"><a name="queryable-state-stream" class="anchor-navigation-ex-anchor" href="#queryable-state-stream"><i class="fa fa-link" aria-hidden="true"></i></a>Queryable State Stream</h4>
+<p>&#x5728; KeyedStream &#x4E0A;&#x8C03;&#x7528; .asQueryableState(stateName, stateDescriptor) &#x65B9;&#x6CD5;&#x53EF;&#x4EE5;&#x751F;&#x6210; QueryableStateStream &#x4F9B;&#x72B6;&#x6001;&#x67E5;&#x8BE2;&#x4F7F;&#x7528;&#xFF0C;&#x6839;&#x636E;&#x4E0D;&#x540C;&#x7C7B;&#x578B;&#x7684;&#x72B6;&#x6001;&#xFF0C;&#x9700;&#x8981;&#x4F7F;&#x7528;&#x4E0D;&#x540C;&#x7684; asQueryableState &#x65B9;&#x6CD5;&#x3002;</p>
+<pre class="language-"><code class="lang-java"><span class="token comment">// ValueState</span>
+<span class="token class-name">QueryableStateStream</span> <span class="token function">asQueryableState</span><span class="token punctuation">(</span>
+    <span class="token class-name">String</span> queryableStateName<span class="token punctuation">,</span>
+    <span class="token class-name">ValueStateDescriptor</span> stateDescriptor<span class="token punctuation">)</span>
+
+<span class="token comment">// Shortcut for explicit ValueStateDescriptor variant</span>
+<span class="token class-name">QueryableStateStream</span> <span class="token function">asQueryableState</span><span class="token punctuation">(</span><span class="token class-name">String</span> queryableStateName<span class="token punctuation">)</span>
+
+<span class="token comment">// ReducingState</span>
+<span class="token class-name">QueryableStateStream</span> <span class="token function">asQueryableState</span><span class="token punctuation">(</span>
+    <span class="token class-name">String</span> queryableStateName<span class="token punctuation">,</span>
+    <span class="token class-name">ReducingStateDescriptor</span> stateDescriptor<span class="token punctuation">)</span>
+</code></pre>
+<blockquote>
+<p>&#x8FD9;&#x91CC;&#x6CA1;&#x6709;&#x652F;&#x6301;&#x53EF;&#x67E5;&#x8BE2;&#x7684; ListState&#xFF0C;&#x56E0;&#x4E3A;&#x8BE5;&#x7C7B;&#x578B;&#x7684;&#x72B6;&#x6001;&#x4E00;&#x76F4;&#x5728;&#x589E;&#x957F;&#xFF0C;list &#x4E2D;&#x7684;&#x5143;&#x7D20;&#x5F97;&#x4E0D;&#x5230;&#x6E05;&#x7406;&#xFF0C;&#x4F1A;&#x9020;&#x6210;&#x6781;&#x5927;&#x7684;&#x5185;&#x5B58;&#x8D44;&#x6E90;&#x6D88;&#x8017;&#x3002;</p>
+</blockquote>
+<p>QueryableStateStream &#x53EF;&#x4EE5;&#x88AB;&#x770B;&#x505A;&#x4E00;&#x4E2A; sink&#xFF0C;&#x5E76;&#x4E14;&#x4E0D;&#x80FD;&#x518D;&#x6B21;&#x88AB;&#x8F6C;&#x6362;&#x3002;&#x5728;&#x5185;&#x90E8;&#xFF0C;QueryableStateStream &#x88AB;&#x8F6C;&#x6362;&#x4E3A;&#x4E00;&#x4E2A; operator&#xFF0C;&#x8BE5; operator &#x4F7F;&#x7528;&#x6240;&#x6709;&#x4F20;&#x5165;&#x8BB0;&#x5F55;&#x6765;&#x66F4;&#x65B0;&#x53EF;&#x67E5;&#x8BE2;&#x72B6;&#x6001;&#x5B9E;&#x4F8B;&#x3002;&#x66F4;&#x65B0;&#x903B;&#x8F91;&#x53D6;&#x51B3;&#x4E8E;&#x8C03;&#x7528; asQueryableState() &#x65F6;&#x4F20;&#x5165;&#x7684; stateDescriptor &#x7C7B;&#x578B;&#x3002;&#x6BD4;&#x5982;&#x50CF;&#x4E0B;&#x9762;&#x8FD9;&#x6837;&#x7684;&#x7A0B;&#x5E8F;&#x4E2D;&#xFF0C;&#x72B6;&#x6001;&#x5C31;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; ValueState.update(value) &#x6765;&#x8FDB;&#x884C;&#x66F4;&#x65B0;&#x3002;</p>
+<pre class="language-"><code class="lang-java">stream<span class="token punctuation">.</span><span class="token function">keyBy</span><span class="token punctuation">(</span>value <span class="token operator">-&gt;</span> value<span class="token punctuation">.</span>f0<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">asQueryableState</span><span class="token punctuation">(</span><span class="token string">&quot;query-name&quot;</span><span class="token punctuation">)</span>
+</code></pre>
+<p>&#x8FD9;&#x7C7B;&#x4F3C;&#x4E8E; scala API &#x4E2D;&#x7684; flatMapWithState &#x65B9;&#x6CD5;&#x3002;</p>
+<h4 id="managed-keyed-state"><a name="managed-keyed-state" class="anchor-navigation-ex-anchor" href="#managed-keyed-state"><i class="fa fa-link" aria-hidden="true"></i></a>Managed Keyed State</h4>
+<p>&#x53EF;&#x4EE5;&#x901A;&#x8FC7; StateDescriptor.setQueryable(String queryableStateName) &#x4F7F; StateDescriptor &#x53EF;&#x67E5;&#x8BE2;&#xFF0C;&#x8FDB;&#x800C;&#x4F7F;&#x8BE5; operator &#x7684; keyed state &#x53EF;&#x67E5;&#x8BE2;&#xFF0C;&#x5982;&#x4E0B;&#x4F8B;&#x6240;&#x793A;&#xFF1A;</p>
+<pre class="language-"><code class="lang-java"><span class="token class-name">ValueStateDescriptor</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Tuple2</span><span class="token punctuation">&lt;</span><span class="token class-name">Long</span><span class="token punctuation">,</span> <span class="token class-name">Long</span><span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span></span> descriptor <span class="token operator">=</span>
+        <span class="token keyword">new</span> <span class="token class-name">ValueStateDescriptor</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span>
+                <span class="token string">&quot;average&quot;</span><span class="token punctuation">,</span> <span class="token comment">// the state name</span>
+                <span class="token class-name">TypeInformation</span><span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">TypeHint</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Tuple2</span><span class="token punctuation">&lt;</span><span class="token class-name">Long</span><span class="token punctuation">,</span> <span class="token class-name">Long</span><span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// type information</span>
+descriptor<span class="token punctuation">.</span><span class="token function">setQueryable</span><span class="token punctuation">(</span><span class="token string">&quot;query-name&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// queryable state name</span>
+</code></pre>
+<blockquote>
+<p>queryableStateName &#x53C2;&#x6570;&#x53EF;&#x4EE5;&#x4EFB;&#x610F;&#x9009;&#x62E9;&#xFF0C;&#x4EC5;&#x7528;&#x4E8E;&#x67E5;&#x8BE2;&#x3002;&#x4E0D;&#x5FC5;&#x4E0E;&#x72B6;&#x6001;&#x540D;&#x79F0;&#x76F8;&#x540C;&#x3002;</p>
+</blockquote>
+<p>&#x8FD9;&#x79CD;&#x65B9;&#x5F0F;&#x5BF9;&#x4F7F;&#x7528;&#x54EA;&#x79CD;&#x72B6;&#x6001;&#x7C7B;&#x578B;&#x6CA1;&#x6709;&#x9650;&#x5236;&#xFF0C;&#x53EF;&#x4EE5;&#x5E94;&#x7528;&#x4E8E;  ValueState&#x3001; ReduceState&#x3001;ListState&#x3001;MapState&#x3001;&#x548C; AggregatingState&#x3002;</p>
+<h3 id="&#x67E5;&#x8BE2;&#x72B6;&#x6001;"><a name="&#x67E5;&#x8BE2;&#x72B6;&#x6001;" class="anchor-navigation-ex-anchor" href="#&#x67E5;&#x8BE2;&#x72B6;&#x6001;"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.5. &#x67E5;&#x8BE2;&#x72B6;&#x6001;</h3>
+<p>&#x5230;&#x76EE;&#x524D;&#x4E3A;&#x6B62;&#xFF0C;Flink &#x96C6;&#x7FA4;&#x5DF2;&#x7ECF;&#x53EF;&#x4EE5;&#x63D0;&#x4F9B;&#x72B6;&#x6001;&#x67E5;&#x8BE2;&#x670D;&#x52A1;&#xFF0C;&#x72B6;&#x6001;&#x4E5F;&#x5DF2;&#x7ECF;&#x53D8;&#x7684;&#x53EF;&#x67E5;&#x8BE2;&#xFF0C;&#x63A5;&#x4E0B;&#x6765;&#x5C31;&#x53EF;&#x4EE5;&#x4E86;&#x89E3;&#x5982;&#x4F55;&#x67E5;&#x8BE2;&#x72B6;&#x6001;&#x3002;</p>
+<p>&#x4E3A;&#x6B64;&#xFF0C;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x4F7F;&#x7528; QueryableStateClient &#x7C7B;&#xFF0C;&#x9700;&#x8981;&#x5728; pom.xml &#x4E2D;&#x5F15;&#x5165;&#x6B64;&#x4F9D;&#x8D56;&#x3002;</p>
+<pre class="language-"><code class="lang-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">&gt;</span></span>org.apache.flink<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">&gt;</span></span>flink-core<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">&gt;</span></span>1.14.3<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">&gt;</span></span>org.apache.flink<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">&gt;</span></span>flink-queryable-state-client-java<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">&gt;</span></span>1.14.3<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">&gt;</span></span>
+</code></pre>
+<p>QueryableStateClient &#x4F1A;&#x63D0;&#x4EA4;&#x67E5;&#x8BE2;&#x8BF7;&#x6C42;&#x5230;&#x5185;&#x90E8;&#x7684; QueryableStateClientProxy &#xFF0C;&#x7528;&#x4E8E;&#x67E5;&#x8BE2;&#x72B6;&#x6001;&#x5E76;&#x8FD4;&#x56DE;&#x6700;&#x7EC8;&#x7ED3;&#x679C;&#x3002;&#x552F;&#x4E00;&#x8981;
+&#x6CE8;&#x610F;&#x7684;&#x70B9;&#x662F;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x7ED9;&#x5BA2;&#x6237;&#x7AEF;&#x6307;&#x5B9A; taskManager &#x7684; hostname &#xFF08;&#x4E0A;&#x9762;&#x5DF2;&#x7ECF;&#x63D0;&#x5230;&#x8FC7;&#x6BCF;&#x4E2A; taskManager &#x90FD;&#x4F1A;&#x542F;&#x52A8;&#x8FD0;&#x884C;&#x5BF9;&#x5E94;&#x7684;&#x4EE3;&#x7406;&#x670D;&#x52A1;&#xFF09;&#x548C;&#x4EE3;&#x7406;&#x76D1;&#x542C;&#x7684;&#x7AEF;&#x53E3;&#x3002;&#x5173;&#x4E8E;&#x5982;&#x4F55;&#x914D;&#x7F6E;&#x8BE5;&#x4EE3;&#x7406;&#x670D;&#x52A1;&#x53CA;&#x5176;&#x7AEF;&#x53E3;&#x53EF;&#x4EE5;&#x67E5;&#x770B; <a href="https://nightlies.apache.org/flink/flink-docs-release-1.14/docs/dev/datastream/fault-tolerance/queryable_state/#configuration" target="_blank">Configuration Section</a></p>
+<pre class="language-"><code class="lang-java"><span class="token class-name">QueryableStateClient</span> client <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">QueryableStateClient</span><span class="token punctuation">(</span>tmHostname<span class="token punctuation">,</span> proxyPort<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>&#x5BA2;&#x6237;&#x7AEF;&#x5C31;&#x7EEA;&#x540E;&#xFF0C;&#x6BD4;&#x5982;&#x67E5;&#x8BE2; k &#x5173;&#x8054;&#x7684;&#x7684;&#x7C7B;&#x578B;&#x4E3A; v &#x7684;&#x72B6;&#x6001;&#xFF0C;&#x53EF;&#x4EE5;&#x8C03;&#x7528;&#x8BE5;&#x65B9;&#x6CD5;&#xFF1A;</p>
+<pre class="language-"><code class="lang-java"><span class="token class-name">CompletableFuture</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">S</span><span class="token punctuation">&gt;</span></span> <span class="token function">getKvState</span><span class="token punctuation">(</span>
+    <span class="token class-name">JobID</span> jobId<span class="token punctuation">,</span>
+    <span class="token class-name">String</span> queryableStateName<span class="token punctuation">,</span>
+    <span class="token class-name">K</span> key<span class="token punctuation">,</span>
+    <span class="token class-name">TypeInformation</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">K</span><span class="token punctuation">&gt;</span></span> keyTypeInfo<span class="token punctuation">,</span>
+    <span class="token class-name">StateDescriptor</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">S</span><span class="token punctuation">,</span> <span class="token class-name">V</span><span class="token punctuation">&gt;</span></span> stateDescriptor<span class="token punctuation">)</span>
+</code></pre>
+<p>&#x6700;&#x7EC8;&#x8FD4;&#x56DE;&#x7684; CompletableFuture &#x5305;&#x542B;&#x8981;&#x67E5;&#x8BE2;&#x7684;&#x72B6;&#x6001;&#x503C;&#x3002;&#x4F20;&#x5165;&#x7684; jobId &#x53C2;&#x6570;&#x7528;&#x6765;&#x6807;&#x8BC6;&#x8BE5;&#x72B6;&#x6001;&#x5C5E;&#x4E8E;&#x54EA;&#x4E2A;&#x4F5C;&#x4E1A;&#x3002;&#x53C2;&#x6570; key &#x662F;&#x5F85;&#x67E5;&#x8BE2;&#x7684; key &#x503C;&#xFF0C;keyTypeInfo &#x7528;&#x6765;&#x786E;&#x5B9A; key &#x7684;&#x7C7B;&#x578B;&#x4EE5;&#x53CA; Flink &#x8BE5;&#x5982;&#x4F55;&#x5E8F;&#x5217;&#x5316;/&#x53CD;&#x5E8F;&#x5217;&#x5316;&#x8BE5; key&#x3002;stateDescriptor &#x4E2D;&#x5305;&#x542B;&#x72B6;&#x6001;&#x7684;&#x7C7B;&#x578B;&#xFF08;Value&#xFF0C;Reduce &#x7B49;&#x7B49;&#xFF09;&#x4EE5;&#x53CA;&#x8BE5;&#x5982;&#x4F55;&#x5E8F;&#x5217;&#x5316;/&#x53CD;&#x5E8F;&#x5217;&#x5316;&#x7684;&#x4FE1;&#x606F;&#x3002;</p>
+<p>&#x7EC6;&#x5FC3;&#x7684;&#x8BFB;&#x8005;&#x4F1A;&#x6CE8;&#x610F;&#x5230;&#xFF0C;&#x8FD4;&#x56DE;&#x7684; CompletableFuture &#x662F;&#x4E00;&#x4E2A;&#x7C7B;&#x578B;&#x4E3A; S &#x7684;&#x503C;&#xFF1A;&#x5373;&#x5305;&#x542B;&#x5B9E;&#x9645;&#x72B6;&#x6001;&#x503C;&#x7684; State Object&#x3002;&#x53EF;&#x4EE5;&#x662F; Flink &#x652F;&#x6301;&#x7684;&#x4EFB;&#x610F;&#x72B6;&#x6001;&#x7C7B;&#x578B;&#xFF1A;ValueState, ReduceState, ListState, MapState, and AggregatingState&#x3002;</p>
+<blockquote>
+<p>Note: &#x8FD4;&#x56DE;&#x7684;&#x72B6;&#x6001;&#x5BF9;&#x8C61;&#x4E2D;&#x5305;&#x542B;&#x7684;&#x72B6;&#x6001;&#x4E0D;&#x5141;&#x8BB8;&#x88AB;&#x4FEE;&#x6539;&#x3002;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x8BE5;&#x5BF9;&#x8C61;&#x83B7;&#x53D6;&#x771F;&#x6B63;&#x7684;&#x72B6;&#x6001;&#x503C;&#xFF0C;&#x4F8B;&#x5982; <code>ValueState.get()</code>&#xFF0C;&#x6216;&#x8005;&#x8FD4;&#x56DE;&#x5305;&#x542B; <k,v> &#x72B6;&#x6001;&#x5BF9;&#x7684;&#x53EF;&#x8FED;&#x4EE3;&#x5BF9;&#x8C61;&#xFF0C;&#x4F8B;&#x5982; <code>mapState.entries()</code>&#x3002;&#x6211;&#x4EEC;&#x53EA;&#x662F;&#x4E0D;&#x80FD;&#x4FEE;&#x6539;&#x8FD9;&#x4E9B;&#x72B6;&#x6001;&#xFF0C;&#x4E3E;&#x4E2A;&#x4F8B;&#x5B50;&#xFF0C;&#x5728;&#x8FD4;&#x56DE;&#x7684; list state &#x5BF9;&#x8C61;&#x4E0A;&#x8C03;&#x7528; add() &#x65B9;&#x6CD5;&#x4F1A;&#x629B;&#x51FA; UnsupportedOperationException&#x3002;</k,v></p>
+<p>Note: &#x72B6;&#x6001;&#x5BA2;&#x6237;&#x7AEF;&#x662F;&#x5F02;&#x6B65;&#x7684;&#xFF0C;&#x4E14;&#x53EF;&#x4EE5;&#x88AB;&#x591A;&#x4E2A;&#x7EBF;&#x7A0B;&#x5171;&#x4EAB;&#x3002;&#x5728;&#x60F3;&#x8981;&#x5173;&#x95ED;&#x7684;&#x65F6;&#x5019;&#x5FC5;&#x987B;&#x4F7F;&#x7528; QueryableStateClient.shutdown() &#x65B9;&#x6CD5;&#x6765;&#x91CA;&#x653E;&#x8D44;&#x6E90;&#x3002;</p>
+</blockquote>
+<h3 id="&#x793A;&#x4F8B;"><a name="&#x793A;&#x4F8B;" class="anchor-navigation-ex-anchor" href="#&#x793A;&#x4F8B;"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.6. &#x793A;&#x4F8B;</h3>
+<p>&#x4E0B;&#x9762;&#x662F;&#x4E00;&#x4E2A;&#x662F;&#x72B6;&#x6001;&#x53EF;&#x67E5;&#x8BE2;&#x7684;&#x4F8B;&#x5B50;</p>
+<pre class="language-"><code class="lang-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">CountWindowAverage</span> <span class="token keyword">extends</span> <span class="token class-name">RichFlatMapFunction</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Tuple2</span><span class="token punctuation">&lt;</span><span class="token class-name">Long</span><span class="token punctuation">,</span> <span class="token class-name">Long</span><span class="token punctuation">&gt;</span><span class="token punctuation">,</span> <span class="token class-name">Tuple2</span><span class="token punctuation">&lt;</span><span class="token class-name">Long</span><span class="token punctuation">,</span> <span class="token class-name">Long</span><span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span></span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">transient</span> <span class="token class-name">ValueState</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Tuple2</span><span class="token punctuation">&lt;</span><span class="token class-name">Long</span><span class="token punctuation">,</span> <span class="token class-name">Long</span><span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span></span> sum<span class="token punctuation">;</span> <span class="token comment">// a tuple containing the count and the sum</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">flatMap</span><span class="token punctuation">(</span><span class="token class-name">Tuple2</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Long</span><span class="token punctuation">,</span> <span class="token class-name">Long</span><span class="token punctuation">&gt;</span></span> input<span class="token punctuation">,</span> <span class="token class-name">Collector</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Tuple2</span><span class="token punctuation">&lt;</span><span class="token class-name">Long</span><span class="token punctuation">,</span> <span class="token class-name">Long</span><span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span></span> out<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span> <span class="token punctuation">{</span>
+        <span class="token class-name">Tuple2</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Long</span><span class="token punctuation">,</span> <span class="token class-name">Long</span><span class="token punctuation">&gt;</span></span> currentSum <span class="token operator">=</span> sum<span class="token punctuation">.</span><span class="token function">value</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        currentSum<span class="token punctuation">.</span>f0 <span class="token operator">+=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+        currentSum<span class="token punctuation">.</span>f1 <span class="token operator">+=</span> input<span class="token punctuation">.</span>f1<span class="token punctuation">;</span>
+        sum<span class="token punctuation">.</span><span class="token function">update</span><span class="token punctuation">(</span>currentSum<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>currentSum<span class="token punctuation">.</span>f0 <span class="token operator">&gt;=</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            out<span class="token punctuation">.</span><span class="token function">collect</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Tuple2</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span>input<span class="token punctuation">.</span>f0<span class="token punctuation">,</span> currentSum<span class="token punctuation">.</span>f1 <span class="token operator">/</span> currentSum<span class="token punctuation">.</span>f0<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            sum<span class="token punctuation">.</span><span class="token function">clear</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token keyword">open</span><span class="token punctuation">(</span><span class="token class-name">Configuration</span> config<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">ValueStateDescriptor</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Tuple2</span><span class="token punctuation">&lt;</span><span class="token class-name">Long</span><span class="token punctuation">,</span> <span class="token class-name">Long</span><span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span></span> descriptor <span class="token operator">=</span>
+                <span class="token keyword">new</span> <span class="token class-name">ValueStateDescriptor</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span>
+                        <span class="token string">&quot;average&quot;</span><span class="token punctuation">,</span> <span class="token comment">// the state name</span>
+                        <span class="token class-name">TypeInformation</span><span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">TypeHint</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Tuple2</span><span class="token punctuation">&lt;</span><span class="token class-name">Long</span><span class="token punctuation">,</span> <span class="token class-name">Long</span><span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// type information</span>
+        descriptor<span class="token punctuation">.</span><span class="token function">setQueryable</span><span class="token punctuation">(</span><span class="token string">&quot;query-name&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        sum <span class="token operator">=</span> <span class="token function">getRuntimeContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getState</span><span class="token punctuation">(</span>descriptor<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>&#x5F53;&#x5305;&#x542B;&#x4EE5;&#x4E0A;&#x903B;&#x8F91;&#x7684;&#x4F5C;&#x4E1A;&#x542F;&#x52A8;&#x540E;&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; jobId &#x67E5;&#x8BE2; sum &#x5173;&#x8054;&#x7684;&#x72B6;&#x6001;&#x3002;</p>
+<pre class="language-"><code class="lang-java"><span class="token class-name">QueryableStateClient</span> client <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">QueryableStateClient</span><span class="token punctuation">(</span>tmHostname<span class="token punctuation">,</span> proxyPort<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// the state descriptor of the state to be fetched.</span>
+<span class="token class-name">ValueStateDescriptor</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Tuple2</span><span class="token punctuation">&lt;</span><span class="token class-name">Long</span><span class="token punctuation">,</span> <span class="token class-name">Long</span><span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span></span> descriptor <span class="token operator">=</span>
+        <span class="token keyword">new</span> <span class="token class-name">ValueStateDescriptor</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span>
+          <span class="token string">&quot;average&quot;</span><span class="token punctuation">,</span>
+          <span class="token class-name">TypeInformation</span><span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">TypeHint</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Tuple2</span><span class="token punctuation">&lt;</span><span class="token class-name">Long</span><span class="token punctuation">,</span> <span class="token class-name">Long</span><span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token class-name">CompletableFuture</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">ValueState</span><span class="token punctuation">&lt;</span><span class="token class-name">Tuple2</span><span class="token punctuation">&lt;</span><span class="token class-name">Long</span><span class="token punctuation">,</span> <span class="token class-name">Long</span><span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span></span> resultFuture <span class="token operator">=</span>
+        client<span class="token punctuation">.</span><span class="token function">getKvState</span><span class="token punctuation">(</span>jobId<span class="token punctuation">,</span> <span class="token string">&quot;query-name&quot;</span><span class="token punctuation">,</span> key<span class="token punctuation">,</span> <span class="token class-name">BasicTypeInfo</span><span class="token punctuation">.</span><span class="token constant">LONG_TYPE_INFO</span><span class="token punctuation">,</span> descriptor<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// now handle the returned value</span>
+resultFuture<span class="token punctuation">.</span><span class="token function">thenAccept</span><span class="token punctuation">(</span>response <span class="token operator">-&gt;</span> <span class="token punctuation">{</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            <span class="token class-name">Tuple2</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Long</span><span class="token punctuation">,</span> <span class="token class-name">Long</span><span class="token punctuation">&gt;</span></span> res <span class="token operator">=</span> response<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h3 id="&#x914D;&#x7F6E;"><a name="&#x914D;&#x7F6E;" class="anchor-navigation-ex-anchor" href="#&#x914D;&#x7F6E;"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.7. &#x914D;&#x7F6E;</h3>
+<p>&#x4EE5;&#x4E0B;&#x662F; state server &#x548C; state client &#x76F8;&#x5173;&#x7684;&#x4E00;&#x4E9B;&#x914D;&#x7F6E;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; QueryableStateOptions &#x8FDB;&#x884C;&#x5B9A;&#x4E49;&#x3002;</p>
+<h4 id="state-server"><a name="state-server" class="anchor-navigation-ex-anchor" href="#state-server"><i class="fa fa-link" aria-hidden="true"></i></a>State Server</h4>
+<ul>
+<li>queryable-state.server.ports&#xFF1A;state server &#x7684;&#x7AEF;&#x53E3;&#x8303;&#x56F4;&#x3002;&#x5982;&#x679C;&#x591A;&#x4E2A; taskManager &#x8FD0;&#x884C;&#x5728;&#x540C;&#x4E00;&#x53F0;&#x673A;&#x5668;&#x4E0A;&#xFF0C;&#x53EF;&#x4EE5;&#x7528;&#x6765;&#x907F;&#x514D;&#x7AEF;&#x53E3;&#x51B2;&#x7A81;&#x3002;&#x8FD9;&#x4E2A;&#x53C2;&#x6570;&#x503C;&#x53EF;&#x4EE5;&#x88AB;&#x8BBE;&#x7F6E;&#x4E3A;&#x591A;&#x79CD;&#x5F62;&#x5F0F;&#xFF0C;&#x6BD4;&#x5982;&#x4E00;&#x4E2A;&#x7AEF;&#x53E3;&#x53F7;&#xFF1A;&quot;9123&quot;&#xFF0C;&#x6216;&#x8005;&#x7AEF;&#x53E3;&#x53F7;&#x7684;&#x8303;&#x56F4;&#xFF1A;&quot;50100-50200&quot;&#xFF0C;&#x6216;&#x8005;&#x7AEF;&#x53E3;&#x5217;&#x8868;&#xFF1A;&#x201C;50100-50200,50300-50400,51234&#x201D;&#x3002;&#x9ED8;&#x8BA4;&#x7AEF;&#x53E3;&#x662F; &quot;9067&quot;&#x3002;</li>
+<li>queryable-state.server.network-threads&#xFF1A;state server &#x5904;&#x7406;&#x67E5;&#x8BE2;&#x8BF7;&#x6C42;&#x7684;&#x7F51;&#x7EDC;&#x7EBF;&#x7A0B;&#x6570;&#x3002;</li>
+<li>queryable-state.server.query-threads&#xFF1A;state server &#x5904;&#x7406;&#x67E5;&#x8BE2;&#x8BF7;&#x6C42;&#x7684;&#x67E5;&#x8BE2;&#x7EBF;&#x7A0B;&#x6570;&#x3002;</li>
+</ul>
+<h4 id="proxy"><a name="proxy" class="anchor-navigation-ex-anchor" href="#proxy"><i class="fa fa-link" aria-hidden="true"></i></a>Proxy</h4>
+<ul>
+<li>queryable-state.proxy.ports&#xFF1A;state proxey &#x7684;&#x7AEF;&#x53E3;&#x8303;&#x56F4;&#x3002;&#x5982;&#x679C;&#x591A;&#x4E2A; taskManager &#x8FD0;&#x884C;&#x5728;&#x540C;&#x4E00;&#x53F0;&#x673A;&#x5668;&#x4E0A;&#xFF0C;&#x53EF;&#x4EE5;&#x7528;&#x6765;&#x907F;&#x514D;&#x7AEF;&#x53E3;&#x51B2;&#x7A81;&#x3002;&#x8FD9;&#x4E2A;&#x53C2;&#x6570;&#x503C;&#x53EF;&#x4EE5;&#x88AB;&#x8BBE;&#x7F6E;&#x4E3A;&#x591A;&#x79CD;&#x5F62;&#x5F0F;&#xFF0C;&#x6BD4;&#x5982;&#x4E00;&#x4E2A;&#x7AEF;&#x53E3;&#x53F7;&#xFF1A;&quot;9123&quot;&#xFF0C;&#x6216;&#x8005;&#x7AEF;&#x53E3;&#x53F7;&#x7684;&#x8303;&#x56F4;&#xFF1A;&quot;50100-50200&quot;&#xFF0C;&#x6216;&#x8005;&#x7AEF;&#x53E3;&#x5217;&#x8868;&#xFF1A;&#x201C;50100-50200,50300-50400,51234&#x201D;&#x3002;&#x9ED8;&#x8BA4;&#x7AEF;&#x53E3;&#x662F; &quot;9069&quot;&#x3002;</li>
+<li>queryable-state.proxy.network-threads&#xFF1A;state proxey &#x5904;&#x7406;&#x67E5;&#x8BE2;&#x8BF7;&#x6C42;&#x7684;&#x7F51;&#x7EDC;&#x7EBF;&#x7A0B;&#x6570;&#x3002;</li>
+<li>queryable-state.proxy.query-threads&#xFF1A;state proxey &#x5904;&#x7406;&#x67E5;&#x8BE2;&#x8BF7;&#x6C42;&#x7684;&#x67E5;&#x8BE2;&#x7EBF;&#x7A0B;&#x6570;&#x3002;</li>
+</ul>
+<h3 id="&#x5C40;&#x9650;"><a name="&#x5C40;&#x9650;" class="anchor-navigation-ex-anchor" href="#&#x5C40;&#x9650;"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.8. &#x5C40;&#x9650;</h3>
+<ul>
+<li>&#x53EF;&#x67E5;&#x8BE2;&#x72B6;&#x6001;&#x7684;&#x751F;&#x547D;&#x5468;&#x671F;&#x548C;&#x8FD0;&#x884C;&#x7684;&#x4F5C;&#x4E1A;&#x662F;&#x7ED1;&#x5B9A;&#x5728;&#x4E00;&#x8D77;&#x7684;&#xFF0C;&#x5728; task &#x542F;&#x52A8;&#x65F6;&#x6CE8;&#x518C;&#xFF0C;task &#x5B8C;&#x6210;&#x65F6;&#x9500;&#x6BC1;&#x3002;&#x5728;&#x672A;&#x6765;&#x7684;&#x7248;&#x672C;&#x4E2D;&#xFF0C;&#x671F;&#x671B;&#x662F;&#x5728;&#x67D0;&#x4E2A; task &#x7ED3;&#x675F;&#x540E;&#x4ECD;&#x7136;&#x53EF;&#x4EE5;&#x67E5;&#x8BE2;&#x5176;&#x7ED1;&#x5B9A;&#x7684;&#x72B6;&#x6001;&#xFF0C;&#x5E76;&#x901A;&#x8FC7;&#x72B6;&#x6001;&#x526F;&#x672C;&#x673A;&#x5236;&#x52A0;&#x901F;&#x4F5C;&#x4E1A;&#x7684;&#x6062;&#x590D;&#x3002;</li>
+<li>&#x5F53;&#x5929; KvState &#x7684;&#x901A;&#x77E5;&#xFF08;&#x4E2A;&#x4EBA;&#x7406;&#x89E3;&#x662F;&#x548C; server&#xFF0C;proxey &#x7B49;&#x7684;&#x4EA4;&#x4E92;&#xFF09;&#x6BD4;&#x8F83;&#x7B80;&#x5355;&#x3002;&#x672A;&#x6765;&#x671F;&#x671B;&#x5EFA;&#x7ACB;&#x66F4;&#x5065;&#x58EE;&#x7684;&#x53CD;&#x9988;&#x673A;&#x5236;&#x3002;</li>
+<li>&#x670D;&#x52A1;&#x5668;&#x548C;&#x5BA2;&#x6237;&#x7AEF;&#x8DDF;&#x8E2A;&#x67E5;&#x8BE2;&#x7684;&#x7EDF;&#x8BA1;&#x4FE1;&#x606F;&#x529F;&#x80FD;&#x5728;&#x9ED8;&#x8BA4;&#x60C5;&#x51B5;&#x4E0B;&#x662F;&#x88AB;&#x7981;&#x7528;&#x7684;&#xFF0C;&#x671F;&#x671B;&#x5728;&#x672A;&#x6765;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; metrics &#x8FDB;&#x884C;&#x66B4;&#x9732;&#x3002;</li>
+</ul>
+<h3 id="&#x601D;&#x8003;"><a name="&#x601D;&#x8003;" class="anchor-navigation-ex-anchor" href="#&#x601D;&#x8003;"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.9. &#x601D;&#x8003;</h3>
+<p>&#x6682;&#x65E0;</p>
+<footer class="page-footer-ex"> <span class="page-footer-ex-copyright"> By <a href="https://github.com/Flyraty" target="_blank">Flyraty</a>&#xFF0C;&#x4F7F;&#x7528;<a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">&#x77E5;&#x8BC6;&#x5171;&#x4EAB; &#x7F72;&#x540D;-&#x76F8;&#x540C;&#x65B9;&#x5F0F;&#x5171;&#x4EAB; 4.0&#x534F;&#x8BAE;</a>&#x53D1;&#x5E03; </span> &#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="page-footer-ex-footer-update"> <i>updated</i> 2023-01-10 14:39:27 </span> </footer>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="checkpointing.html" class="navigation navigation-prev " aria-label="Previous page: Checkpointing">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="state_backends.html" class="navigation navigation-next " aria-label="Next page: 状态后端">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"状态查询","level":"1.4.4","depth":2,"next":{"title":"状态后端","level":"1.4.5","depth":2,"path":"State & Fault Tolerance/state_backends.md","ref":"State & Fault Tolerance/state_backends.md","articles":[]},"previous":{"title":"Checkpointing","level":"1.4.3","depth":2,"path":"State & Fault Tolerance/checkpointing.md","ref":"State & Fault Tolerance/checkpointing.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-expandable-chapters","github-buttons","editlink","copy-code-button","page-footer-ex","anchor-navigation-ex","expandable-chapters-small","prism","-highlight","lunr","-search","search-pro","splitter"],"ignores":["_book","node_modules"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-solarizedlight.css"],"lang":{"flow":"typescript"}},"editlink":{"label":"Edit This Page","multilingual":false,"base":"https://github.com/Flyraty/flink_learning_notes/tree/gitbook"},"page-footer-ex":{"copyright":"By [Flyraty](https://github.com/Flyraty)，使用[知识共享 署名-相同方式共享 4.0协议](https://creativecommons.org/licenses/by-sa/4.0/)发布","markdown":true,"update_format":"YYYY-MM-DD HH:mm:ss","update_label":"<i>updated</i>"},"splitter":{},"search-pro":{},"lunr":{"ignoreSpecialCharacters":false,"maxIndexSize":1000000},"fontsettings":{"theme":"white","family":"sans","size":2},"anchor-navigation-ex":{"associatedWithSummary":true,"float":{"floatIcon":"fa fa-navicon","level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"mode":"float","multipleH1":true,"pageTop":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"printLog":false,"showGoTop":true,"showLevel":true},"github-buttons":{"buttons":[{"user":"Flyraty","repo":"flink_learning_notes","type":"star","size":"small"}]},"expandable-chapters-small":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"flink_learning_notes","language":"zh-hans","gitbook":"*"},"file":{"path":"State & Fault Tolerance/queryable_state.md","mtime":"2023-01-10T14:39:27.411Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2023-01-10T14:40:20.271Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-github-buttons/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-editlink/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-copy-code-button/toggle.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
