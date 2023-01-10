@@ -16,7 +16,7 @@ checkpointedState = getRuntimeContext().getListState(descriptor);
 如果您打算为您的状态类型实现自定义 TypeSerializer，并且想了解如何实现序列化器以支持状态模式演化，可以查看[Custom State Serialization](https://nightlies.apache.org/flink/flink-docs-release-1.16/docs/dev/datastream/fault-tolerance/serialization/custom_serialization/)
 
 ### 状态 schema 的演化
-
+总结一句就是以旧模式读取旧数据，以新模式继续处理新的数据。
 
 
 

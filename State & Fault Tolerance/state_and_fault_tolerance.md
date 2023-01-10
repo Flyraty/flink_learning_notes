@@ -166,29 +166,129 @@ Scala 通过*类型 manifests 和类标签*对运行时的类型信息有非常�
 
 此外，Scala 允许通过 Scala 宏在 Scala 编译器中运行自定义代码。that means that some Flink code gets executed whenever you compile a Scala program written against Flink’s Scala API。此处有点不太理解，对于程序的底层编译运行还是一知半解。
 
-#### No Implicit Value for Evidence Parameter Error
+Scala 宏可以在编译期获取用户自定义函数的参数和返回值类型。在宏中，我们为参数或者返回值的类型创建一个 *TypeInformation* 并注入到后续的 operator 中。
 
-#### 通用方法
+#### No Implicit Value for Evidence Parameter Error
+这是使用 Scala API 在创建 TypeInformation 时的一个常见错误。其原因往往是没有导入完整的 flink.api.scala 类库。
+
+```java
+import org.apache.flink.api.scala._
+```
+另一个常见的原因是泛型方法引起的，这个在下一小节会提到。
+
+#### 泛型方法
+可以先思考下下面的代码：
+```java
+def selectFirst[T](input: DataStream[(T, _)]) : DataStream[T] = {
+  input.map { v => v._1 }
+}
+
+val data : DataStream[(String, Long) = ...
+
+val result = selectFirst(data)
+```
+对于此类泛型方法，函数参数的数据类型和返回值类型对于每次调用可能都不相同，并且在方法签名中也是未知的。这个也会造成 `No Implicit Value for Evidence Parameter Error`。
+
+在这种情况下，类型信息必须在调用时生成并传递给方法。 Scala 为此提供了隐式参数。以下代码告诉 Scala 将 T 的类型信息带入函数中。然后将在调用方法的位置而不是定义方法的位置生成类型信息。
+```java
+def selectFirst[T : TypeInformation](input: DataStream[(T, _)]) : DataStream[T] = {
+  input.map { v => v._1 }
+}
+```
 
 ### Java API 中的类型信息
+通常情况下，Java 会擦除泛型的类型信息。Flink 试图通过 Java 本身保留的少数位信息（主要是函数签名和子类信息）通过反射重建尽可能多的类型信息。此逻辑还包含一些简单的类型推断，适用于函数的返回类型取决于其输入类型的情况：
+```java
+public class AppendOne<T> implements MapFunction<T, Tuple2<T, Long>> {
+
+    public Tuple2<T, Long> map(T value) {
+        return new Tuple2<T, Long>(value, 1L);
+    }
+}
+```
+这里同样存在 Flink 无法补齐的类型信息，此时需要 *TypeHint* 辅助重建。
 
 #### Type Hints in the Java API 
+在Flink 无法重建泛型类型信息的情况下，Java API 提供了 *type hints* 用来提示告诉系统该函数产生的数据集类型。
+```java
+DataStream<SomeType> result = stream
+    .map(new MyGenericNonInferrableFunction<Long, SomeType>())
+        .returns(SomeType.class);
+```
+returns() 方法指定生成的类型，在本例中是通过一个类。
+
+- class，无参类，且不是泛型。
+- returns() 方法返回 TypeHints(new TypeHint<Tuple2<Integer, SomeType>>(){})。 TypeHint 类可以捕获泛型类型信息并为运行时保留它（通过匿名子类的方式）。
 
 #### Type extraction for Java 8 lambdas
+Java 8 lambda 的类型提取与非 lambda 的工作方式不同，因为 lambda 不与继承函数接口的实现类相关联。
+
+目前，Flink 试图弄清楚哪个方法实现了 lambda，并使用 Java 的泛型签名来确定参数类型和返回类型。但是，并非所有编译器都为 lambda 生成这些签名。如果你观察到意外行为，请使用 returns 方法手动指定返回类型。
 
 #### Serialization of POJO types
+PojoTypeInfo 为 POJO 中的所有字段创建序列化程器。标准类型如 int、long、String 等，由 Flink 提供的序列化程序处理。对于其他类型，会使用 Kryo 序列化。
+
+如果 kyro 不能正常处理这些类型，可以使用 avro。
+```java 
+final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+env.getConfig().enableForceAvro();
+```
+
+也可以自定义序列化器。
+```java
+env.getConfig().addDefaultKryoSerializer(Class<?> type, Class<? extends Serializer<?>> serializerClass);
+
+```
 
 ### 禁用 kyro 回调
+在某些情况下，我们可能希望明确避免使用 Kryo 作为泛型类型的备选序列化器。最常见的一种是希望通过 Flink 自己的序列化器或用户定义的自定义序列化器来确保所有类型都被有效地序列化。
+```java
+env.getConfig().disableGenericTypes();
+```
 
 ### 使用工厂类定义 TypeInformation
+TypeInformation 的工厂类允许以可插拔的形式将自定义类型注入 Flink 本身的类型系统。我们必须继承 org.apache.flink.api.common.typeinfo.TypeInfoFactory 才能返回我们的自定义类型信息。如果相应类型或使用此类型的 POJO 字段已使用 @org.apache.flink.api.common.typeinfo.TypeInfo 注释进行注释，则在类型提取阶段调用会调用工厂类。该方法在 Java 和 Scala API 中是通用的。
 
+在类型层次结构中，会选择最近的类型工厂，当然内置的类型工厂是优先级最高的。以下示例显示如何使用 Java 中的工厂注释自定义类型 MyTuple 并为其提供自定义类型信息。
+
+```java 
+@TypeInfo(MyTupleTypeInfoFactory.class)
+public class MyTuple<T0, T1> {
+  public T0 myfield0;
+  public T1 myfield1;
+}
+
+public class MyTupleTypeInfoFactory extends TypeInfoFactory<MyTuple> {
+
+  @Override
+  public TypeInformation<MyTuple> createTypeInfo(Type t, Map<String, TypeInformation<?>> genericParameters) {
+    return new MyTupleTypeInfo(genericParameters.get("T0"), genericParameters.get("T1"));
+  }
+}
+```
+除了注解类型本身，还可以在 Flink POJO 中使用，如下所示：
+```java
+public class MyPojo {
+  public int id;
+
+  @TypeInfo(MyTupleTypeInfoFactory.class)
+  public MyTuple<Integer, String> tuple;
+}
+```
+createTypeInfo(Type, Map<String, TypeInformation<?>>) 方法为工厂的目标类型创建类型信息。其参数提供有关类型本身以及类型的泛型参数（如果可用）的额外信息。
 ### 思考
 
 **1. POJO 的序列化，PojoTypeInfo 是啥，和 kyro、avro 又是啥关系？**
 
 **2. Java 或者 Scala 的原语类型是指啥？**
+一般分为原语类型和类类型，原语类型比如 Java 的 int、boolean、long 等，既不是对象也不是类，也没有实现什么方法。而像 String，Integer 类型则是类类型，可以实例化，有丰富的方法可以调用。
 
 **3. Java 的类型擦除？**
+可以查看这篇文档 [Java泛型类型擦除以及类型擦除带来的问题](https://www.cnblogs.com/wuqinglong/p/9456193.html)
+
+**4. Scala 宏是什么？**
+[神奇的Scala Macro之旅](https://www.cnblogs.com/barrywxx/p/10779385.html)
+
 
 
 
